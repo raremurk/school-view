@@ -18,8 +18,7 @@ export class ClassComponent implements OnInit{
   classes: Class[];    
   teacherFullNames: TeacherFullName[];
   
-  constructor(private titleService: Title, private dataService: DataService){      
-  }
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);   

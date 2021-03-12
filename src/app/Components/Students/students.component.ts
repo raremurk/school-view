@@ -20,7 +20,7 @@ export class StudentsComponent implements OnInit{
   students: Student[];  
   classes: Class[];
   
-  constructor(private titleService: Title, private dataService: DataService){}
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
     this.titleService.setTitle(this.title); 

@@ -7,11 +7,11 @@
             margin: 5px;
             padding: 0;         
         }
-        .checked{
+		.btn-check:checked+.btn{
             height: 50px;
             width: 50px;
-            line-height: 48px;
-        }
+            line-height: 48px;		
+		}	
     }    
     .card-day{
         width: 190px;

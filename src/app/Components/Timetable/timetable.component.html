@@ -1,4 +1,4 @@
-<ng-template [ngIf]="id > 0  && id <= classes?.length" [ngIfElse]="empty">
+<ng-template [ngIf]="id > 0  && id <= 11" [ngIfElse]="empty">
 <div class="container-xxl">   
   <h2 class="text-center">{{title}}</h2> 
   <div class="row align-items-center">
@@ -8,14 +8,8 @@
     <div class="col-8"> 
       <div class="btn-group align-items-center" role="group">
         <div *ngFor="let class of classes"> 
-          <ng-template [ngIf]="class.id == id" [ngIfElse]="unchecked">
-            <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}" checked>
-            <label class="btn btn-outline-secondary rounded-circle checked" for="btnradio{{class.id}}">{{class.id}}</label>      
-          </ng-template>         
-          <ng-template #unchecked>
-            <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}">
-            <label class="btn btn-outline-secondary rounded-circle" for="btnradio{{class.id}}">{{class.id}}</label>
-          </ng-template>          
+          <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}" [checked]="id == class.id">
+          <label class="btn btn-outline-secondary rounded-circle shadow-none" for="btnradio{{class.id}}">{{class.id}}</label>              
         </div>        
       </div> 
     </div>

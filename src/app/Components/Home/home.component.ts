@@ -13,8 +13,7 @@ export class HomeComponent {
   admin_route = 'admin';
   schoolStat: SchoolStat;
   
-  constructor(private titleService: Title, private dataService: DataService,){      
-  }
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);      

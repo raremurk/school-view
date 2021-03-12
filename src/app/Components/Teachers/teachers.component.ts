@@ -24,7 +24,7 @@ export class TeachersComponent implements OnInit{
   teachers: Teacher[]; 
   edit_mod: number = 0; 
      
-  constructor(private titleService: Title, private dataService: DataService){}
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
     this.titleService.setTitle(this.title);   

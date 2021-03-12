@@ -18,8 +18,7 @@ export class AcademicSubjectComponent implements OnInit{
   slider_options: Options = { floor: 1, ceil: 11, showTicksValues: true};
   slider_options_disabled: Options = {...this.slider_options, disabled : true};
   
-  constructor(private titleService: Title, private dataService: DataService,){      
-  }
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);

@@ -26,20 +26,20 @@ export class TimetableComponent implements OnInit{
   id: number;
   edit_day: number = 0;
 
-  constructor(private titleService: Title, private dataService: DataService, 
-    private activateRoute: ActivatedRoute){}
+  constructor(private titleService: Title, private dataService: DataService, private activateRoute: ActivatedRoute){ }
 
-    ngOnInit(){ 
-      this.titleService.setTitle(this.title);
-      this.loadAllClasses();
-      this.activateRoute.paramMap
-        .pipe(switchMap(params => params.getAll('id')))
-        .subscribe((data)=> {
-          this.id = +data;        
+  ngOnInit(){ 
+    this.titleService.setTitle(this.title);
+    this.loadAllClasses();
+    this.activateRoute.paramMap
+      .pipe(switchMap(params => params.getAll('id')))
+      .subscribe((data)=> {
+        this.id = +data;  
+        if(this.id > 0 && this.id <= 11) {
           this.loadAllAcademicSubjects(this.id);
           this.loadTimetable(this.id);
-          this.cancel(); 
-        });
+        }     
+      });
   }
 
   loadAllClasses() {
