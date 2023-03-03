@@ -41,13 +41,13 @@
       </div>
       <div>  
         <label>Предметы</label>      
-        <div *ngFor="let sub of teacher.academicSubjects" class="sub-area">
+        <div *ngFor="let sub of teacher.teacherSubjects" class="sub-area">
           <select [(ngModel)]="sub.id" class="form-select fixed-size-left"> 
             <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.shortName}}</option>
           </select>                      
           <input (click)="deleteSubject()" class="small-right" type="image" src="/images/X_30x30.png" alt="Edit">       
         </div>  
-        <ng-template [ngIf]="teacher.academicSubjects == undefined || teacher.academicSubjects.length < 3">
+        <ng-template [ngIf]="teacher.teacherSubjects == undefined || teacher.teacherSubjects.length < 3">
           <div class="sub-area">
             <input (click)="addSubject()" class="small-left" type="image" src="/images/plus_30x30.png"> 
             <input type="text" class="form-control fixed-size-right" value="Добавить" disabled>  
@@ -80,7 +80,7 @@
             <input class="big" type="image" src="/images/pencil_30x30.png" alt="Edit" (click)="editModeOn()">
           </ng-template> 
           <ng-template [ngIf]="edit_mod == 1"> 
-            <input class="big" type="image" src="/images/check_30x30.png" alt="Save" (click)="updateTeacher(teacher)">
+            <input class="big" type="image" src="/images/check_30x30.png" alt="Save" (click)="updateTeacher(teacher.id, teacher)">
           </ng-template>         
           <input class="big" type="image" data-bs-dismiss="modal" src="/images/X_30x30.png" alt="Cancel" (click)="cancel()">
         </div>
@@ -108,7 +108,7 @@
                 <h5>{{teacher.position}}</h5>
               </div>
               <label>Предметы</label>
-              <h5 *ngFor="let sub of teacher.academicSubjects">{{viewSubject(sub.id)}}</h5>
+              <h5 *ngFor="let sub of teacher.teacherSubjects">{{viewSubject(sub.id)}}</h5>
             </div>
           </div>
           <div class="col">

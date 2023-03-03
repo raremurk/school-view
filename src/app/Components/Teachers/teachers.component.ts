@@ -12,9 +12,10 @@ import { DataService } from '../../data.service';
 })
 export class TeachersComponent implements OnInit{ 
     title = 'Список учителей';
-    teacher: Teacher = new Teacher(1,'','','','',[],[]);
+    teacher: Teacher = new Teacher();
     teachers: Teacher[];
     academicSubjects: AcademicSubject[];
+    academicSubjectsFiltered: AcademicSubject[];
     classes: Class[];
     rout = 'http://localhost:49716/api/teachers';
     rout_as = 'http://localhost:49716/api/academicsubjects';
@@ -22,6 +23,7 @@ export class TeachersComponent implements OnInit{
     positions = ['Директор','Завуч','Учитель'];  
     edit_mod: number = 0;
     pidaras: number = 0;
+    indexes: number[] = [];
       
     constructor(private titleService: Title, private dataService: DataService){}
       
@@ -56,44 +58,46 @@ export class TeachersComponent implements OnInit{
     }
 
     editTeacher(p: Teacher) {
-      this.teacher = p;      
+      this.teacher = p;       
     }
 
     updateTeacher(id: number, p: Teacher) {
-      this.dataService.update(id, p).subscribe(data => this.loadAll());
-      this.cancel();
+      this.dataService.update(id, p).subscribe();
+      this.edit_mod = 0;
     }
 
     deleteTeacher(p: number) {
-      this.dataService.delete(p).subscribe(data => this.loadAll());
+      this.dataService.delete(p).subscribe();
+      let index = this.teachers.findIndex(d => d.id === p); 
+      this.teachers.splice(index, 1);
     }
 
     deleteSubject(id: number) {
-      let index = this.teacher.academicSubjects.findIndex(d => d.id === id); 
-      this.teacher.academicSubjects.splice(index, 1);
+      let index = this.teacher.teacherSubjects.findIndex(d => d.id === id); 
+      this.teacher.teacherSubjects.splice(index, 1);
     }
 
     addSubject() {
-      this.teacher.academicSubjects.push({'id' : 2});
+      this.teacher.teacherSubjects.push({'id': this.academicSubjects[0].id});
     }
 
     viewSubject(id: number) {
-      return this.academicSubjects.find(d => d.id === id).shortName; 
+      return this.academicSubjects?.find(d => d.id == id).shortName; 
     }
 
     changeState(id: number){
       if (this.classExist(id) == "btn-primary"){
-        let index = this.teacher.classes.findIndex(d => d.id === id); 
-        this.teacher.classes.splice(index, 1);
+        let index = this.teacher.teacherClasses.findIndex(d => d.id === id); 
+        this.teacher.teacherClasses.splice(index, 1);
       }
       else{
-        this.teacher.classes.push({'id' : id});
+        this.teacher.teacherClasses.push({'id' : id});
       }      
     }
 
     classExist(id: number) {
-      for (var index = 0; index < this.teacher.classes?.length; ++index) {        
-        if (id == this.teacher.classes[index].id) {
+      for (var index = 0; index < this.teacher.teacherClasses?.length; ++index) {        
+        if (id == this.teacher.teacherClasses[index].id) {
           this.pidaras++;
           console.log(this.pidaras);
           return "btn-primary";
@@ -104,11 +108,11 @@ export class TeachersComponent implements OnInit{
 
     createTeacher(p: Teacher) {
       this.dataService.create(p).subscribe((data: Teacher) => this.teachers.push(data));
-      this.teacher = new Teacher();
+      this.cancel();
     }
 
     cancel() {
-      this.teacher = new Teacher(1,'','','','',[],[]);
+      this.teacher = new Teacher();
       this.edit_mod = 0;
       this.loadAll();
     }
