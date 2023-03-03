@@ -1,0 +1,108 @@
+<div class="container-md">
+  <h2>{{title}}</h2>      
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Фамилия</th>
+          <th>Имя</th>
+          <th>Отчество</th>
+          <th>Дата рождения</th>
+          <th>Класс</th>
+          <th>Операции</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let one of students" class="align-middle">
+          <ng-template [ngIf]="student?.id != one.id" [ngIfElse]="edit">
+            <td>{{one?.id}}</td>
+            <td>{{one?.lastName}}</td>
+            <td>{{one?.firstName}}</td>
+            <td>{{one?.middleName}}</td>    
+            <td>{{one?.birthday}}</td>
+            <td>{{one?.className}}</td>
+            <td>
+              <button (click)="editStudent(one)" class="btn btn-primary">Изменить</button>
+              <button (click)="deleteStudent(one.id)" class="btn btn-danger">Удалить</button>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>  
+      <tfoot>
+        <tr>
+          <td>
+            <button class="show-button btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Создать</button>
+          </td>          
+        </tr>
+      </tfoot>        
+    </table>  
+    <router-outlet></router-outlet>     
+  </div>
+  
+  <ng-template #edit>
+      <td>{{student.id}}</td>
+      <td>
+        <input type="text" [(ngModel)]="student.lastName" class="form-control" size="7">
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="student.firstName" class="form-control" size="7">
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="student.middleName" class="form-control" size="7">
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="student.birthday" class="form-control" size="7">
+      </td>
+      <td>
+        <select [(ngModel)]="student.classId" class="form-select">  
+          <option selected value="{{student.classId}}">{{student.className}}</option>  
+          <option *ngFor="let pos of classes" value="{{pos.id}}">{{pos.name}}</option>
+        </select> 
+      </td>
+      <td>
+          <button (click)="updateStudent(student.id, student)" class="btn btn-success">Сохранить</button>
+          <button (click)="cancel()" class="btn btn-warning">Отмена</button>
+      </td>
+  </ng-template>
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Создание ученика</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <label class="form-label">Фамилия</label>
+            <input type="text" [(ngModel)]="student.lastName" class="form-control">  
+          </div>
+          <div>
+            <label class="form-label">Имя</label> 
+            <input type="text" [(ngModel)]="student.firstName" class="form-control">
+          </div>
+          <div>
+            <label class="form-label">Отчество</label>
+            <input type="text" [(ngModel)]="student.middleName" class="form-control">  
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="form-label">Дата рождения</label>           
+              <input type="date" [(ngModel)]="student.birthday" class="form-control">  
+            </div>
+            <div class="col">
+              <label class="form-label">Класс</label>
+              <select [(ngModel)]="student.classId" class="form-select">   
+                <option *ngFor="let pos of defaultClasses" value="{{pos.id}}">{{pos.name}}</option>
+              </select>        
+            </div>    
+          </div>    
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <button (click)="createStudent(student)" class="btn btn-success " data-bs-dismiss="modal" >Создать</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,20 @@
+<div class="container"> 
+<h2>{{title}}</h2>  
+  <div class="row">
+    <div class="col-2">
+      <label class="form-label">Время</label> 
+      <div *ngFor="let time of times">
+        <input type="text" class="form-control" value="{{time}}" disabled>  
+      </div>      
+    </div>
+    <div *ngFor="let day of days" class="col">
+      <label class="form-label">{{day}}</label> 
+      <select *ngFor="let index of times" class="form-select"> 
+        <option selected >Не выбрано</option>     
+        <option>Математика</option>
+        <option>Русский</option>
+        <option>Физра</option>
+      </select>
+    </div>
+  </div>     
+</div>

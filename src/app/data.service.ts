@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { AcademicSubject } from './Models/academicSubject';
  
 @Injectable()
 export class DataService {
  
-    private url = 'http://localhost:49716/api/academicsubjects';
+    private url: string;
 
     httpOptions = {
         headers: new HttpHeaders({    
@@ -15,6 +14,10 @@ export class DataService {
  
     constructor(private http: HttpClient) {
     }
+
+    configure(rout: string) {
+        this.url = rout;
+    }
  
     getAll(){
         return this.http.get(this.url);
@@ -24,7 +27,7 @@ export class DataService {
         return this.http.get(this.url + '/' + id, this.httpOptions);
     }
      
-    create(object: AcademicSubject){
+    create(object){
         return this.http.post(this.url, object, this.httpOptions);
     }
 
@@ -32,8 +35,8 @@ export class DataService {
         return this.http.delete(this.url + '/' + id, this.httpOptions);
     }
 
-    update(object: AcademicSubject){
-        return this.http.put(this.url, object, this.httpOptions);
+    update(id: number, object){
+        return this.http.put(this.url + '/' + id, object, this.httpOptions);
     }
 }
 

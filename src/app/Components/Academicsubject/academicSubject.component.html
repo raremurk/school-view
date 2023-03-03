@@ -1,9 +1,9 @@
 <div class="container-md"> 
-<h1>Список предметов</h1>      
+<h2>{{title}}</h2>      
   <table class="table">
     <thead>
       <tr>
-        <th>Id предмета</th>
+        <th>Id</th>
         <th>Название предмета</th>
         <th>Операции</th>
       </tr>
@@ -27,7 +27,7 @@
         </td>          
       </tr>
     </tfoot>        
-  </table>       
+  </table>   
 </div>
 
 <ng-template #edit>
@@ -36,7 +36,8 @@
         <input type="text" [(ngModel)]="academicSubject.name" class="form-control" size="7">
     </td>
     <td>
-        <button (click)="updateAcademicSubject(academicSubject)" class="btn btn-success">Сохранить</button>
+        <button (click)="updateAcademicSubject(academicSubject.id, academicSubject)" 
+                class="btn btn-success">Сохранить</button>
         <button (click)="cancel()" class="btn btn-warning">Отмена</button>
     </td>
 </ng-template>
@@ -45,18 +46,21 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Создание предмета</h5>
+        <h3 class="modal-title">Создание предмета</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div>
-          <label>Название</label>
-          <input type="text" [(ngModel)]="academicSubject.name" maxlength="40"/>
+          <label class="form-label">Название</label>
+          <input type="text" class="form-control" [(ngModel)]="academicSubject.name"/>         
         </div>
       </div>
-      <div class="modal-footer ms-right">
-        <button (click)="createAcademicSubject(academicSubject)" class="btn btn-success " data-bs-dismiss="modal" >Создать</button>
+      <div class="modal-footer">
+        <div class="container">
+          <button (click)="createAcademicSubject(academicSubject)" class="btn btn-success " data-bs-dismiss="modal" >Создать</button>
+        </div>        
       </div>
     </div>
   </div>
 </div>
+
