@@ -1,45 +1,36 @@
-<div class="container-md"> 
-<h2>{{title}}</h2>      
+<div class="container"> 
+<h2 class="text-center fw-bold">{{title}}</h2>      
   <table class="table">
     <thead>
       <tr>
-        <th>Id</th>
-        <th>Название предмета</th>
-        <th>Операции</th>
+        <th class="col-6">Название предмета</th>
+        <th class="col-6 text-end">
+          <button class="show-button btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Создать</button>
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let one of academicSubjects">
         <ng-template [ngIf]="academicSubject?.id != one.id" [ngIfElse]="edit">
-          <td>{{one?.id}}</td>
           <td>{{one?.name}}</td>
-          <td>
+          <td class="text-end">
             <button (click)="editAcademicSubject(one)" class="btn btn-primary">Изменить</button>
             <button (click)="deleteAcademicSubject(one.id)" class="btn btn-danger">Удалить</button>
           </td>
         </ng-template>
       </tr>
-    </tbody>  
-    <tfoot>
-      <tr>
-        <td>
-          <button class="show-button btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Создать</button>
-        </td>          
-      </tr>
-    </tfoot>        
+    </tbody>       
   </table>   
 </div>
 
 <ng-template #edit>
-    <td>{{academicSubject.id}}</td>
-    <td>
-        <input type="text" [(ngModel)]="academicSubject.name" class="form-control" size="7">
-    </td>
-    <td>
-        <button (click)="updateAcademicSubject(academicSubject.id, academicSubject)" 
-                class="btn btn-success">Сохранить</button>
-        <button (click)="cancel()" class="btn btn-warning">Отмена</button>
-    </td>
+  <td>
+    <input type="text" [(ngModel)]="academicSubject.name" class="form-control">
+  </td>
+  <td class="text-end">
+    <button (click)="updateAcademicSubject(academicSubject.id, academicSubject)" class="btn btn-success">Сохранить</button>
+    <button (click)="cancel()" class="btn btn-warning">Отмена</button>
+  </td>
 </ng-template>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

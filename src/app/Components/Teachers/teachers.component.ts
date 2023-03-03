@@ -82,7 +82,7 @@ export class TeachersComponent implements OnInit{
     }
 
     viewSubject(id: number) {
-      return this.academicSubjects?.find(d => d.id == id).shortName; 
+      return this.academicSubjects?.find(d => d.id == id).name; 
     }
 
     changeState(id: number){

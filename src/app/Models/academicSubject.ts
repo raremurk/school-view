@@ -1,6 +1,5 @@
 export class AcademicSubject{    
     constructor (       
         public id?: number, 
-        public name?: string,
-        public shortName?: string ) {}
+        public name?: string ) {}
 }

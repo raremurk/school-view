@@ -1,21 +1,10 @@
-div {
-    font-family: 'Roboto', sans-serif;
-    h2 {
-        text-align: center ;   
-        padding: 1rem;
-    }  
-    tfoot {
-        border: white;
-    } 
-    button {
-        margin: 0px 5px;
-        padding: 3px;
-    }
-} 
-
-.modal-footer {
-    div {
-        text-align: center;
+.container{
+    font-family: 'Roboto', sans-serif;  
+    td, th{
+        font-size: large;
+        button {
+            margin: 0px 5px;
+            padding: 3px;
+        }
     }
 }
-

@@ -3,13 +3,17 @@ import { Student } from '../../Models/student';
 import { Class } from '../../Models/class';
 import { Title } from '@angular/platform-browser';
 import { DataService } from '../../data.service';
-     
+
 @Component({
     templateUrl: './students.component.html',
     styleUrls: ['./students.component.scss'],
-    providers: [DataService]
+    providers: [
+      DataService
+    ]
 })
 export class StudentsComponent implements OnInit{ 
+    min_data = new Date(new Date().setFullYear(new Date().getFullYear() - 20));    
+    max_data = new Date(new Date().setFullYear(new Date().getFullYear() - 4)); 
     title = 'Список учеников';
     student: Student = new Student();
     students: Student[];
@@ -58,4 +62,3 @@ export class StudentsComponent implements OnInit{
       this.loadAll();
     }
 } 
-

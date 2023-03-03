@@ -1,19 +1,19 @@
 <ng-template [ngIf]="id > 0  && id <= classes?.length" [ngIfElse]="empty">
 <div class="cont">   
-  <h1 class="text-center fw-bold">Расписание</h1> 
+  <h2 class="text-center fw-bold">{{title}}</h2> 
   <div class="row align-items-center mb-3">
     <div class="col-4 text-end">
-      <h2 class="fw-bold">Классы</h2> 
+      <h3 class="fw-bold">Классы</h3> 
     </div>
     <div class="col-8">  
       <ng-template *ngFor="let class of classes" [ngIf]="class.id != id" [ngIfElse]="checked">
-        <button routerLink="../{{class.id}}" class="btn btn-outline-dark border rounded-circle fw-bold">{{class.id}}</button>
+        <button routerLink="../{{class.id}}" class="btn bnt-class btn-outline-dark border rounded-circle fw-bold">{{class.id}}</button>
       </ng-template>        
     </div>
   </div>
   <div class="card-group">
     <div *ngFor="let day of timetable; let i=index" class="col">
-      <div class="card mx-auto">   
+      <div class="card card-day mx-auto">   
         <div class="row">
           <div class="col-9">
             <h5 class="fw-bold text-nowrap">{{headers[i]}}</h5>     
@@ -45,14 +45,14 @@
 </ng-template>
 
 <ng-template #checked>
-  <button routerLink="../{{id}}" class="btn btn-primary border rounded-circle fw-bold checked">{{id}}</button>
+  <button routerLink="../{{id}}" class="btn bnt-class btn-primary border rounded-circle fw-bold checked">{{id}}</button>
 </ng-template>
 
 <ng-template #editbody>   
   <div *ngFor="let sub of timetableDay" class="data d-flex align-items-center">
     <div>
       <select [(ngModel)]="sub.academicSubjectId" class="form-select">  
-        <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.shortName}}</option>
+        <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.name}}</option>
       </select> 
     </div>
     <div>

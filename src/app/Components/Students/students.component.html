@@ -1,63 +1,70 @@
-<div class="container-md">
-  <h2>{{title}}</h2>   
+<div class="container">
+  <select>
+    <option>12</option>
+    <option>23</option>
+  </select>
+  <h2 class="text-center fw-bold">{{title}}</h2>   
     <table class="table">
       <thead>
         <tr>
-          <th>Id</th>
-          <th>Фамилия</th>
-          <th>Имя</th>
-          <th>Отчество</th>
-          <th>Дата рождения</th>
-          <th>Класс</th>
-          <th>Операции</th>
+          <th class="col-2">Фамилия</th>
+          <th class="col-2">Имя</th>
+          <th class="col-2">Отчество</th>
+          <th class="col">Дата рождения</th>
+          <th class="col">Пол</th>
+          <th class="col">Класс</th>
+          <th class="col-2 text-end">
+            <button class="show-button btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Создать</button>
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let one of students" class="align-middle">
           <ng-template [ngIf]="student?.id != one.id" [ngIfElse]="edit">
-            <td>{{one?.id}}</td>
             <td>{{one?.lastName}}</td>
             <td>{{one?.firstName}}</td>
             <td>{{one?.middleName}}</td>    
-            <td>{{one?.birthday}}</td>
+            <td>{{one?.birthday | date:'dd.MM.yyyy'}}</td>
+            <td>{{one?.gender}}</td>
             <td>{{one?.classId}}</td>
-            <td>
+            <td class="text-end">
               <button (click)="editStudent(one)" class="btn btn-primary">Изменить</button>
               <button (click)="deleteStudent(one.id)" class="btn btn-danger">Удалить</button>
             </td>
           </ng-template>
         </tr>
-      </tbody>  
-      <tfoot>
-        <tr>
-          <td>
-            <button class="show-button btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Создать</button>
-          </td>          
-        </tr>
-      </tfoot>        
+      </tbody> 
     </table>   
   </div>
   
   <ng-template #edit>
-      <td>{{student.id}}</td>
       <td>
-        <input type="text" [(ngModel)]="student.lastName" class="form-control" size="7">
+        <input type="text" [(ngModel)]="student.lastName" class="form-control">
       </td>
       <td>
-        <input type="text" [(ngModel)]="student.firstName" class="form-control" size="7">
+        <input type="text" [(ngModel)]="student.firstName" class="form-control">
       </td>
       <td>
-        <input type="text" [(ngModel)]="student.middleName" class="form-control" size="7">
+        <input type="text" [(ngModel)]="student.middleName" class="form-control">
       </td>
       <td>
-        <input type="text" [(ngModel)]="student.birthday" class="form-control" size="7">
+        <input type="date" [(ngModel)]="student.birthday" class="form-control" min="{{min_data | date:'yyyy-MM-dd'}}" max="{{max_data | date:'yyyy-MM-dd'}}">
+      </td>        
+      <td>   
+        {{popa}}   
+        <div class="btn-group" role="group">
+          <input [(ngModel)]="popa" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="M">
+          <label class="btn btn-outline-primary" for="btnradio1"><img src="/images/male_30x30.png"></label>
+          <input [(ngModel)]="popa" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="W">
+          <label class="btn btn-outline-primary" for="btnradio2"><img src="/images/female_30x30.png"></label>     
+        </div>
       </td>
       <td>
         <select [(ngModel)]="student.classId" class="form-select">  
           <option *ngFor="let class of classes" value="{{class.id}}">{{class.id}}</option>
         </select> 
       </td>
-      <td>
+      <td class="text-end">
           <button (click)="updateStudent(student.id, student)" class="btn btn-success">Сохранить</button>
           <button (click)="cancel()" class="btn btn-warning">Отмена</button>
       </td>

@@ -1,18 +1,27 @@
 <div class="container">
-  <div class="row mb-3">
-    <div class="col-4">
-      <button (click)="createModeOn()" class="show-button btn btn-success btn-create my-auto" data-bs-toggle="modal" data-bs-target="#infoModal">Добавить</button>
-    </div>
-    <div class="col-4">
-      <h2 class="text-center fw-bold">{{title}}</h2>
-    </div>
-  </div>       
+  <h2 class="text-center fw-bold">{{title}}</h2>      
   <table class="table">
+    <thead>
+      <tr>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th class="text-end">
+          <button (click)="createModeOn()" class="show-button btn btn-success btn-create my-auto" data-bs-toggle="modal" data-bs-target="#infoModal">Создать</button>
+        </th>
+      </tr>
+    </thead>
     <tbody>
       <tr *ngFor="let one of teachers">
         <td>
-          {{one?.lastName}} {{one?.firstName}} {{one?.middleName}}
-        </td>     
+          {{one?.lastName}}
+        </td>    
+        <td>
+          {{one?.firstName}}
+        </td> 
+        <td>
+          {{one?.middleName}}
+        </td>  
         <td class="text-end">
           <button (click)="editTeacher(one)" class="show-button btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Подробнее</button>
           <button (click)="deleteTeacher(one.id)" class="btn btn-danger">Удалить</button>
@@ -115,7 +124,7 @@
         <div *ngFor="let sub of teacher.teacherSubjects" class="sub-row d-flex align-items-center">
           <div>
             <select [(ngModel)]="sub.id" class="form-select"> 
-              <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.shortName}}</option>
+              <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.name}}</option>
             </select>   
           </div>
           <div>

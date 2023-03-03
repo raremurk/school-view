@@ -1,20 +1,21 @@
-div {
-    font-family: 'Roboto', sans-serif;    
-    h2 {
-        text-align: center ;   
-        padding: 1rem;
-    }  
-    tfoot {
-        border: white;
-    } 
-    button {
-        margin: 0px 5px;
-        padding: 3px;
+.container{
+    font-family: 'Roboto', sans-serif;  
+    td, th{
+        font-size: large;
+        button {
+            margin: 0px 5px;
+            padding: 3px;
+        }
     }
-} 
-
-.modal-footer {
-    div {
-        text-align: center;
+    .btn-group{
+        .btn{
+            border: 1px solid rgba(0,0,0,.125); 
+            padding: 3px;
+        }
+    }
+    select{
+        option{
+            display: inline-block;
+        }
     }
 }

@@ -1,14 +1,14 @@
-<div class="con">
+<div class="cont">
   <div class="card-group">
-    <div class="col" *ngFor="let one of classes">
+    <div *ngFor="let one of classes" class="col">
       <div class="card mx-auto">
-        <div class="row r-header">
-          <div class="col">
+        <div class="row">
+          <div class="col-8">
             <h4>{{one?.id}} Класс</h4>
           </div>
-          <div class="col right">
+          <div class="col-4 text-end">
             <ng-template [ngIf]="one?.id != class.id" [ngIfElse]="editbuttons"> 
-              <input type="image" src="/images/pencil_30x30.png" alt="Edit" (click)="editClass(one)">
+              <button (click)="editClass(one)" class="btn btn-img border rounded"><img src="/images/pencil_30x30.png"></button>
             </ng-template> 
           </div>  
         </div>         
@@ -22,10 +22,10 @@
         </div>              
         <div class="row foot">
           <div class="col">
-            <button class="btn light-blue" routerLink="../students">Список учеников</button>   
+            <button routerLink="../students" class="btn light-blue">Ученики</button>   
           </div>
           <div class="col right">
-            <button class="btn light-blue" routerLink="../timetable/{{one.id}}">Расписание</button> 
+            <button routerLink="../timetable/{{one.id}}" class="btn light-blue">Расписание</button> 
           </div>              
         </div> 
       </div>
@@ -40,6 +40,10 @@
 </ng-template>
 
 <ng-template #editbuttons> 
-  <input type="image" src="/images/check_30x30.png" alt="Save" (click)="updateClass(class.id, class)">
-  <input type="image" src="/images/X_30x30.png" alt="Cancel" (click)="cancel()">
+  <button (click)="updateClass(class.id, class)" class="btn btn-img border rounded">
+    <img src="/images/check_30x30.png">
+  </button>
+  <button (click)="cancel()" class="btn btn-img border rounded">
+    <img src="/images/X_30x30.png">
+  </button>
 </ng-template>
