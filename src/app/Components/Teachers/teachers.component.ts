@@ -15,7 +15,6 @@ export class TeachersComponent implements OnInit{
     teacher: Teacher = new Teacher();
     teachers: Teacher[];
     academicSubjects: AcademicSubject[];
-    academicSubjectsFiltered: AcademicSubject[];
     classes: Class[];
     rout = 'http://localhost:49716/api/teachers';
     rout_as = 'http://localhost:49716/api/academicsubjects';
@@ -58,7 +57,8 @@ export class TeachersComponent implements OnInit{
     }
 
     editTeacher(p: Teacher) {
-      this.teacher = p;       
+      this.teacher = p;  
+      this.edit_mod = 0;         
     }
 
     updateTeacher(id: number, p: Teacher) {
@@ -73,7 +73,7 @@ export class TeachersComponent implements OnInit{
     }
 
     deleteSubject(id: number) {
-      let index = this.teacher.teacherSubjects.findIndex(d => d.id === id); 
+      let index = this.teacher.teacherSubjects.findIndex(d => d.id == id); 
       this.teacher.teacherSubjects.splice(index, 1);
     }
 
@@ -111,9 +111,8 @@ export class TeachersComponent implements OnInit{
       this.cancel();
     }
 
-    cancel() {
+    cancel() {      
       this.teacher = new Teacher();
-      this.edit_mod = 0;
       this.loadAll();
     }
 } 

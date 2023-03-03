@@ -1,78 +1,32 @@
-.con{
-    font-family: 'Roboto', sans-serif;           
-    margin: 0% 5%;
-    h1, h2{
-        font-weight: bold;
-        text-align: center;
-    }
-    .nav-btn{
-        text-align: center;
-        margin-bottom: 20px;
-        h2{            
-            display: inline-block;
-            line-height: normal;
-            vertical-align: middle;    
-            margin-right: 20px;
-        }
-        .btn-group{
-            display: inline-block;
-            line-height: normal;
-            vertical-align: middle;     
-            .btn{
-                font-weight: bold;
-                margin: 5px;
-                height: 36px;
-                width: 36px;
-                padding: 5px 0;
-                border-radius: 50%;            
-            }
-            .checked{
-                height: 45px;
-                width: 45px;
-            }
-        }
-    }
-    .card{
-        width: 185px;
-        padding: 10px 10px 0px;
+.cont{
+    font-family: 'Roboto', sans-serif;     
+    margin: 0 5%;  
+    .btn{
+        height: 36px;
+        width: 36px;
         margin: 5px;
-        .r-header{
-            h5{
-                white-space: nowrap;
-                width: 100px;
-                margin-left: 5px;
-                font-weight: bold;
+        padding: 5px 0;        
+    }
+    .checked{
+        height: 46px;
+        width: 46px;
+    }    
+    .card{
+        width: 190px;
+        padding: 10px 10px 0px;
+        .data{
+            height: 40px;
+            border-top: 1px solid rgba(0,0,0,.125);   
+            .form-select{
+                background: white;
+                border-right: 0;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+                padding: 0px 2px 0px 5px;                
+                height: 27px;
+                width: 140px;
+                font-size: small;
             } 
-            input{
-                border-radius: 5px;
-                border: 1px solid rgba(0,0,0,.125);
-                float: right;
-            }
-        } 
-        .data{       
-            text-align: center;  
-            line-height: 40px;
-            border-top: 1px solid rgba(0,0,0,.125);
-        }
-        .footer{
-            border-top: 1px solid rgba(0,0,0,.125);
-            text-align: center;
-            input{
-                margin-top: 5px;
-                border-radius: 5px;
-                border: 1px solid rgba(0,0,0,.125);
-            }
         }
     } 
 } 
-
-.right{
-    text-align: right;
-}
-
-select option {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100px;
-}

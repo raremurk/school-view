@@ -1,118 +1,60 @@
-div {
-    font-family: 'Roboto', sans-serif;    
-    h2 {
-        text-align: center ;   
-        padding: 1rem;
-        font-weight: bold;
-        
-    }  
-    h3, h4{
-        font-weight: bold;
+.container{
+    font-family: 'Roboto', sans-serif;
+    .btn-create{
+        height: 40px;
+        width: 100px;
+    }    
+    td{
+        font-size: x-large;
+        button {
+            margin: 0px 5px;
+            padding: 3px;
+        }
     }
-    h5{        
-        border-top: 1px solid rgba(0,0,0,.125);
-        font-weight: bold;
-    }
-    .card{
-        padding: 15px;
-    } 
-    button {
-        margin: 0px 5px;
-        padding: 3px;
-    }
-} 
-
-.btn-create{
-    height: 40px;
-    width: 100px;
-    float: left;
 }
 
-.nav-btn{
-    text-align: center;
-    .btn-group{
-        border-top: 1px solid rgba(0,0,0,.125);
-        display: inline-block;
-        line-height: normal;
-        vertical-align: middle;   
-        padding-top: 10px;
-        .btn{
+.modal{
+    font-family: 'Roboto', sans-serif;
+    .data-area{
+        min-height: 210px;
+        h5{        
             font-weight: bold;
-            margin: 1px;
+            border-top: 1px solid rgba(0,0,0,.125);
+        }
+        .data-row{
+            height: 70px;
+        }
+        .data-subjects{ 
+            height: 140px;
+            .sub-row{
+                margin-bottom: 12px;
+            }
+            .btn-img{
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;   
+                padding: 0;
+            }
+            .form-select{            
+                padding: 0px 2px 0px 5px;                
+                height: 28px;
+                width: 194px;
+                font-size: medium;
+                border-right: 0;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;    
+            }
+            .form-sel-disabled{
+                background: lightgray;
+            }
+        }
+    }
+    .btn-group{
+        height: 60px;
+        .btn{
             height: 40px;
             width: 40px;
-            padding: 5px 0;
-            border-radius: 50%;            
-        }
-        .checked{
-            height: 45px;
-            width: 45px;
+            margin: 1px; 
+            padding: 0;                 
         }
     }
-}
-
-.sub-area{ 
-    height: 38px;
-}
-
-.non-fixed{
-    line-height: 24px;
-}
-
-.fixed-size-left{
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-    width: 190px;
-    line-height: 18px;
-    float: left;
-}
-
-.fixed-size-right{
-    margin-left: -1px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-    width: 190px;
-    line-height: 18px;
-    float: right;
-}
-
-.top-data{
-    min-height: 210px;
-}
-
-.data{
-    height: 70px;
-}
-
-.align-center{
-    text-align: center;
-}
-
-.big{
-    padding: 2px;
-    border-radius: 5px;
-    border: 1px solid rgba(0,0,0,.125);
-}
-
-.small-left{    
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border: 1px solid rgba(0,0,0,.125);
-    float: left;
-}
-
-.small-right{    
-    margin-left: -1px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border: 1px solid rgba(0,0,0,.125);
-    float: right;
-}
-
-.right{
-    text-align: right;
-}
-
-.submit{
-    text-align: right;
 }

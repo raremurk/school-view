@@ -1,61 +1,72 @@
-<ng-template [ngIf]="classes?.length >= id && id > 0" [ngIfElse]="empty">
-<div class="con">   
-  <h1>Расписание</h1> 
-  <div class="nav-btn"> 
-    <h2>Классы</h2> 
-    <div class="btn-group">        
+<ng-template [ngIf]="id > 0  && id <= classes?.length" [ngIfElse]="empty">
+<div class="cont">   
+  <h1 class="text-center fw-bold">Расписание</h1> 
+  <div class="row align-items-center mb-3">
+    <div class="col-4 text-end">
+      <h2 class="fw-bold">Классы</h2> 
+    </div>
+    <div class="col-8">  
       <ng-template *ngFor="let class of classes" [ngIf]="class.id != id" [ngIfElse]="checked">
-        <button routerLink="../{{class.id}}" class="btn btn-outline-dark">{{class.id}}</button>
+        <button routerLink="../{{class.id}}" class="btn btn-outline-dark border rounded-circle fw-bold">{{class.id}}</button>
       </ng-template>        
-    </div>  
-  </div>  
+    </div>
+  </div>
   <div class="card-group">
-    <div class="col" *ngFor="let day of timetable; let i=index">
-      <div class="card mx-auto">  
-        <div class="row r-header">
-          <div class="col">
-            <h5>{{headers[i]}}</h5>     
+    <div *ngFor="let day of timetable; let i=index" class="col">
+      <div class="card mx-auto">   
+        <div class="row">
+          <div class="col-9">
+            <h5 class="fw-bold text-nowrap">{{headers[i]}}</h5>     
           </div>
-          <div class="col right">
-            <ng-template  [ngIf]="timetableDay[0].day != day[0].day" [ngIfElse]="closeButton"> 
-              <input type="image" src="/images/pencil_25x25.png" alt="Edit" (click)="editTimetableDay(day)">
+          <div class="col-3">
+            <ng-template [ngIf]="timetableDay[0].day != day[0].day" [ngIfElse]="closeButton"> 
+              <input (click)="editTimetableDay(day)" class="border rounded" type="image" src="/images/pencil_25x25.png" alt="Edit">
             </ng-template> 
           </div>  
-        </div>
-        <ng-template [ngIf]="day[0].day != timetableDay[0].day" [ngIfElse]="editbody">
-          <div *ngFor="let acadSub of day" class="data">
-            <div>{{acadSub.academicSubjectName}}</div>
+        </div>     
+        <ng-template [ngIf]="day[0].day != timetableDay[0].day" [ngIfElse]="editbody">  
+          <div *ngFor="let acadSub of day" class="data d-flex align-items-center">
+            <div class="mx-auto">
+              {{acadSub.academicSubjectName}}
+            </div>
           </div>  
-        </ng-template>   
-      </div>
+        </ng-template> 
+        <ng-template [ngIf]="day[0].day == timetableDay[0].day">
+          <div class="data d-flex align-items-center">    
+            <div class="mx-auto">
+              <input (click)="updateTimetableDay(timetableDay)" class="d-flex border rounded" type="image" src="/images/check_25x25.png" alt="Save">
+            </div>                
+          </div>  
+        </ng-template>        
+      </div>  
     </div>
   </div>
 </div>
 </ng-template>
 
-<ng-template #empty>
-  <div class="con"> 
-    <h2>Такого класса нет</h2> 
-  </div>
-</ng-template>
-
 <ng-template #checked>
-  <button routerLink="../{{id}}" class="btn btn-primary checked">{{id}}</button>
+  <button routerLink="../{{id}}" class="btn btn-primary border rounded-circle fw-bold checked">{{id}}</button>
 </ng-template>
 
-<ng-template #closeButton> 
-  <input type="image" src="/images/X_25x25.png" alt="Cancel" (click)="cancel()">
-</ng-template>
-
-<ng-template #editbody>
-  <div *ngFor="let sub of timetableDay" class="data">
+<ng-template #editbody>   
+  <div *ngFor="let sub of timetableDay" class="data d-flex align-items-center">
     <div>
-      <select [(ngModel)]="sub.academicSubjectId">  
+      <select [(ngModel)]="sub.academicSubjectId" class="form-select">  
         <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.shortName}}</option>
       </select> 
     </div>
+    <div>
+      <input (click)="sub.academicSubjectId = null" class="float-end border rounded-end" type="image" src="/images/X_25x25.png" alt="Cancel">
+    </div>
   </div>
-  <div class="footer">
-    <input type="image" src="/images/check_25x25.png" alt="Save" (click)="updateTimetableDay(timetableDay)">
+</ng-template>
+
+<ng-template #closeButton> 
+  <input (click)="cancel()" class="border rounded" type="image" src="/images/X_25x25.png" alt="Cancel">
+</ng-template>
+
+<ng-template #empty>
+  <div class="cont"> 
+    <h2 class="text-center">Такого класса нет</h2> 
   </div>
 </ng-template>

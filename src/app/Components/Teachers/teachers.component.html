@@ -1,13 +1,19 @@
 <div class="container">
-  <button (click)="createModeOn()" class="show-button btn btn-success btn-create my-auto" data-bs-toggle="modal" data-bs-target="#infoModal">Добавить</button>
-  <h2>{{title}}</h2>     
+  <div class="row mb-3">
+    <div class="col-4">
+      <button (click)="createModeOn()" class="show-button btn btn-success btn-create my-auto" data-bs-toggle="modal" data-bs-target="#infoModal">Добавить</button>
+    </div>
+    <div class="col-4">
+      <h2 class="text-center fw-bold">{{title}}</h2>
+    </div>
+  </div>       
   <table class="table">
     <tbody>
-      <tr *ngFor="let one of teachers" class="align-middle">
+      <tr *ngFor="let one of teachers">
         <td>
-          <h4>{{one?.lastName}} {{one?.firstName}} {{one?.middleName}}</h4>
+          {{one?.lastName}} {{one?.firstName}} {{one?.middleName}}
         </td>     
-        <td class="right">
+        <td class="text-end">
           <button (click)="editTeacher(one)" class="show-button btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">Подробнее</button>
           <button (click)="deleteTeacher(one.id)" class="btn btn-danger">Удалить</button>
         </td>
@@ -16,94 +22,47 @@
   </table>
 </div>
 
-<ng-template #edit>  
-  <div class="row top-data">
-    <div class="col-6">
-      <div class="data">
-        <label>Фамилия</label>
-        <input type="text" [(ngModel)]="teacher.lastName" class="form-control">
-      </div>
-      <div class="data">
-        <label>Имя</label>
-        <input type="text" [(ngModel)]="teacher.firstName" class="form-control">
-      </div>
-      <div class="data">
-        <label>Отчество</label>
-        <input type="text" [(ngModel)]="teacher.middleName" class="form-control">  
-      </div>      
-    </div>
-    <div class="col">
-      <div class="data">
-        <label>Должность</label>
-        <select [(ngModel)]="teacher.position" class="form-select non-fixed"> 
-          <option *ngFor="let pos of positions">{{pos}}</option>
-        </select>         
-      </div>
-      <div>  
-        <label>Предметы</label>      
-        <div *ngFor="let sub of teacher.teacherSubjects" class="sub-area">
-          <select [(ngModel)]="sub.id" class="form-select fixed-size-left"> 
-            <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.shortName}}</option>
-          </select>                      
-          <input (click)="deleteSubject()" class="small-right" type="image" src="/images/X_30x30.png" alt="Edit">       
-        </div>  
-        <ng-template [ngIf]="teacher.teacherSubjects == undefined || teacher.teacherSubjects.length < 3">
-          <div class="sub-area">
-            <input (click)="addSubject()" class="small-left" type="image" src="/images/plus_30x30.png"> 
-            <input type="text" class="form-control fixed-size-right" value="Добавить" disabled>  
-          </div> 
-        </ng-template>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="nav-btn"> 
-        <div>
-          <label>Классы</label>
-        </div>
-        <div class="btn-group">        
-          <button *ngFor="let class of classes" (click)="changeState(class.id)" class="btn {{classExist(class.id)}}">{{class.id}}</button>     
-        </div>  
-      </div>        
-    </div>
-  </div>
-</ng-template>
-
 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Полная информация</h3>
+        <div>
+          <ng-template [ngIf]="edit_mod == 0 || edit_mod == 1">
+            <h3 class="modal-title fw-bold">Полная информация</h3>
+          </ng-template> 
+          <ng-template [ngIf]="edit_mod == 2"> 
+            <h3 class="modal-title fw-bold">Создание учителя</h3>
+          </ng-template>  
+        </div>     
         <div>
           <ng-template [ngIf]="edit_mod == 0">
-            <input class="big" type="image" src="/images/pencil_30x30.png" alt="Edit" (click)="editModeOn()">
+            <input class="border rounded" type="image" src="/images/pencil_30x30.png" alt="Edit" (click)="editModeOn()">
           </ng-template> 
           <ng-template [ngIf]="edit_mod == 1"> 
-            <input class="big" type="image" src="/images/check_30x30.png" alt="Save" (click)="updateTeacher(teacher.id, teacher)">
+            <input class="border rounded" type="image" src="/images/check_30x30.png" alt="Save" (click)="updateTeacher(teacher.id, teacher)">
           </ng-template>         
-          <input class="big" type="image" data-bs-dismiss="modal" src="/images/X_30x30.png" alt="Cancel" (click)="cancel()">
+          <input class="border rounded" type="image" data-bs-dismiss="modal" src="/images/X_30x30.png" alt="Cancel" (click)="cancel()">
         </div>
       </div>      
       <div class="modal-body">
         <ng-template [ngIf]="edit_mod == 0" [ngIfElse]="edit">        
-          <div class="row top-data">
-            <div class="col-6">
-              <div class="data">
+          <div class="row data-area">
+            <div class="col">
+              <div class="data-row">
                 <label>Фамилия</label>
                 <h5>{{teacher.lastName}}</h5>
               </div>
-              <div class="data">
+              <div class="data-row">
                 <label>Имя</label>
                 <h5>{{teacher.firstName}}</h5>
               </div>
-              <div class="data">
+              <div class="data-row">
                 <label>Отчество</label>
                 <h5>{{teacher.middleName}}</h5>   
               </div>       
             </div>
             <div class="col">
-              <div class="data">
+              <div class="data-row">
                 <label>Должность</label>
                 <h5>{{teacher.position}}</h5>
               </div>
@@ -111,21 +70,71 @@
               <h5 *ngFor="let sub of teacher.teacherSubjects">{{viewSubject(sub.id)}}</h5>
             </div>
           </div>
-          <div class="col">
-            <div class="nav-btn"> 
-              <div>
-                <label>Классы</label>
-              </div>
-              <div class="btn-group">        
-                <button *ngFor="let class of classes" class="btn {{classExist(class.id)}}" disabled>{{class.id}}</button>     
-              </div>  
-            </div>         
+          <div class="text-center">
+            <label>Классы</label> 
+            <div class="btn-group border-top align-items-center">
+              <button *ngFor="let class of classes" class="btn {{classExist(class.id)}} border rounded-circle fw-bold" disabled>{{class.id}}</button>   
+            </div>
           </div>
         </ng-template> 
-        <ng-template [ngIf]="edit_mod == 2">
-          <button (click)="createTeacher(teacher)" class="btn btn-success submit" data-bs-dismiss="modal" >Создать</button>
+        <ng-template [ngIf]="edit_mod == 2">                 
+          <div class="text-center border-top pt-3">
+            <button (click)="createTeacher(teacher)" class="btn btn-success" data-bs-dismiss="modal">Создать</button>
+          </div>          
         </ng-template> 
       </div>    
     </div>
   </div>
 </div>
+
+<ng-template #edit>  
+  <div class="row data-area">
+    <div class="col-6">
+      <div class="data-row">
+        <label>Фамилия</label>
+        <input type="text" [(ngModel)]="teacher.lastName" class="form-control">
+      </div>
+      <div class="data-row">
+        <label>Имя</label>
+        <input type="text" [(ngModel)]="teacher.firstName" class="form-control">
+      </div>
+      <div class="data-row">
+        <label>Отчество</label>
+        <input type="text" [(ngModel)]="teacher.middleName" class="form-control">  
+      </div>      
+    </div>
+    <div class="col">
+      <div class="data-row">
+        <label>Должность</label>
+        <select [(ngModel)]="teacher.position" class="form-select"> 
+          <option *ngFor="let pos of positions">{{pos}}</option>
+        </select>         
+      </div>
+      <div class="data-subjects">  
+        <label>Предметы</label>    
+        <div *ngFor="let sub of teacher.teacherSubjects" class="sub-row d-flex align-items-center">
+          <div>
+            <select [(ngModel)]="sub.id" class="form-select"> 
+              <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.shortName}}</option>
+            </select>   
+          </div>
+          <div>
+            <button (click)="deleteSubject(sub.id)" class="btn float-end border btn-img"><img src="/images/X_25x25.png"></button>  
+          </div>
+        </div>  
+        <ng-template [ngIf]="teacher.teacherSubjects == undefined || teacher.teacherSubjects.length < 3">
+          <div class="d-flex align-items-center">            
+            <input type="text" class="form-select form-sel-disabled text-center" value="Добавить" disabled>
+            <button (click)="addSubject()" class="btn float-end border btn-img"><img src="/images/plus_25x25.png"></button>   
+          </div> 
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <label>Классы</label> 
+    <div class="btn-group border-top align-items-center">
+      <button *ngFor="let class of classes" (click)="changeState(class.id)" class="btn {{classExist(class.id)}} border rounded-circle fw-bold">{{class.id}}</button>   
+    </div>
+  </div>
+</ng-template>
