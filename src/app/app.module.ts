@@ -9,8 +9,8 @@ import { ClassComponent }   from './Components/Classes/class.component';
 import { TimetableComponent }   from './Components/Timetable/timetable.component';
 import { NavbarComponent }   from './Components/Navbar/navbar.component';
 import { RouterModule, Routes } from '@angular/router';
-import { NotFoundComponent }   from './Components/Routes/not-found.component';
-import { HomeComponent }   from './Components/Routes/home.component';
+import { NotFoundComponent }   from './Components/Not-found/not-found.component';
+import { HomeComponent }   from './Components/Home/home.component';
 
 const appRoutes: Routes =[
     { path: '', component: HomeComponent},
@@ -18,7 +18,7 @@ const appRoutes: Routes =[
     { path: 'teachers', component: TeachersComponent},
     { path: 'students', component: StudentsComponent},
     { path: 'classes', component: ClassComponent},
-    { path: 'timetable', component: TimetableComponent},
+    { path: 'timetable/:id', component: TimetableComponent},
     { path: '**', component: NotFoundComponent }
 ];
 

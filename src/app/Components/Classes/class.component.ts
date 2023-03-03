@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Class } from '../../Models/class';
 import { TeacherFullName } from '../../Models/teacherFullName';
-import { Title } from '@angular/platform-browser';
 import { DataService } from '../../data.service';
      
 @Component({
@@ -14,32 +14,26 @@ export class ClassComponent implements OnInit{
   class: Class = new Class();
   classes: Class[];    
   teacherFullNames: TeacherFullName[];
-  defaultFullNames: TeacherFullName[];
   rout = 'http://localhost:49716/api/classes';
-  rout_tall = 'http://localhost:49716/api/teachers/all';
+  rout_teachers = 'http://localhost:49716/api/teachers/all';
   
-  constructor(private titleService: Title, private dataService: DataService,){      
+  constructor(private titleService: Title, private dataService: DataService){      
   }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);  
-    this.loadAllTeachers();
     this.loadAll();
   }
 
-  loadAllTeachers() {
-    this.dataService.configure(this.rout_tall);
-    this.dataService.getAll().subscribe((data: TeacherFullName[]) => this.defaultFullNames = data);
-    this.dataService.configure(this.rout);
-  }
-
   loadAll() {
+    this.dataService.configure(this.rout_teachers);
+    this.dataService.getAll().subscribe((data: TeacherFullName[]) => this.teacherFullNames = data);
+    this.dataService.configure(this.rout);
     this.dataService.getAll().subscribe((data: Class[]) => this.classes = data);    
   }
 
   editClass(p: Class) {
     this.class = p;
-    this.teacherFullNames = this.defaultFullNames.filter(x => x.fullName !== this.class.classTeacherFullName);
   }
 
   updateClass(id: number, p: Class) {
@@ -47,18 +41,8 @@ export class ClassComponent implements OnInit{
     this.cancel();
   }
 
-  deleteClass(p: number) {
-    this.dataService.delete(p).subscribe(data => this.loadAll());
-  }
-
-  createClass(p: Class) {
-    this.dataService.create(p).subscribe((data: Class) => this.classes.push(data));
-    this.cancel();
-  }
-
   cancel() {
     this.class = new Class();
-    this.loadAll();
   }
 } 
 

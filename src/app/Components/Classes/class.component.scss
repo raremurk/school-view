@@ -1,20 +1,39 @@
-div {
+.con{
+    margin: 0% 5%;
     font-family: 'Roboto', sans-serif;
-    h2 {
-        text-align: center ;   
-        padding: 1rem;
-    }  
-    tfoot {
-        border: white;
-    } 
-    button {
-        margin: 0px 5px;
-        padding: 3px;
-    }
-} 
-
-.modal-footer {
-    div {
-        text-align: center;
+    .card{
+        padding: 15px;
+        font-weight: bold;
+        width: 270px;
+        margin: 5px; 
+        h4{
+            font-weight: bold;
+        }
+        .r-header{
+            height: 40px;
+            input{
+                padding: 2px;
+                border-radius: 5px;
+                border: 1px solid rgba(0,0,0,.125);
+            }
+        }
+        .r-body{
+            height: 60px;
+            font-size: large;
+            label{
+                font-size: small;
+            }
+        }
+        .btn{
+            font-size: 0.8rem;    
+            padding: 0px 2px;
+        }
+        .right{
+            text-align: right;
+        }
+        .light-blue{
+            color: white;
+            background-color: rgb(72, 175, 201);
+        }
     }
 }

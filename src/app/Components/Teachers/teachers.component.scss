@@ -3,9 +3,18 @@ div {
     h2 {
         text-align: center ;   
         padding: 1rem;
+        font-weight: bold;
+        
     }  
-    tfoot {
-        border: white;
+    h3, h4{
+        font-weight: bold;
+    }
+    h5{        
+        border-top: 1px solid rgba(0,0,0,.125);
+        font-weight: bold;
+    }
+    .card{
+        padding: 15px;
     } 
     button {
         margin: 0px 5px;
@@ -13,8 +22,97 @@ div {
     }
 } 
 
-.modal-footer {
-    div {
-        text-align: center;
+.btn-create{
+    height: 40px;
+    width: 100px;
+    float: left;
+}
+
+.nav-btn{
+    text-align: center;
+    .btn-group{
+        border-top: 1px solid rgba(0,0,0,.125);
+        display: inline-block;
+        line-height: normal;
+        vertical-align: middle;   
+        padding-top: 10px;
+        .btn{
+            font-weight: bold;
+            margin: 1px;
+            height: 40px;
+            width: 40px;
+            padding: 5px 0;
+            border-radius: 50%;            
+        }
+        .checked{
+            height: 45px;
+            width: 45px;
+        }
     }
+}
+
+.sub-area{ 
+    height: 38px;
+}
+
+.non-fixed{
+    line-height: 24px;
+}
+
+.fixed-size-left{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    width: 190px;
+    line-height: 18px;
+    float: left;
+}
+
+.fixed-size-right{
+    margin-left: -1px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    width: 190px;
+    line-height: 18px;
+    float: right;
+}
+
+.top-data{
+    min-height: 210px;
+}
+
+.data{
+    height: 70px;
+}
+
+.align-center{
+    text-align: center;
+}
+
+.big{
+    padding: 2px;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.small-left{    
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid rgba(0,0,0,.125);
+    float: left;
+}
+
+.small-right{    
+    margin-left: -1px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid rgba(0,0,0,.125);
+    float: right;
+}
+
+.right{
+    text-align: right;
+}
+
+.submit{
+    text-align: right;
 }

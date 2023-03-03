@@ -16,8 +16,6 @@ export class StudentsComponent implements OnInit{
     rout = 'http://localhost:49716/api/students';
     rout_as = 'http://localhost:49716/api/classes';
     classes: Class[];
-    defaultClasses: Class[];
-    
     
     constructor(private titleService: Title, private dataService: DataService){}
       
@@ -29,7 +27,7 @@ export class StudentsComponent implements OnInit{
 
     loadAllClasses() {
       this.dataService.configure(this.rout_as);
-      this.dataService.getAll().subscribe((data: Class[]) => this.defaultClasses = data);
+      this.dataService.getAll().subscribe((data: Class[]) => this.classes = data);
       this.dataService.configure(this.rout);
     }
 
@@ -39,7 +37,6 @@ export class StudentsComponent implements OnInit{
 
     editStudent(p: Student) {
       this.student = p; 
-      this.classes = this.defaultClasses.filter(x => x.id !== this.student.classId);
     }
 
     updateStudent(id: number, p: Student) {

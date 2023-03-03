@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let one of academicSubjects" class="align-middle">
+      <tr *ngFor="let one of academicSubjects">
         <ng-template [ngIf]="academicSubject?.id != one.id" [ngIfElse]="edit">
           <td>{{one?.id}}</td>
           <td>{{one?.name}}</td>

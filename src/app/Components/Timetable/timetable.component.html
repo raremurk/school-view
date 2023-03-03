@@ -1,20 +1,61 @@
-<div class="container"> 
-<h2>{{title}}</h2>  
-  <div class="row">
-    <div class="col-2">
-      <label class="form-label">Время</label> 
-      <div *ngFor="let time of times">
-        <input type="text" class="form-control" value="{{time}}" disabled>  
-      </div>      
+<ng-template [ngIf]="classes?.length >= id && id > 0" [ngIfElse]="empty">
+<div class="con">   
+  <h1>Расписание</h1> 
+  <div class="nav-btn"> 
+    <h2>Классы</h2> 
+    <div class="btn-group">        
+      <ng-template *ngFor="let class of classes" [ngIf]="class.id != id" [ngIfElse]="checked">
+        <button routerLink="../{{class.id}}" class="btn btn-outline-dark">{{class.id}}</button>
+      </ng-template>        
+    </div>  
+  </div>  
+  <div class="card-group">
+    <div class="col" *ngFor="let day of timetable; let i=index">
+      <div class="card mx-auto">  
+        <div class="row r-header">
+          <div class="col">
+            <h5>{{headers[i]}}</h5>     
+          </div>
+          <div class="col right">
+            <ng-template  [ngIf]="timetableDay[0].day != day[0].day" [ngIfElse]="closeButton"> 
+              <input type="image" src="/images/pencil_25x25.png" alt="Edit" (click)="editTimetableDay(day)">
+            </ng-template> 
+          </div>  
+        </div>
+        <ng-template [ngIf]="day[0].day != timetableDay[0].day" [ngIfElse]="editbody">
+          <div *ngFor="let acadSub of day" class="data">
+            <div>{{acadSub.academicSubjectName}}</div>
+          </div>  
+        </ng-template>   
+      </div>
     </div>
-    <div *ngFor="let day of days" class="col">
-      <label class="form-label">{{day}}</label> 
-      <select *ngFor="let index of times" class="form-select"> 
-        <option selected >Не выбрано</option>     
-        <option>Математика</option>
-        <option>Русский</option>
-        <option>Физра</option>
-      </select>
-    </div>
-  </div>     
+  </div>
 </div>
+</ng-template>
+
+<ng-template #empty>
+  <div class="con"> 
+    <h2>Такого класса нет</h2> 
+  </div>
+</ng-template>
+
+<ng-template #checked>
+  <button routerLink="../{{id}}" class="btn btn-primary checked">{{id}}</button>
+</ng-template>
+
+<ng-template #closeButton> 
+  <input type="image" src="/images/X_25x25.png" alt="Cancel" (click)="cancel()">
+</ng-template>
+
+<ng-template #editbody>
+  <div *ngFor="let sub of timetableDay" class="data">
+    <div>
+      <select [(ngModel)]="sub.academicSubjectId">  
+        <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.shortName}}</option>
+      </select> 
+    </div>
+  </div>
+  <div class="footer">
+    <input type="image" src="/images/check_25x25.png" alt="Save" (click)="updateTimetableDay(timetableDay)">
+  </div>
+</ng-template>
