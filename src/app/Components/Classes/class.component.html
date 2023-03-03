@@ -7,10 +7,10 @@
             <h4>{{one?.id}} Класс</h4>
           </div>
           <div class="col text-end">
-            <input *ngIf="one?.id != class.id else editButtons" (click)="editClass(one)" type="image" src="/images/pencil-square.svg" width="30" height="30" alt="Edit">
+            <input *ngIf="one?.id != class.id else editButtons" (click)="editClass(one)" type="image" src="images/pencil-square.svg" width="30" height="30" alt="Edit">
              <ng-template #editButtons> 
-              <input (click)="updateClass()" type="image" src="/images/check.svg" width="30" height="30" alt="Save">              
-              <input (click)="cancel()" type="image" src="/images/x.svg" width="30" height="30" alt="Close">
+              <input (click)="updateClass()" type="image" src="images/check.svg" width="30" height="30" alt="Save">              
+              <input (click)="cancel()" type="image" src="images/x.svg" width="30" height="30" alt="Close">
             </ng-template>                      
           </div>  
         </div>    
@@ -23,7 +23,7 @@
                 <select [(ngModel)]="class.classTeacherId" class="form-select">  
                   <option *ngFor="let one of teacherFullNames" value="{{one.id}}">{{one.fullName}}</option>
                 </select>
-                <input (click)="deleteClassTeacher()" class="position-absolute bottom-0 end-0" type="image" src="/images/x.svg" width="25" height="25" alt="Delete">
+                <input (click)="deleteClassTeacher()" class="position-absolute bottom-0 end-0" type="image" src="images/x.svg" width="25" height="25" alt="Delete">
               </div>  
             </ng-template>  
           </div>                        

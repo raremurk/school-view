@@ -15,9 +15,9 @@ import { switchMap } from 'rxjs/operators';
 export class TimetableComponent implements OnInit{ 
   title = 'Расписание';
   headers: string[] = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-  rout_lessons = 'http://localhost:49716/api/lessons';
-  rout_as = 'http://localhost:49716/api/academicsubjects/class';
-  rout_classes = 'http://localhost:49716/api/classes';
+  classes_route = 'classes';
+  lessons_route = 'lessons';
+  subjects_route = 'academicsubjects/class';  
   academicSubjects: AcademicSubject[];
   classes: Class[];
   buf: Lesson[];
@@ -26,32 +26,32 @@ export class TimetableComponent implements OnInit{
   id: number;
   edit_day: number = 0;
 
-  constructor(private titleService: Title, private dataService: DataService, 
-    private activateRoute: ActivatedRoute){}
+  constructor(private titleService: Title, private dataService: DataService, private activateRoute: ActivatedRoute){ }
 
-    ngOnInit(){ 
-      this.titleService.setTitle(this.title);
-      this.loadAllClasses();
-      this.activateRoute.paramMap
-        .pipe(switchMap(params => params.getAll('id')))
-        .subscribe((data)=> {
-          this.id = +data;        
+  ngOnInit(){ 
+    this.titleService.setTitle(this.title);
+    this.loadAllClasses();
+    this.activateRoute.paramMap
+      .pipe(switchMap(params => params.getAll('id')))
+      .subscribe((data)=> {
+        this.id = +data;  
+        if(this.id > 0 && this.id <= 11) {
           this.loadAllAcademicSubjects(this.id);
           this.loadTimetable(this.id);
-          this.cancel(); 
-        });
+        }     
+      });
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.rout_classes).subscribe((data: Class[]) => this.classes = data); 
+    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data);
   }
 
   loadAllAcademicSubjects(id: number) {
-    this.dataService.getOne(this.rout_as, id).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
+    this.dataService.getOne(this.subjects_route, id).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
   }
 
   loadTimetable(id: number) {    
-    this.dataService.getOne(this.rout_lessons, id).subscribe((data: [Lesson[]]) => this.timetable = data); 
+    this.dataService.getOne(this.lessons_route, id).subscribe((data: [Lesson[]]) => this.timetable = data); 
   }
 
   editTimetableDay(p: Lesson[]) {
@@ -62,7 +62,7 @@ export class TimetableComponent implements OnInit{
 
   updateTimetableDay() {
     for(let one of this.timetableDay){
-      this.dataService.update(this.rout_lessons, one.id, one).subscribe();
+      this.dataService.update(this.lessons_route, one.id, one).subscribe();
       if(one.academicSubjectId != null && one.academicSubjectId != 0){
         one.academicSubjectName = this.academicSubjects.find(x => x.id == one.academicSubjectId).name;
       }

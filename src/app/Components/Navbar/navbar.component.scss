@@ -1,9 +1,16 @@
 .navbar{        
-    .navbar-brand{
-        margin: 0px 50px;
-    }
-    .nav-item{
-        font-size: large;
-        margin: 10px 10px;
-    }
+	.navbar-brand{
+		margin-left: 50px;
+	}
+	.nav-item{
+		margin-left: 20px;
+		.btn{
+			font-size: large;
+		}
+		.btn-check:checked+.btn{
+			font-size: larger;
+			font-weight: bold;
+			border-bottom: 2px solid rgba(0,0,0,.125); 			
+		}	
+	}
 }

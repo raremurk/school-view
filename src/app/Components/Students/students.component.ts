@@ -11,8 +11,8 @@ import { DataService } from '../../data.service';
 })
 export class StudentsComponent implements OnInit{ 
   title = 'Список учеников';
-  rout_students = 'http://localhost:49716/api/students';
-  rout_classes = 'http://localhost:49716/api/classes';
+  students_route = 'students';
+  classes_route = 'classes';
   min_data = new Date(new Date().setFullYear(new Date().getFullYear() - 20));    
   max_data = new Date(new Date().setFullYear(new Date().getFullYear() - 4));
   buf: Student = new Student();  
@@ -20,7 +20,7 @@ export class StudentsComponent implements OnInit{
   students: Student[];  
   classes: Class[];
   
-  constructor(private titleService: Title, private dataService: DataService){}
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
     this.titleService.setTitle(this.title); 
@@ -29,20 +29,20 @@ export class StudentsComponent implements OnInit{
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.rout_classes).subscribe((data: Class[]) => this.classes = data);    
+    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data);    
   }
 
   loadAllStudents() {
-    this.dataService.getAll(this.rout_students).subscribe((data: Student[]) => this.students = data);
+    this.dataService.getAll(this.students_route).subscribe((data: Student[]) => this.students = data);
   }
 
   saveStudent() {
     if (this.student.id == null) {
-      this.dataService.create(this.rout_students, this.student)
+      this.dataService.create(this.students_route, this.student)
         .subscribe((data: Student) => this.students.push(data));
     } 
     else {
-      this.dataService.update(this.rout_students, this.student.id, this.student).subscribe();
+      this.dataService.update(this.students_route, this.student.id, this.student).subscribe();
       Object.assign(this.buf, this.student);
     }    
     this.cancel();
@@ -58,7 +58,7 @@ export class StudentsComponent implements OnInit{
   }
 
   deleteStudent(p: number) {
-    this.dataService.delete(this.rout_students, p).subscribe(data => {
+    this.dataService.delete(this.students_route, p).subscribe(data => {
       var index = this.students.findIndex(x => x.id == p);
       this.students.splice(index, 1);
     });

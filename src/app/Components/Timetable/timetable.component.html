@@ -1,4 +1,4 @@
-<ng-template [ngIf]="id > 0  && id <= classes?.length" [ngIfElse]="empty">
+<ng-template [ngIf]="id > 0  && id <= 11" [ngIfElse]="empty">
 <div class="container-xxl">   
   <h2 class="text-center">{{title}}</h2> 
   <div class="row align-items-center">
@@ -8,14 +8,8 @@
     <div class="col-8"> 
       <div class="btn-group align-items-center" role="group">
         <div *ngFor="let class of classes"> 
-          <ng-template [ngIf]="class.id == id" [ngIfElse]="unchecked">
-            <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}" checked>
-            <label class="btn btn-outline-secondary rounded-circle checked" for="btnradio{{class.id}}">{{class.id}}</label>      
-          </ng-template>         
-          <ng-template #unchecked>
-            <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}">
-            <label class="btn btn-outline-secondary rounded-circle" for="btnradio{{class.id}}">{{class.id}}</label>
-          </ng-template>          
+          <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}" [checked]="id == class.id">
+          <label class="btn btn-outline-secondary rounded-circle shadow-none" for="btnradio{{class.id}}">{{class.id}}</label>              
         </div>        
       </div> 
     </div>
@@ -28,9 +22,9 @@
             <h5 class="text-nowrap">{{headers[i]}}</h5>     
           </div>
           <div class="col-3">
-            <input *ngIf="day[0].day != edit_day else closeButton" (click)="editTimetableDay(day)" type="image" src="/images/pencil-square.svg" width="25" height="25" alt="Edit">
+            <input *ngIf="day[0].day != edit_day else closeButton" (click)="editTimetableDay(day)" type="image" src="images/pencil-square.svg" width="25" height="25" alt="Edit">
             <ng-template #closeButton> 
-              <input (click)="cancel()" type="image" src="/images/x.svg" width="25" height="25" alt="Close">
+              <input (click)="cancel()" type="image" src="images/x.svg" width="25" height="25" alt="Close">
             </ng-template>
           </div>  
         </div>     
@@ -41,7 +35,7 @@
         </ng-template> 
         <div *ngIf="day[0].day == edit_day" class="data d-flex align-items-center">    
           <div class="d-flex mx-auto">
-            <input (click)="updateTimetableDay()" type="image" src="/images/check.svg" width="25" height="25" alt="Save">
+            <input (click)="updateTimetableDay()" type="image" src="images/check.svg" width="25" height="25" alt="Save">
           </div>                
         </div> 
       </div>  
@@ -56,7 +50,7 @@
       <select [(ngModel)]="sub.academicSubjectId" class="form-select">  
         <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.name}}</option>
       </select> 
-      <input (click)="deleteAcademicSubject(sub)" class="position-absolute bottom-0 end-0" type="image" src="/images/x.svg" width="25" height="25" alt="Delete">
+      <input (click)="deleteAcademicSubject(sub)" class="position-absolute bottom-0 end-0" type="image" src="images/x.svg" width="25" height="25" alt="Delete">
     </div>
   </div>
 </ng-template>

@@ -10,11 +10,10 @@ import { SchoolStat } from '../../Models/SchoolStat';
 })
 export class HomeComponent {
   title = 'Главная';     
-  rout_admin = 'http://localhost:49716/api/admin';
+  admin_route = 'admin';
   schoolStat: SchoolStat;
   
-  constructor(private titleService: Title, private dataService: DataService,){      
-  }
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);      
@@ -22,12 +21,13 @@ export class HomeComponent {
   }
 
   loadInfo() {
-    this.dataService.getAll(this.rout_admin).subscribe((data: SchoolStat) => this.schoolStat = data);
+    this.dataService.getAll(this.admin_route).subscribe((data: SchoolStat) => this.schoolStat = data);
   } 
 
   upStudents(){
     if(confirm()){
-      this.dataService.create(this.rout_admin, '').subscribe()
+      this.dataService.create(this.admin_route, '').subscribe();
+      this.loadInfo();
     }
   }
 } 

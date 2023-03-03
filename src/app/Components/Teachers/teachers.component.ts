@@ -12,10 +12,10 @@ import { DataService } from '../../data.service';
 })
 export class TeachersComponent implements OnInit{ 
   title = 'Список учителей';
-  rout_teachers = 'http://localhost:49716/api/teachers';
-  rout_as = 'http://localhost:49716/api/academicsubjects';
-  rout_classes = 'http://localhost:49716/api/classes';
-  positions = ['Директор','Завуч','Учитель', 'Учитель мл. классов'];  
+  teachers_route = 'teachers';
+  subjects_route = 'academicsubjects';
+  classes_route = 'classes';
+  positions = ['Директор','Завуч','Учитель','Учитель мл. классов'];  
   academicSubjects: AcademicSubject[];
   filter: {'id' : number}[];
   classes: Class[];
@@ -24,32 +24,33 @@ export class TeachersComponent implements OnInit{
   teachers: Teacher[]; 
   edit_mod: number = 0; 
      
-  constructor(private titleService: Title, private dataService: DataService){}
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
     this.titleService.setTitle(this.title);   
     this.loadAllClasses(); 
-    this.loadAllTeachers();   
+    this.loadAllTeachers();  
+    this.loadAllAcademicSubjects();  
   }
   
   loadAllAcademicSubjects() {
-    this.dataService.getAll(this.rout_as).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
+    this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.rout_classes).subscribe((data: Class[]) => this.classes = data); 
+    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data); 
   }
 
   loadAllTeachers() {
-    this.dataService.getAll(this.rout_teachers).subscribe((data: Teacher[]) => this.teachers = data);
+    this.dataService.getAll(this.teachers_route).subscribe((data: Teacher[]) => this.teachers = data);
   }
 
   saveTeacher() {
     if (this.teacher.id == null) {
-      this.dataService.create(this.rout_teachers, this.teacher).subscribe((data: Teacher) => this.teachers.push(data));
+      this.dataService.create(this.teachers_route, this.teacher).subscribe((data: Teacher) => this.teachers.push(data));
     } 
     else {
-      this.dataService.update(this.rout_teachers, this.teacher.id, this.teacher).subscribe();
+      this.dataService.update(this.teachers_route, this.teacher.id, this.teacher).subscribe();
       Object.assign(this.buf, this.teacher);
     }
     this.cancel();
@@ -59,19 +60,19 @@ export class TeachersComponent implements OnInit{
     this.edit_mod = 1;
   }
 
-  createModeOn(){
+  createTeacher(){
+    this.teacher = new Teacher();
     this.edit_mod = 2;
   }
 
-  editTeacher(p: Teacher) {
-    this.loadAllAcademicSubjects();  
+  editTeacher(p: Teacher) {     
     this.buf = p;
     this.teacher = JSON.parse(JSON.stringify(p));
     this.edit_mod = 0;         
   }
 
   deleteTeacher(p: number) {
-    this.dataService.delete(this.rout_teachers, p).subscribe(data => {
+    this.dataService.delete(this.teachers_route, p).subscribe(data => {
       var index = this.teachers.findIndex(d => d.id === p); 
       this.teachers.splice(index, 1);
     });

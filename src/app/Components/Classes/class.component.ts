@@ -11,15 +11,14 @@ import { DataService } from '../../data.service';
 })
 export class ClassComponent implements OnInit{ 
   title = 'Список классов';
-  rout_classes = 'http://localhost:49716/api/classes';
-  rout_teachers = 'http://localhost:49716/api/teachers/all';
+  classes_route = 'classes';
+  teachers_route = 'teachers/class';
   buf: Class = new Class();
   class: Class = new Class();
   classes: Class[];    
   teacherFullNames: TeacherFullName[];
   
-  constructor(private titleService: Title, private dataService: DataService){      
-  }
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);   
@@ -27,11 +26,11 @@ export class ClassComponent implements OnInit{
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.rout_classes).subscribe((data: Class[]) => this.classes = data);    
+    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data);    
   }
 
   loadAllTeachers(p: number) {
-    this.dataService.getOne(this.rout_teachers, p).subscribe((data: TeacherFullName[]) => this.teacherFullNames = data);
+    this.dataService.getOne(this.teachers_route, p).subscribe((data: TeacherFullName[]) => this.teacherFullNames = data);
   }
 
   editClass(p: Class) {
@@ -46,7 +45,7 @@ export class ClassComponent implements OnInit{
   }
 
   updateClass() {
-    this.dataService.update(this.rout_classes, this.class.id, this.class).subscribe();
+    this.dataService.update(this.classes_route, this.class.id, this.class).subscribe();
     if (this.class.classTeacherId != null){
       this.class.classTeacherFullName = this.teacherFullNames.find(x => x.id == this.class.classTeacherId).fullName;
     }

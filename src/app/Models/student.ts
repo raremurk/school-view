@@ -6,5 +6,5 @@ export class Student{
         public lastName?: string,
         public birthday?: string,
         public gender?: string,
-        public classId?: number) {}
+        public classId?: number ) {}
 }

@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="text-center fw-bold">{{title}}</h2>      
+  <h2 class="text-center">{{title}}</h2>      
   <table class="table align-middle">
     <thead>
       <tr>
@@ -7,7 +7,7 @@
         <th>Имя</th>
         <th>Отчество</th>
         <th class="text-end">
-          <button (click)="createModeOn()" class="show-button btn btn-sm btn-success btn-create my-auto" data-bs-toggle="modal" data-bs-target="#infoModal">Создать</button>
+          <button (click)="createTeacher()" class="btn btn-success table-btn" data-bs-toggle="modal" data-bs-target="#infoModal">Создать</button>
         </th>
       </tr>
     </thead>
@@ -17,8 +17,8 @@
         <td>{{one?.firstName}}</td> 
         <td>{{one?.middleName}}</td>  
         <td class="text-end">
-          <button (click)="editTeacher(one)" class="btn light-blue btn-sm show-button" data-bs-toggle="modal" data-bs-target="#infoModal">Подробнее</button>
-          <button (click)="deleteTeacher(one.id)" class="btn btn-danger btn-sm">Удалить</button>
+          <button (click)="editTeacher(one)" class="btn light-blue table-btn" data-bs-toggle="modal" data-bs-target="#infoModal">Подробнее</button>
+          <button (click)="deleteTeacher(one.id)" class="btn btn-danger table-btn">Удалить</button>
         </td>
       </tr>
     </tbody>     
@@ -34,9 +34,9 @@
           <h3 *ngIf="edit_mod == 2" class="modal-title fw-bold">Создание учителя</h3>    
         </div>     
         <div>
-          <input *ngIf="edit_mod == 0" (click)="editModeOn()" type="image" src="/images/pencil-square.svg" width="30" height="30" alt="Edit">
-          <input *ngIf="edit_mod == 1 || edit_mod == 2" (click)="saveTeacher()" data-bs-dismiss="modal" type="image" src="/images/check.svg" width="30" height="30" alt="Save">
-          <input (click)="cancel()" data-bs-dismiss="modal" type="image" src="/images/x.svg" width="30" height="30" alt="Close">
+          <input *ngIf="edit_mod == 0" (click)="editModeOn()" type="image" src="images/pencil-square.svg" width="30" height="30" alt="Edit">
+          <input *ngIf="edit_mod == 1 || edit_mod == 2" (click)="saveTeacher()" data-bs-dismiss="modal" type="image" src="images/check.svg" width="30" height="30" alt="Save">
+          <input (click)="cancel()" data-bs-dismiss="modal" type="image" src="images/x.svg" width="30" height="30" alt="Close">
         </div>
       </div>      
       <div class="modal-body">
@@ -71,10 +71,7 @@
             <label class="fw-bold mb-2">Классы</label> 
             <div class="btn-group" role="group">
               <div *ngFor="let class of classes">
-                <input *ngIf="classExist(class.id) else unchecked" type="checkbox" class="btn-check" id="btncheck{{class.id}}" checked disabled>
-                <ng-template #unchecked>
-                  <input type="checkbox" class="btn-check" id="btncheck{{class.id}}" disabled>
-                </ng-template>          
+                <input type="checkbox" class="btn-check" id="btncheck{{class.id}}" [checked]="classExist(class.id)" disabled>
                 <label class="btn btn-outline-primary border rounded-circle" for="btncheck{{class.id}}">{{class.id}}</label>
               </div>
             </div>   
@@ -114,14 +111,12 @@
           <select [(ngModel)]="sub.id" class="form-select"> 
             <option *ngFor="let one of getAcademicSubjects(sub.id)" value="{{one.id}}">{{one.name}}</option>
           </select>
-          <input (click)="deleteSubject(sub.id)" class="position-absolute bottom-0 end-0" type="image" src="/images/x.svg" width="25" height="25" alt="Delete">
+          <input (click)="deleteSubject(sub.id)" class="position-absolute bottom-0 end-0" type="image" src="images/x.svg" width="25" height="25" alt="Delete">
         </div>  
-        <ng-template [ngIf]="teacher.teacherSubjects == undefined || teacher.teacherSubjects.length < 3">
-          <div class="form-sel-x position-relative mb-2">            
-            <input type="text" class="form-select form-sel-disabled text-center" value="Добавить" disabled>
-            <input (click)="addSubject()" class="position-absolute bottom-0 end-0" type="image" src="/images/plus.svg" width="25" height="25" alt="Add">
-          </div> 
-        </ng-template>
+        <div *ngIf="teacher.teacherSubjects.length < 3" class="form-sel-x position-relative mb-2">            
+          <input type="text" class="form-select form-sel-disabled text-center" value="Добавить" disabled>
+          <input (click)="addSubject()" class="position-absolute bottom-0 end-0" type="image" src="images/plus.svg" width="25" height="25" alt="Add">
+        </div> 
       </div>  
     </div>
   </div> 
@@ -129,10 +124,7 @@
     <label class="fw-bold mb-2">Классы</label> 
     <div class="btn-group" role="group">
       <div *ngFor="let class of classes">
-        <input *ngIf="classExist(class.id) else unchecked" (click)="changeClassState(class.id)" type="checkbox" class="btn-check" id="btncheck{{class.id}}" checked>
-        <ng-template #unchecked>
-          <input type="checkbox" (click)="changeClassState(class.id)" class="btn-check" id="btncheck{{class.id}}">
-        </ng-template>          
+        <input (click)="changeClassState(class.id)" type="checkbox" class="btn-check" id="btncheck{{class.id}}" [checked]="classExist(class.id)">
         <label class="btn btn-outline-primary border rounded-circle" for="btncheck{{class.id}}">{{class.id}}</label>
       </div>
     </div>

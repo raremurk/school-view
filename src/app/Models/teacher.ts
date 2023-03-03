@@ -5,6 +5,6 @@ export class Teacher{
         public middleName?: string,
         public lastName?: string,
         public position?: string,
-        public teacherSubjects: {'id' : number}[] = [],
-        public teacherClasses: {'id' : number}[] = []) {}
+        public teacherSubjects: {'id': number}[] = [],
+        public teacherClasses: {'id': number}[] = [] ) {}
 }

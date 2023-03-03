@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="text-center fw-bold">{{title}}</h2>   
+  <h2 class="text-center">{{title}}</h2>   
   <table class="table align-middle">
     <thead>
       <tr>
@@ -10,7 +10,7 @@
         <th class="col">Пол</th>
         <th class="col">Класс</th>
         <th class="col-2 text-end">
-          <button (click)="createStudent()" class="btn btn-success btn-sm show-button" data-bs-toggle="modal" data-bs-target="#createModal">Создать</button>
+          <button (click)="createStudent()" class="btn btn-success table-btn" data-bs-toggle="modal" data-bs-target="#createModal">Создать</button>
         </th>
       </tr>
     </thead>
@@ -27,8 +27,8 @@
           </td> 
           <td>{{one?.classId}}</td>
           <td class="text-end">
-            <button (click)="editStudent(one)" class="btn light-blue btn-sm">Изменить</button>
-            <button (click)="deleteStudent(one.id)" class="btn btn-danger btn-sm">Удалить</button>
+            <button (click)="editStudent(one)" class="btn light-blue table-btn">Изменить</button>
+            <button (click)="deleteStudent(one.id)" class="btn btn-danger table-btn">Удалить</button>
           </td>
         </ng-template>
       </tr>
@@ -61,8 +61,8 @@
       </select> 
     </td>
     <td class="text-end">
-        <button (click)="saveStudent()" class="btn btn-success btn-sm">Сохранить</button>
-        <button (click)="cancel()" class="btn btn-warning btn-sm">Отмена</button>
+        <button (click)="saveStudent()" class="btn btn-success table-btn">Сохранить</button>
+        <button (click)="cancel()" class="btn btn-warning table-btn">Отмена</button>
     </td>
 </ng-template>
   
@@ -71,7 +71,7 @@
     <div class="modal-content">
       <div class="modal-header">        
         <h3 class="modal-title fw-bold">Создание ученика</h3>    
-        <input data-bs-dismiss="modal" type="image" src="/images/x.svg" width="30" height="30" alt="Close">
+        <input data-bs-dismiss="modal" type="image" src="images/x.svg" width="30" height="30" alt="Close">
       </div>
       <div class="modal-body"> 
         <div class="input-group input-group-sm mb-2">

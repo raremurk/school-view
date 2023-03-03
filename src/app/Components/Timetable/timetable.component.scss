@@ -7,11 +7,11 @@
             margin: 5px;
             padding: 0;         
         }
-        .checked{
+		.btn-check:checked+.btn{
             height: 50px;
             width: 50px;
-            line-height: 48px;
-        }
+            line-height: 48px;		
+		}	
     }    
     .card-day{
         width: 190px;
@@ -19,17 +19,10 @@
         margin-bottom: 10px;
         .data{
             height: 40px;
-            border-top: 1px solid rgba(0,0,0,.125);   
-            .form-sel-x{
-                height: 25px;
-                width: 100%;
-                .form-select{ 
-                    font-size: small; 
-                    padding: 0px 2px 0px 5px;                
-                    height: 25px; 
-                    background: white;     
-                }
-            }
+            border-top: 1px solid rgba(0,0,0,.125); 
+            .form-select{ 
+                font-size: small; 
+            }          
         }
     } 
 } 

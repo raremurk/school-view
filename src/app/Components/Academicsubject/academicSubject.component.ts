@@ -11,15 +11,14 @@ import { AcademicSubject } from '../../Models/academicSubject';
 })
 export class AcademicSubjectComponent implements OnInit{ 
   title = 'Список предметов';     
-  rout = 'http://localhost:49716/api/academicsubjects';
+  subjects_route = 'academicsubjects';
   buf: AcademicSubject = new AcademicSubject();
   academicSubject: AcademicSubject = new AcademicSubject();
   academicSubjects: AcademicSubject[];  
   slider_options: Options = { floor: 1, ceil: 11, showTicksValues: true};
   slider_options_disabled: Options = {...this.slider_options, disabled : true};
   
-  constructor(private titleService: Title, private dataService: DataService,){      
-  }
+  constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);
@@ -27,16 +26,16 @@ export class AcademicSubjectComponent implements OnInit{
   }
 
   loadAllAcademicSubjects() {
-    this.dataService.getAll(this.rout).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
+    this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
   }
 
   saveAcademicSubject() {
     if (this.academicSubject.id == null) {
-      this.dataService.create(this.rout, this.academicSubject)
+      this.dataService.create(this.subjects_route, this.academicSubject)
         .subscribe((data: AcademicSubject) => this.academicSubjects.push(data));
     } 
     else {
-      this.dataService.update(this.rout, this.academicSubject.id, this.academicSubject)
+      this.dataService.update(this.subjects_route, this.academicSubject.id, this.academicSubject)
         .subscribe();
       Object.assign(this.buf, this.academicSubject);
     }    
@@ -55,7 +54,7 @@ export class AcademicSubjectComponent implements OnInit{
   }
 
   deleteAcademicSubject(p: number) {
-    this.dataService.delete(this.rout, p).subscribe(data => {
+    this.dataService.delete(this.subjects_route, p).subscribe(data => {
       var index = this.academicSubjects.findIndex(x => x.id == p);
       this.academicSubjects.splice(index, 1);
     });

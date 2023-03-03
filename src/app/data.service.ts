@@ -3,27 +3,29 @@ import { HttpClient } from '@angular/common/http';
  
 @Injectable()
 export class DataService {
- 
+    
+    url: string = 'https://school228.somee.com/api/';
+
     constructor(private http: HttpClient) {
     }
  
-    getAll(url: string){
-        return this.http.get(url);
+    getAll(route: string){
+        return this.http.get(this.url + route);
     }
      
-    getOne(url: string, id: number){
-        return this.http.get(url + '/' + id);
+    getOne(route: string, id: number){
+        return this.http.get(this.url + route + '/' + id);
     }
      
-    create(url: string, object){
-        return this.http.post(url, object);
+    create(route: string, object){
+        return this.http.post(this.url + route, object);
     }
 
-    delete(url: string, id: number){
-        return this.http.delete(url + '/' + id);
+    delete(route: string, id: number){
+        return this.http.delete(this.url + route + '/' + id);
     }
 
-    update(url: string, id: number, object){
-        return this.http.put(url + '/' + id, object);
+    update(route: string, id: number, object){
+        return this.http.put(this.url + route + '/' + id, object);
     }
 }
