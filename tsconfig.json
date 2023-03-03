@@ -1,11 +1,12 @@
 {
   "compileOnSave": false,
-  "compilerOptions": {
+  "compilerOptions": {  
     "baseUrl": "./",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es2015",

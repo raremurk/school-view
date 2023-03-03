@@ -1,0 +1,62 @@
+<div class="container-md"> 
+<h1>Список предметов</h1>      
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id предмета</th>
+        <th>Название предмета</th>
+        <th>Операции</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let one of academicSubjects" class="align-middle">
+        <ng-template [ngIf]="academicSubject?.id != one.id" [ngIfElse]="edit">
+          <td>{{one?.id}}</td>
+          <td>{{one?.name}}</td>
+          <td>
+            <button (click)="editAcademicSubject(one)" class="btn btn-primary">Изменить</button>
+            <button (click)="deleteAcademicSubject(one.id)" class="btn btn-danger">Удалить</button>
+          </td>
+        </ng-template>
+      </tr>
+    </tbody>  
+    <tfoot>
+      <tr>
+        <td>
+          <button class="show-button btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Создать</button>
+        </td>          
+      </tr>
+    </tfoot>        
+  </table>       
+</div>
+
+<ng-template #edit>
+    <td>{{academicSubject.id}}</td>
+    <td>
+        <input type="text" [(ngModel)]="academicSubject.name" class="form-control" size="7">
+    </td>
+    <td>
+        <button (click)="updateAcademicSubject(academicSubject)" class="btn btn-success">Сохранить</button>
+        <button (click)="cancel()" class="btn btn-warning">Отмена</button>
+    </td>
+</ng-template>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Создание предмета</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label>Название</label>
+          <input type="text" [(ngModel)]="academicSubject.name" maxlength="40"/>
+        </div>
+      </div>
+      <div class="modal-footer ms-right">
+        <button (click)="createAcademicSubject(academicSubject)" class="btn btn-success " data-bs-dismiss="modal" >Создать</button>
+      </div>
+    </div>
+  </div>
+</div>
