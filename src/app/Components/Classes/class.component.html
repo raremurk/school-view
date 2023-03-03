@@ -1,49 +1,42 @@
-<div class="cont">
+<div class="container">
   <div class="card-group">
-    <div *ngFor="let one of classes" class="col">
+    <div class="col" *ngFor="let one of classes">
       <div class="card mx-auto">
         <div class="row">
-          <div class="col-8">
+          <div class="col">
             <h4>{{one?.id}} Класс</h4>
           </div>
-          <div class="col-4 text-end">
-            <ng-template [ngIf]="one?.id != class.id" [ngIfElse]="editbuttons"> 
-              <button (click)="editClass(one)" class="btn btn-img border rounded"><img src="/images/pencil_30x30.png"></button>
-            </ng-template> 
+          <div class="col text-end">
+            <input *ngIf="one?.id != class.id else editButtons" (click)="editClass(one)" type="image" src="/images/pencil-square.svg" width="30" height="30" alt="Edit">
+             <ng-template #editButtons> 
+              <input (click)="updateClass()" type="image" src="/images/check.svg" width="30" height="30" alt="Save">              
+              <input (click)="cancel()" type="image" src="/images/x.svg" width="30" height="30" alt="Close">
+            </ng-template>                      
           </div>  
-        </div>         
-        <div class="row r-body">     
-          <div>         
+        </div>    
+        <div class="row">    
+          <div class="data"> 
             <label>Классный руководитель</label>  
-              <ng-template [ngIf]="one?.id != class.id" [ngIfElse]="editbody"> 
-                <p>{{one?.classTeacherFullName}}</p>
-              </ng-template>   
-          </div>                          
-        </div>              
-        <div class="row foot">
+            <p *ngIf="one?.id != class.id else editTeacher" class="fw-bold">{{one?.classTeacherFullName}}</p>
+            <ng-template #editTeacher> 
+              <div class="form-sel-x position-relative">
+                <select [(ngModel)]="class.classTeacherId" class="form-select">  
+                  <option *ngFor="let one of teacherFullNames" value="{{one.id}}">{{one.fullName}}</option>
+                </select>
+                <input (click)="deleteClassTeacher()" class="position-absolute bottom-0 end-0" type="image" src="/images/x.svg" width="25" height="25" alt="Delete">
+              </div>  
+            </ng-template>  
+          </div>                        
+        </div>            
+        <div class="row">
           <div class="col">
-            <button routerLink="../students" class="btn light-blue">Ученики</button>   
+            <button routerLink="../students" class="btn light-blue btn-sm">Ученики</button>   
           </div>
-          <div class="col right">
-            <button routerLink="../timetable/{{one.id}}" class="btn light-blue">Расписание</button> 
-          </div>              
-        </div> 
+          <div class="col text-end">
+            <button routerLink="../timetable/{{one.id}}" class="btn light-blue btn-sm">Расписание</button> 
+          </div>        
+        </div>                
       </div>
     </div>
   </div>
 </div>
-
-<ng-template #editbody> 
-  <select [(ngModel)]="class.classTeacherId">  
-    <option *ngFor="let one of teacherFullNames" value="{{one.id}}">{{one.fullName}}</option>
-  </select> 
-</ng-template>
-
-<ng-template #editbuttons> 
-  <button (click)="updateClass(class.id, class)" class="btn btn-img border rounded">
-    <img src="/images/check_30x30.png">
-  </button>
-  <button (click)="cancel()" class="btn btn-img border rounded">
-    <img src="/images/X_30x30.png">
-  </button>
-</ng-template>

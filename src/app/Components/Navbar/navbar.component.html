@@ -1,26 +1,26 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/"><img src="/images/logo_80x80.png"></a>
+        <a routerLink="/" class="navbar-brand"><img src="/images/logo.svg" height="80" width="80"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" routerLink="classes">Классы</a>
+                    <a routerLink="timetable/1" class="nav-link active">Расписание</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" routerLink="academicsubjects">Учебные предметы</a>
+                    <a routerLink="classes" class="nav-link active">Классы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" routerLink="students">Ученики</a>
+                    <a routerLink="teachers" class="nav-link active">Учителя</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" routerLink="teachers">Учителя</a>
+                    <a routerLink="students" class="nav-link active">Ученики</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" routerLink="timetable/1">Расписание</a>
+                    <a routerLink="academicsubjects" class="nav-link active">Учебные предметы</a>
                 </li>
             </ul>
         </div>

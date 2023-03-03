@@ -1,11 +1,12 @@
 <div class="container"> 
-<h2 class="text-center fw-bold">{{title}}</h2>      
-  <table class="table">
+  <h2 class="text-center">{{title}}</h2>
+  <table class="table align-middle">
     <thead>
       <tr>
-        <th class="col-6">Название предмета</th>
-        <th class="col-6 text-end">
-          <button class="show-button btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Создать</button>
+        <th class="col-3">Название предмета</th>
+        <th class="col-7">Классы, в которых он изучается</th>
+        <th class="col-2 text-end">
+          <button (click)="createAcademicSubject()" class="show-button btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#createModal">Создать</button>
         </th>
       </tr>
     </thead>
@@ -13,9 +14,12 @@
       <tr *ngFor="let one of academicSubjects">
         <ng-template [ngIf]="academicSubject?.id != one.id" [ngIfElse]="edit">
           <td>{{one?.name}}</td>
+          <td>
+            <ngx-slider [value]="one.minClass" [highValue]="one.maxClass" [options]="slider_options_disabled"></ngx-slider>
+          </td>
           <td class="text-end">
-            <button (click)="editAcademicSubject(one)" class="btn btn-primary">Изменить</button>
-            <button (click)="deleteAcademicSubject(one.id)" class="btn btn-danger">Удалить</button>
+            <button (click)="editAcademicSubject(one)" class="btn light-blue btn-sm">Изменить</button>
+            <button (click)="deleteAcademicSubject(one.id)" class="btn btn-danger btn-sm">Удалить</button>
           </td>
         </ng-template>
       </tr>
@@ -25,33 +29,37 @@
 
 <ng-template #edit>
   <td>
-    <input type="text" [(ngModel)]="academicSubject.name" class="form-control">
+    <input [(ngModel)]="academicSubject.name" type="text" class="form-control" placeholder="Введите название">
+  </td>
+  <td>
+    <ngx-slider [(value)]="academicSubject.minClass" [(highValue)]="academicSubject.maxClass" [options]="slider_options"></ngx-slider>
   </td>
   <td class="text-end">
-    <button (click)="updateAcademicSubject(academicSubject.id, academicSubject)" class="btn btn-success">Сохранить</button>
-    <button (click)="cancel()" class="btn btn-warning">Отмена</button>
+    <button (click)="saveAcademicSubject()" class="btn btn-success btn-sm">Сохранить</button>
+    <button (click)="cancel()" class="btn btn-warning btn-sm">Отмена</button>
   </td>
 </ng-template>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">Создание предмета</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <input data-bs-dismiss="modal" type="image" src="/images/x.svg" width="30" height="30" alt="Close">
       </div>
-      <div class="modal-body">
-        <div>
-          <label class="form-label">Название</label>
-          <input type="text" class="form-control" [(ngModel)]="academicSubject.name"/>         
+      <div class="modal-body text-center">
+        <div class="input-group input-group-sm">
+          <span class="input-group-text">Название</span>
+          <input [(ngModel)]="academicSubject.name" id="inputName" type="text" class="form-control">
         </div>
-      </div>
-      <div class="modal-footer">
-        <div class="container">
-          <button (click)="createAcademicSubject(academicSubject)" class="btn btn-success " data-bs-dismiss="modal" >Создать</button>
+        <div class="pt-3">
+          <label class="form-label">Классы, в которых он изучается</label>
+          <ngx-slider [(value)]="academicSubject.minClass" [(highValue)]="academicSubject.maxClass" [options]="slider_options"></ngx-slider>    
+        </div>             
+        <div class="pt-3">
+          <button (click)="saveAcademicSubject()" class="btn btn-success" data-bs-dismiss="modal">Создать</button>
         </div>        
-      </div>
+      </div>         
     </div>
   </div>
 </div>
-

@@ -1,21 +1,27 @@
-.container{
-    font-family: 'Roboto', sans-serif;  
-    td, th{
-        font-size: large;
-        button {
-            margin: 0px 5px;
-            padding: 3px;
-        }
+.table{
+    .light-blue{
+        color: white;
+        background-color: rgb(75, 175, 200);
     }
-    .btn-group{
-        .btn{
-            border: 1px solid rgba(0,0,0,.125); 
-            padding: 3px;
-        }
+    .btn-sm{
+        margin-left: 5px;
+        padding: 3px;
+    }    
+}
+
+.row-input{
+    .form-select{
+        padding-right: 10px;
+        background: white;
     }
-    select{
-        option{
-            display: inline-block;
-        }
-    }
+    #inputBirthday{
+        width: 120px;
+    }    
+    #inputGender{
+        width: max-content;
+    }   
+}
+
+.w-80{
+    width: 80px;
 }

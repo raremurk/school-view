@@ -11,38 +11,50 @@ import { DataService } from '../../data.service';
 })
 export class ClassComponent implements OnInit{ 
   title = 'Список классов';
+  rout_classes = 'http://localhost:49716/api/classes';
+  rout_teachers = 'http://localhost:49716/api/teachers/all';
+  buf: Class = new Class();
   class: Class = new Class();
   classes: Class[];    
   teacherFullNames: TeacherFullName[];
-  rout = 'http://localhost:49716/api/classes';
-  rout_teachers = 'http://localhost:49716/api/teachers/all';
   
   constructor(private titleService: Title, private dataService: DataService){      
   }
     
   ngOnInit(){
-    this.titleService.setTitle(this.title);  
-    this.loadAll();
+    this.titleService.setTitle(this.title);   
+    this.loadAllClasses();
   }
 
-  loadAll() {
-    this.dataService.configure(this.rout_teachers);
-    this.dataService.getAll().subscribe((data: TeacherFullName[]) => this.teacherFullNames = data);
-    this.dataService.configure(this.rout);
-    this.dataService.getAll().subscribe((data: Class[]) => this.classes = data);    
+  loadAllClasses() {
+    this.dataService.getAll(this.rout_classes).subscribe((data: Class[]) => this.classes = data);    
+  }
+
+  loadAllTeachers(p: number) {
+    this.dataService.getOne(this.rout_teachers, p).subscribe((data: TeacherFullName[]) => this.teacherFullNames = data);
   }
 
   editClass(p: Class) {
-    this.class = p;
+    this.loadAllTeachers(p.id);
+    this.buf = p;
+    this.class = {...p};  
   }
 
-  updateClass(id: number, p: Class) {
-    this.dataService.update(id, p).subscribe(data => this.loadAll());
+  deleteClassTeacher(){
+    this.class.classTeacherId = null;
+    this.class.classTeacherFullName = null;
+  }
+
+  updateClass() {
+    this.dataService.update(this.rout_classes, this.class.id, this.class).subscribe();
+    if (this.class.classTeacherId != null){
+      this.class.classTeacherFullName = this.teacherFullNames.find(x => x.id == this.class.classTeacherId).fullName;
+    }
+    Object.assign(this.buf, this.class);    
     this.cancel();
   }
 
   cancel() {
     this.class = new Class();
   }
-} 
-
+}

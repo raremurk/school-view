@@ -1,32 +1,35 @@
-.cont{
-    font-family: 'Roboto', sans-serif;     
-    margin: 0 5%;  
-    .bnt-class{
-        height: 36px;
-        width: 36px;
-        margin: 5px;
-        padding: 5px 0;        
-    }
-    .checked{
-        height: 46px;
-        width: 46px;
+.container-xxl{
+    .btn-group{
+        .btn{
+            height: 40px;
+            width: 40px;
+            line-height: 38px;
+            margin: 5px;
+            padding: 0;         
+        }
+        .checked{
+            height: 50px;
+            width: 50px;
+            line-height: 48px;
+        }
     }    
     .card-day{
         width: 190px;
         padding: 10px 10px 0px;
+        margin-bottom: 10px;
         .data{
             height: 40px;
             border-top: 1px solid rgba(0,0,0,.125);   
-            .form-select{
-                background: white;
-                border-right: 0;
-                border-top-right-radius: 0px;
-                border-bottom-right-radius: 0px;
-                padding: 0px 2px 0px 5px;                
-                height: 27px;
-                width: 140px;
-                font-size: small;
-            } 
+            .form-sel-x{
+                height: 25px;
+                width: 100%;
+                .form-select{ 
+                    font-size: small; 
+                    padding: 0px 2px 0px 5px;                
+                    height: 25px; 
+                    background: white;     
+                }
+            }
         }
     } 
 } 

@@ -1,68 +1,64 @@
 <ng-template [ngIf]="id > 0  && id <= classes?.length" [ngIfElse]="empty">
-<div class="cont">   
-  <h2 class="text-center fw-bold">{{title}}</h2> 
-  <div class="row align-items-center mb-3">
+<div class="container-xxl">   
+  <h2 class="text-center">{{title}}</h2> 
+  <div class="row align-items-center">
     <div class="col-4 text-end">
-      <h3 class="fw-bold">Классы</h3> 
+      <h3>Классы</h3> 
     </div>
-    <div class="col-8">  
-      <ng-template *ngFor="let class of classes" [ngIf]="class.id != id" [ngIfElse]="checked">
-        <button routerLink="../{{class.id}}" class="btn bnt-class btn-outline-dark border rounded-circle fw-bold">{{class.id}}</button>
-      </ng-template>        
+    <div class="col-8"> 
+      <div class="btn-group align-items-center" role="group">
+        <div *ngFor="let class of classes"> 
+          <ng-template [ngIf]="class.id == id" [ngIfElse]="unchecked">
+            <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}" checked>
+            <label class="btn btn-outline-secondary rounded-circle checked" for="btnradio{{class.id}}">{{class.id}}</label>      
+          </ng-template>         
+          <ng-template #unchecked>
+            <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}">
+            <label class="btn btn-outline-secondary rounded-circle" for="btnradio{{class.id}}">{{class.id}}</label>
+          </ng-template>          
+        </div>        
+      </div> 
     </div>
   </div>
-  <div class="card-group">
+  <div class="card-group mt-3">
     <div *ngFor="let day of timetable; let i=index" class="col">
       <div class="card card-day mx-auto">   
         <div class="row">
           <div class="col-9">
-            <h5 class="fw-bold text-nowrap">{{headers[i]}}</h5>     
+            <h5 class="text-nowrap">{{headers[i]}}</h5>     
           </div>
           <div class="col-3">
-            <ng-template [ngIf]="timetableDay[0].day != day[0].day" [ngIfElse]="closeButton"> 
-              <input (click)="editTimetableDay(day)" class="border rounded" type="image" src="/images/pencil_25x25.png" alt="Edit">
-            </ng-template> 
+            <input *ngIf="day[0].day != edit_day else closeButton" (click)="editTimetableDay(day)" type="image" src="/images/pencil-square.svg" width="25" height="25" alt="Edit">
+            <ng-template #closeButton> 
+              <input (click)="cancel()" type="image" src="/images/x.svg" width="25" height="25" alt="Close">
+            </ng-template>
           </div>  
         </div>     
-        <ng-template [ngIf]="day[0].day != timetableDay[0].day" [ngIfElse]="editbody">  
+        <ng-template [ngIf]="day[0].day != edit_day" [ngIfElse]="editbody">  
           <div *ngFor="let acadSub of day" class="data d-flex align-items-center">
-            <div class="mx-auto">
-              {{acadSub.academicSubjectName}}
-            </div>
+            <div class="mx-auto">{{acadSub.academicSubjectName}}</div>
           </div>  
         </ng-template> 
-        <ng-template [ngIf]="day[0].day == timetableDay[0].day">
-          <div class="data d-flex align-items-center">    
-            <div class="mx-auto">
-              <input (click)="updateTimetableDay(timetableDay)" class="d-flex border rounded" type="image" src="/images/check_25x25.png" alt="Save">
-            </div>                
-          </div>  
-        </ng-template>        
+        <div *ngIf="day[0].day == edit_day" class="data d-flex align-items-center">    
+          <div class="d-flex mx-auto">
+            <input (click)="updateTimetableDay()" type="image" src="/images/check.svg" width="25" height="25" alt="Save">
+          </div>                
+        </div> 
       </div>  
     </div>
   </div>
 </div>
 </ng-template>
 
-<ng-template #checked>
-  <button routerLink="../{{id}}" class="btn bnt-class btn-primary border rounded-circle fw-bold checked">{{id}}</button>
-</ng-template>
-
 <ng-template #editbody>   
   <div *ngFor="let sub of timetableDay" class="data d-flex align-items-center">
-    <div>
+    <div class="form-sel-x position-relative">
       <select [(ngModel)]="sub.academicSubjectId" class="form-select">  
         <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.name}}</option>
       </select> 
-    </div>
-    <div>
-      <input (click)="sub.academicSubjectId = null" class="float-end border rounded-end" type="image" src="/images/X_25x25.png" alt="Cancel">
+      <input (click)="deleteAcademicSubject(sub)" class="position-absolute bottom-0 end-0" type="image" src="/images/x.svg" width="25" height="25" alt="Delete">
     </div>
   </div>
-</ng-template>
-
-<ng-template #closeButton> 
-  <input (click)="cancel()" class="border rounded" type="image" src="/images/X_25x25.png" alt="Cancel">
 </ng-template>
 
 <ng-template #empty>

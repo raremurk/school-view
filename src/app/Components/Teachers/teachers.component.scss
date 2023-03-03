@@ -1,56 +1,36 @@
-.container{
-    font-family: 'Roboto', sans-serif;  
-    td, th{
-        font-size: large;
-        button {
-            margin: 0px 5px;
-            padding: 3px;
-        }
+.table{
+    .light-blue{
+        color: white;
+        background-color: rgb(75, 175, 200);
     }
+    .btn-sm{
+        margin-left: 5px;
+        padding: 3px;
+    }    
 }
 
 .modal{
-    font-family: 'Roboto', sans-serif;
-    .data-area{
-        min-height: 210px;
-        h5{        
-            font-weight: bold;
-            border-top: 1px solid rgba(0,0,0,.125);
+    .input-group-text{
+        width: 90px;
+    }
+    .form-sel-x{
+        height: 25px;
+        .form-select{  
+            padding: 0px 2px 0px 5px;                
+            height: 25px;          
+            background: white;    
         }
-        .data-row{
-            height: 70px;
-        }
-        .data-subjects{ 
-            height: 140px;
-            .sub-row{
-                margin-bottom: 12px;
-            }
-            .btn-img{
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;   
-                padding: 0;
-            }
-            .form-select{            
-                padding: 0px 2px 0px 5px;                
-                height: 28px;
-                width: 194px;
-                font-size: medium;
-                border-right: 0;
-                border-top-right-radius: 0px;
-                border-bottom-right-radius: 0px;    
-            }
-            .form-sel-disabled{
-                background: lightgray;
-            }
+        .form-sel-disabled{
+            background: lightgray;
         }
     }
     .btn-group{
-        height: 60px;
         .btn{
             height: 40px;
-            width: 40px;
-            margin: 1px; 
-            padding: 0;                 
+            width: 40px; 
+            line-height: 38px; 
+            margin: 1px;   
+            padding: 0; 
         }
     }
 }

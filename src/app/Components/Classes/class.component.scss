@@ -1,20 +1,29 @@
-.cont{
-    font-family: 'Roboto', sans-serif;
-    margin: 0% 5%;
-    .col{
-        padding: 5px;
-    }
+.container{
     .card{
         padding: 15px;
-        min-width: 270px;
-        .btn-img{
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;   
-            padding: 0;
+        width: 270px;
+        margin: 5px; 
+        .data{
+            height: 60px;
+            .form-sel-x{
+                height: 25px;
+                width: max-content;  
+                .form-select{  
+                    padding: 0px 2px 0px 5px;                
+                    height: 25px; 
+                    width: 200px;   
+                    background: white;     
+                }
+            }
+        }
+        .btn-sm{
+            margin-left: 5px;
+            padding: 3px;
+            width: 100px;
         }
         .light-blue{
             color: white;
-            background-color: rgb(72, 175, 201);
+            background-color: rgb(75, 175, 200);
         }
     }
 }

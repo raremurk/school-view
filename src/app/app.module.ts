@@ -1,4 +1,4 @@
-import { NgModule, ViewChild } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule, Title  } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpClientModule }   from '@angular/common/http';
@@ -11,9 +11,8 @@ import { NavbarComponent }   from './Components/Navbar/navbar.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent }   from './Components/Not-found/not-found.component';
 import { HomeComponent }   from './Components/Home/home.component';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatNativeDateModule } from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker'
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
 const appRoutes: Routes =[
     { path: '', component: HomeComponent},
     { path: 'academicsubjects', component: AcademicSubjectComponent},
@@ -28,11 +27,9 @@ const appRoutes: Routes =[
     imports:      [ 
         BrowserModule, 
         FormsModule, 
-        HttpClientModule, 
-        MatMomentDateModule,
-        MatDatepickerModule, 
-        MatNativeDateModule,
-        RouterModule.forRoot(appRoutes) ],
+        HttpClientModule,
+        RouterModule.forRoot(appRoutes),
+        NgxSliderModule],
     declarations: [ 
         NavbarComponent, 
         AcademicSubjectComponent, 

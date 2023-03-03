@@ -1,10 +1,10 @@
-.container{
-    font-family: 'Roboto', sans-serif;  
-    td, th{
-        font-size: large;
-        button {
-            margin: 0px 5px;
-            padding: 3px;
-        }
+.table{
+    .light-blue{
+        color: white;
+        background-color: rgb(75, 175, 200);
     }
+    .btn-sm{
+        margin-left: 5px;
+        padding: 3px;
+    }    
 }

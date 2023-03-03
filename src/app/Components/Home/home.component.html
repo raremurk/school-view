@@ -1,3 +1,33 @@
-<div class="container">
-    <h2 class="text-end">Директор: gblfhfc sdfdg sdf</h2>
+<div class="container">    
+    <div class="row text-center border-bottom mb-3">
+        <div class="col">
+            <h3>Информация</h3>            
+        </div>
+        <div class="col">
+            <h3>Операции</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <div class="d-flex">
+                <p class="span-gray sm h-30">Директор</p>
+                <span class="fw-bold h-30">{{schoolStat?.director}}</span>
+            </div>
+            <div class="d-flex">
+                <p class="span-gray sm h-30">Завуч</p>
+                <span class="fw-bold h-30">{{schoolStat?.headTeacher}}</span>
+            </div>
+            <div class="d-flex">
+                <p class="span-gray bg h-30">Количество учеников</p>
+                <span class="fw-bold h-30">{{schoolStat?.studentsCount}}</span>
+            </div>
+            <div class="d-flex">
+                <p class="span-gray bg h-30">Количество учителей</p>
+                <span class="fw-bold h-30">{{schoolStat?.teachersCount}}</span>
+            </div>
+        </div>
+        <div class="col text-center">
+            <button (click)="upStudents()" class="btn light-blue">Перевести учеников в следующий класс</button>
+        </div>
+    </div>  
 </div>

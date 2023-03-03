@@ -1,64 +1,70 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Student } from '../../Models/student';
 import { Class } from '../../Models/class';
-import { Title } from '@angular/platform-browser';
 import { DataService } from '../../data.service';
 
 @Component({
-    templateUrl: './students.component.html',
-    styleUrls: ['./students.component.scss'],
-    providers: [
-      DataService
-    ]
+  templateUrl: './students.component.html',
+  styleUrls: ['./students.component.scss'],
+  providers: [DataService]
 })
 export class StudentsComponent implements OnInit{ 
-    min_data = new Date(new Date().setFullYear(new Date().getFullYear() - 20));    
-    max_data = new Date(new Date().setFullYear(new Date().getFullYear() - 4)); 
-    title = 'Список учеников';
-    student: Student = new Student();
-    students: Student[];
-    rout = 'http://localhost:49716/api/students';
-    rout_as = 'http://localhost:49716/api/classes';
-    classes: Class[];
+  title = 'Список учеников';
+  rout_students = 'http://localhost:49716/api/students';
+  rout_classes = 'http://localhost:49716/api/classes';
+  min_data = new Date(new Date().setFullYear(new Date().getFullYear() - 20));    
+  max_data = new Date(new Date().setFullYear(new Date().getFullYear() - 4));
+  buf: Student = new Student();  
+  student: Student = new Student();
+  students: Student[];  
+  classes: Class[];
+  
+  constructor(private titleService: Title, private dataService: DataService){}
     
-    constructor(private titleService: Title, private dataService: DataService){}
-      
-    ngOnInit(){  
-      this.loadAllClasses();    
-      this.titleService.setTitle(this.title); 
-      this.loadAll();
-    }
+  ngOnInit(){  
+    this.titleService.setTitle(this.title); 
+    this.loadAllClasses();   
+    this.loadAllStudents();
+  }
 
-    loadAllClasses() {
-      this.dataService.configure(this.rout_as);
-      this.dataService.getAll().subscribe((data: Class[]) => this.classes = data);
-      this.dataService.configure(this.rout);
-    }
+  loadAllClasses() {
+    this.dataService.getAll(this.rout_classes).subscribe((data: Class[]) => this.classes = data);    
+  }
 
-    loadAll() {
-      this.dataService.getAll().subscribe((data: Student[]) => this.students = data);
-    }
+  loadAllStudents() {
+    this.dataService.getAll(this.rout_students).subscribe((data: Student[]) => this.students = data);
+  }
 
-    editStudent(p: Student) {
-      this.student = p; 
-    }
+  saveStudent() {
+    if (this.student.id == null) {
+      this.dataService.create(this.rout_students, this.student)
+        .subscribe((data: Student) => this.students.push(data));
+    } 
+    else {
+      this.dataService.update(this.rout_students, this.student.id, this.student).subscribe();
+      Object.assign(this.buf, this.student);
+    }    
+    this.cancel();
+  }
 
-    updateStudent(id: number, p: Student) {
-      this.dataService.update(id, p).subscribe(data => this.loadAll());
-      this.cancel();
-    }
+  createStudent() {
+    this.cancel();
+  }
 
-    deleteStudent(p: number) {
-      this.dataService.delete(p).subscribe(data => this.loadAll());
-    }
+  editStudent(p: Student) {
+    this.buf = p;
+    this.student = { ...p};
+  }
 
-    createStudent(p: Student) {
-      this.dataService.create(p).subscribe((data: Student) => this.students.push(data));
-      this.student = new Student();
-    }
+  deleteStudent(p: number) {
+    this.dataService.delete(this.rout_students, p).subscribe(data => {
+      var index = this.students.findIndex(x => x.id == p);
+      this.students.splice(index, 1);
+    });
+  }
 
-    cancel() {
-      this.student = new Student();
-      this.loadAll();
-    }
+  cancel() {
+    this.student = new Student();
+  }
 } 
