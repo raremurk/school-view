@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+  <mat-grid-list  cols="10" style="min-height: 50px">
+    <mat-grid-tile colspan="9">
+      <div class="text-align-start">
+        <h3>Добавление предмета</h3>
+      </div>      
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div>
+        <button mat-icon-button class="close-button" mat-dialog-close>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-form-field style="width: 100%">
+    <mat-label>Название предмета</mat-label>
+    <input matInput [(ngModel)]="academicSubject.name">
+  </mat-form-field>
+  <div>
+    <label>Классы, в которых он изучается</label>
+    <mat-slider style="width: 96%" min="1" max="11" step="1" showTickMarks discrete>
+      <input matSliderStartThumb [(value)]="academicSubject.minClass">
+      <input matSliderEndThumb [(value)]="academicSubject.maxClass">
+    </mat-slider>   
+  </div>   
+  <div style="text-align: center">
+    <button mat-raised-button (click)="createAcademicSubject()" class="emerald-button">Добавить</button>
+  </div>     
+</div>    

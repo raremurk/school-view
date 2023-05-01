@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Options } from '@angular-slider/ngx-slider';
-import { DataService } from '../../data.service';
-import { AcademicSubject } from '../../Models/academicSubject';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {MatDialog} from '@angular/material/dialog';
+import {AcademicSubject} from '../../Models/academicSubject';
+import {DialogComponent} from '../Dialog/dialog.component';
+import {DataService} from '../../data.service';
 
 @Component({
   templateUrl: './academicSubject.component.html',
@@ -15,30 +16,31 @@ export class AcademicSubjectComponent implements OnInit{
   buf: AcademicSubject = new AcademicSubject();
   academicSubject: AcademicSubject = new AcademicSubject();
   academicSubjects: AcademicSubject[];  
-  slider_options: Options = { floor: 1, ceil: 11, showTicksValues: true};
-  slider_options_disabled: Options = {...this.slider_options, disabled : true};
   
-  constructor(private titleService: Title, private dataService: DataService){ }
+  constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
     this.titleService.setTitle(this.title);
     this.loadAllAcademicSubjects();
   }
 
+  openDialog() {
+    this.dialog.open(DialogComponent).afterClosed().subscribe((result: AcademicSubject)=>{
+      if(result.id == 0){
+        this.dataService.create(this.subjects_route, result)
+        .subscribe((data: AcademicSubject) => this.academicSubjects.push(data));
+      }
+    })
+  }
+
   loadAllAcademicSubjects() {
     this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
   }
 
-  saveAcademicSubject() {
-    if (this.academicSubject.id == null) {
-      this.dataService.create(this.subjects_route, this.academicSubject)
-        .subscribe((data: AcademicSubject) => this.academicSubjects.push(data));
-    } 
-    else {
-      this.dataService.update(this.subjects_route, this.academicSubject.id, this.academicSubject)
-        .subscribe();
-      Object.assign(this.buf, this.academicSubject);
-    }    
+  updateAcademicSubject() {
+    this.dataService.update(this.subjects_route, this.academicSubject.id, this.academicSubject)
+      .subscribe();
+    Object.assign(this.buf, this.academicSubject); 
     this.cancel();
   }
 

@@ -6,7 +6,7 @@
         <th class="col-3">Название предмета</th>
         <th class="col-7 text-center">Классы, в которых он изучается</th>
         <th class="col-2 text-end">
-          <button (click)="createAcademicSubject()" class="btn btn-success table-btn" data-bs-toggle="modal" data-bs-target="#createModal">Создать</button>
+          <button mat-raised-button color="primary" (click)="openDialog()">Добавить</button>
         </th>
       </tr>
     </thead>
@@ -15,7 +15,10 @@
         <ng-template [ngIf]="academicSubject?.id != one.id" [ngIfElse]="edit">
           <td>{{one?.name}}</td>
           <td>
-            <ngx-slider [value]="one.minClass" [highValue]="one.maxClass" [options]="slider_options_disabled"></ngx-slider>
+            <mat-slider min="1" max="11" step="1" showTickMarks discrete disabled>
+              <input matSliderStartThumb [value]="one.minClass">
+              <input matSliderEndThumb [value]="one.maxClass">
+            </mat-slider>
           </td>
           <td class="text-end">
             <button (click)="editAcademicSubject(one)" class="btn light-blue table-btn">Изменить</button>
@@ -32,34 +35,13 @@
     <input [(ngModel)]="academicSubject.name" type="text" class="form-control" placeholder="Введите название">
   </td>
   <td>
-    <ngx-slider [(value)]="academicSubject.minClass" [(highValue)]="academicSubject.maxClass" [options]="slider_options"></ngx-slider>
+    <mat-slider min="1" max="11" step="1" showTickMarks discrete>
+      <input matSliderStartThumb [(value)]="academicSubject.minClass">
+      <input matSliderEndThumb [(value)]="academicSubject.maxClass">
+    </mat-slider>
   </td>
   <td class="text-end">
-    <button (click)="saveAcademicSubject()" class="btn btn-success table-btn">Сохранить</button>
+    <button (click)="updateAcademicSubject()" class="btn btn-success table-btn">Сохранить</button>
     <button (click)="cancel()" class="btn btn-warning table-btn">Отмена</button>
   </td>
 </ng-template>
-
-<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Создание предмета</h3>
-        <input data-bs-dismiss="modal" type="image" src="images/x.svg" width="30" height="30" alt="Close">
-      </div>
-      <div class="modal-body text-center">
-        <div class="input-group input-group-sm">
-          <span class="input-group-text">Название</span>
-          <input [(ngModel)]="academicSubject.name" id="inputName" type="text" class="form-control">
-        </div>
-        <div class="pt-3">
-          <label class="form-label">Классы, в которых он изучается</label>
-          <ngx-slider [(value)]="academicSubject.minClass" [(highValue)]="academicSubject.maxClass" [options]="slider_options"></ngx-slider>    
-        </div>             
-        <div class="pt-3">
-          <button (click)="saveAcademicSubject()" class="btn btn-success" data-bs-dismiss="modal">Создать</button>
-        </div>        
-      </div>         
-    </div>
-  </div>
-</div>
