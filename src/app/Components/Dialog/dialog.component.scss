@@ -1,12 +1,15 @@
-.text-align-start{
-    width: 100%; 
-    text-align: start;
-}
+.dialog-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
 
 .close-button{
     height: 24px;
     width: 24px;
     padding: 0;
+    margin-bottom: 4px;
 }
 
 .emerald-button{
