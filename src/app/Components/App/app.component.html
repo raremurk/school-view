@@ -1,3 +1,13 @@
-<app-navbar></app-navbar>
-
-<router-outlet></router-outlet>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="navbar">
+	<a mat-tab-link (click)="activeLink = homeLink"
+		[active]="activeLink == homeLink"
+		routerLink="{{homeLink}}">
+		<mat-icon class="logo">school</mat-icon>{{homeLabel}}</a>
+	<a mat-tab-link *ngFor="let link of links; index as i"
+		(click)="activeLink = link"		
+		[active]="activeLink == link"
+		routerLink="{{link}}">{{labels[i]}}</a>
+</nav>
+<mat-tab-nav-panel #tabPanel>
+	<router-outlet></router-outlet>
+</mat-tab-nav-panel>

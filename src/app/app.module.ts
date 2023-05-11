@@ -8,7 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
-import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import {AppComponent}   from './Components/App/app.component';
 import {AcademicSubjectComponent}   from './Components/Academicsubject/academicSubject.component';
@@ -16,7 +16,6 @@ import {TeachersComponent}   from './Components/Teachers/teachers.component';
 import {StudentsComponent}   from './Components/Students/students.component';
 import {ClassComponent}   from './Components/Classes/class.component';
 import {TimetableComponent}   from './Components/Timetable/timetable.component';
-import {NavbarComponent}   from './Components/Navbar/navbar.component';
 import {NotFoundComponent}   from './Components/Not-found/not-found.component';
 import {HomeComponent}   from './Components/Home/home.component';
 import {DialogComponent} from './Components/Dialog/dialog.component';
@@ -34,11 +33,10 @@ import {AppRoutingModule} from './app-routing.module';
         MatButtonModule,        
         MatInputModule,
         MatIconModule,
-        MatGridListModule
+        MatTabsModule
     ],
     declarations: [
         AppComponent,
-        NavbarComponent, 
         TimetableComponent,
         ClassComponent,
         TeachersComponent, 
