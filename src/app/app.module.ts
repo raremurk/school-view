@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
 
 import {AppComponent}   from './Components/App/app.component';
 import {AcademicSubjectComponent}   from './Components/Academicsubject/academicSubject.component';
@@ -33,7 +34,8 @@ import {AppRoutingModule} from './app-routing.module';
         MatButtonModule,        
         MatInputModule,
         MatIconModule,
-        MatTabsModule
+        MatTabsModule,
+        MatChipsModule
     ],
     declarations: [
         AppComponent,

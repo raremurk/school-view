@@ -6,12 +6,9 @@
       <h3>Классы</h3> 
     </div>
     <div class="col-8"> 
-      <div class="btn-group align-items-center" role="group">
-        <div *ngFor="let class of classes"> 
-          <input routerLink="../{{class.id}}" type="radio" class="btn-check" name="btnradio" id="btnradio{{class.id}}" [checked]="id == class.id">
-          <label class="btn btn-outline-secondary rounded-circle shadow-none" for="btnradio{{class.id}}">{{class.id}}</label>              
-        </div>        
-      </div> 
+      <mat-chip-listbox>
+        <mat-chip-option *ngFor="let class of classes" routerLink="../{{class.id}}" selected="{{class.id == id}}">{{class.id}}</mat-chip-option>
+      </mat-chip-listbox>
     </div>
   </div>
   <div class="card-group mt-3">

@@ -1,18 +1,4 @@
 .container-xxl{
-    .btn-group{
-        .btn{
-            height: 40px;
-            width: 40px;
-            line-height: 38px;
-            margin: 5px;
-            padding: 0;         
-        }
-		.btn-check:checked+.btn{
-            height: 50px;
-            width: 50px;
-            line-height: 48px;		
-		}	
-    }    
     .card-day{
         width: 190px;
         padding: 10px 10px 0px;
