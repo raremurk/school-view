@@ -2,15 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {MatDialog} from '@angular/material/dialog';
 import {AcademicSubject} from '../../Models/academicSubject';
-import {DialogComponent} from '../Dialog/dialog.component';
+import {AcademicSubjectsDialogComponent} from './Dialog/academicSubjectsDialog.component';
 import {DataService} from '../../data.service';
 
 @Component({
-  templateUrl: './academicSubject.component.html',
-  styleUrls: ['./academicSubject.component.scss'],
+  templateUrl: './academicSubjects.component.html',
+  styleUrls: ['./academicSubjects.component.scss'],
   providers: [DataService]
 })
-export class AcademicSubjectComponent implements OnInit{ 
+export class AcademicSubjectsComponent implements OnInit{ 
   title = 'Список предметов';     
   subjects_route = 'academicsubjects';
   buf: AcademicSubject = new AcademicSubject();
@@ -25,7 +25,7 @@ export class AcademicSubjectComponent implements OnInit{
   }
 
   openDialog() {
-    this.dialog.open(DialogComponent).afterClosed().subscribe((result: AcademicSubject)=>{
+    this.dialog.open(AcademicSubjectsDialogComponent).afterClosed().subscribe((result: AcademicSubject)=>{
       if(result.id == 0){
         this.dataService.create(this.subjects_route, result)
         .subscribe((data: AcademicSubject) => this.academicSubjects.push(data));

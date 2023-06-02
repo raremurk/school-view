@@ -12,14 +12,14 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 
 import {AppComponent}   from './Components/App/app.component';
-import {AcademicSubjectComponent}   from './Components/Academicsubject/academicSubject.component';
+import {AcademicSubjectsComponent}   from './Components/AcademicSubjects/academicSubjects.component';
+import {AcademicSubjectsDialogComponent} from './Components/AcademicSubjects/Dialog/academicSubjectsDialog.component';
 import {TeachersComponent}   from './Components/Teachers/teachers.component';
 import {StudentsComponent}   from './Components/Students/students.component';
 import {ClassComponent}   from './Components/Classes/class.component';
 import {TimetableComponent}   from './Components/Timetable/timetable.component';
 import {NotFoundComponent}   from './Components/Not-found/not-found.component';
 import {HomeComponent}   from './Components/Home/home.component';
-import {DialogComponent} from './Components/Dialog/dialog.component';
 import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
@@ -43,10 +43,10 @@ import {AppRoutingModule} from './app-routing.module';
         ClassComponent,
         TeachersComponent, 
         StudentsComponent,
-        AcademicSubjectComponent,        
+        AcademicSubjectsComponent,    
+        AcademicSubjectsDialogComponent,    
         NotFoundComponent,
-        HomeComponent,
-        DialogComponent
+        HomeComponent
     ],
     providers:    [ Title ],
     bootstrap:    [ AppComponent ]
