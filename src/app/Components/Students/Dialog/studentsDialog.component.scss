@@ -7,6 +7,15 @@
     padding: 0;
 }
 
+.input-form{
+    width: 430px; 
+    margin-top: 15px;
+    mat-form-field{
+        margin-bottom: 15px;
+        width: 100%
+    }
+}
+
 .emerald-button{
     background-color: #58BC82;
     color: white;

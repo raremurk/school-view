@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Student } from '../../Models/student';
-import { Class } from '../../Models/class';
-import { DataService } from '../../data.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Title} from '@angular/platform-browser';
+import {StudentsDialogComponent} from './Dialog/studentsDialog.component';
+import {Student} from '../../Models/student';
+import {Class} from '../../Models/class';
+import {DataService} from '../../data.service';
 
 @Component({
   templateUrl: './students.component.html',
@@ -20,12 +22,21 @@ export class StudentsComponent implements OnInit{
   students: Student[];  
   classes: Class[];
   
-  constructor(private titleService: Title, private dataService: DataService){ }
+  constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
     this.titleService.setTitle(this.title); 
     this.loadAllClasses();   
     this.loadAllStudents();
+  }
+
+  openDialog() {
+    this.dialog.open(StudentsDialogComponent).afterClosed().subscribe((result: Student)=>{
+      if(result.id == 0){
+        this.dataService.create(this.students_route, result)
+        .subscribe((data: Student) => this.students.push(data));
+      }
+    })
   }
 
   loadAllClasses() {

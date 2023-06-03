@@ -1,11 +1,9 @@
 <div mat-dialog-content>
-  <div class="dialog-title">
-    <h3>Добавление предмета</h3>
-    <button mat-icon-button class="close-button" mat-dialog-close>
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  <mat-form-field style="width: 100%">
+  <h3>Добавление предмета</h3>
+  <button mat-icon-button class="close-button" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-form-field style="width: 100%; margin: 15px 0">
     <mat-label>Название предмета</mat-label>
     <input matInput [(ngModel)]="academicSubject.name">
   </mat-form-field>

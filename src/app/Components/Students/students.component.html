@@ -10,7 +10,7 @@
         <th class="col">Пол</th>
         <th class="col">Класс</th>
         <th class="col-2 text-end">
-          <button (click)="createStudent()" class="btn btn-success table-btn" data-bs-toggle="modal" data-bs-target="#createModal">Создать</button>
+          <button mat-raised-button color="primary" (click)="openDialog()">Добавить</button>
         </th>
       </tr>
     </thead>
@@ -65,46 +65,3 @@
         <button (click)="cancel()" class="btn btn-warning table-btn">Отмена</button>
     </td>
 </ng-template>
-  
-<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">        
-        <h3 class="modal-title fw-bold">Создание ученика</h3>    
-        <input data-bs-dismiss="modal" type="image" src="images/x.svg" width="30" height="30" alt="Close">
-      </div>
-      <div class="modal-body"> 
-        <div class="input-group input-group-sm mb-2">
-          <span class="input-group-text w-80">Фамилия</span>
-          <input [(ngModel)]="student.lastName" id="inputLastName" type="text" class="form-control form-control-sm" autocomplete="off">
-        </div>
-        <div class="input-group input-group-sm mb-2">
-          <span class="input-group-text w-80">Имя</span>
-          <input [(ngModel)]="student.firstName" id="inputFirstName" type="text" class="form-control form-control-sm" autocomplete="off">
-        </div>
-        <div class="input-group input-group-sm mb-3">
-          <span class="input-group-text w-80">Отчество</span>
-          <input [(ngModel)]="student.middleName" id="inputMiddleame" type="text" class="form-control form-control-sm" autocomplete="off">
-        </div>
-        <div class="row-input">
-          <div class="input-group input-group-sm mb-2">
-            <span class="input-group-text">Дата рождения</span>
-            <input [(ngModel)]="student.birthday" id="inputBirthday" type="date" class="form-control form-control-sm" min="{{min_data | date:'yyyy-MM-dd'}}" max="{{max_data | date:'yyyy-MM-dd'}}">
-            <span class="input-group-text">Пол</span>
-            <select [(ngModel)]="student.gender" id="inputGender" class="form-select form-select-sm">  
-              <option value="M">Мужской</option>
-              <option value="W">Женский</option>
-            </select>
-            <span class="input-group-text">Класс</span>
-            <select [(ngModel)]="student.classId" id="inputClass" class="form-select form-select-sm">  
-              <option *ngFor="let class of classes" value="{{class.id}}">{{class.id}}</option>
-            </select>
-          </div>  
-        </div>         
-        <div class="text-center pt-3">
-          <button (click)="saveStudent()" class="btn btn-success" data-bs-dismiss="modal">Создать</button>
-        </div>        
-      </div>         
-    </div>
-  </div>
-</div>
