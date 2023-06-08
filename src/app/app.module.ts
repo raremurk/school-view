@@ -16,6 +16,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
@@ -23,6 +24,7 @@ import {AppComponent}   from './Components/App/app.component';
 import {AcademicSubjectsComponent}   from './Components/AcademicSubjects/academicSubjects.component';
 import {AcademicSubjectsDialogComponent} from './Components/AcademicSubjects/Dialog/academicSubjectsDialog.component';
 import {TeachersComponent}   from './Components/Teachers/teachers.component';
+import {TeachersDialogComponent}   from './Components/Teachers/Dialog/teachersDialog.component';
 import {StudentsComponent}   from './Components/Students/students.component';
 import {StudentsDialogComponent} from './Components/Students/Dialog/studentsDialog.component';
 import {ClassComponent}   from './Components/Classes/class.component';
@@ -35,7 +37,7 @@ import {AppRoutingModule} from './app-routing.module';
     imports: [
         BrowserAnimationsModule,
         BrowserModule, 
-        FormsModule, 
+        FormsModule,
         HttpClientModule,
         AppRoutingModule,
         MatSliderModule,
@@ -50,13 +52,15 @@ import {AppRoutingModule} from './app-routing.module';
         MatNativeDateModule,
         MatSelectModule,
         MatRadioModule,
-        MatGridListModule
+        MatGridListModule,
+        MatButtonToggleModule
     ],
     declarations: [
         AppComponent,
         TimetableComponent,
         ClassComponent,
-        TeachersComponent, 
+        TeachersComponent,
+        TeachersDialogComponent, 
         StudentsComponent,
         StudentsDialogComponent,
         AcademicSubjectsComponent,    

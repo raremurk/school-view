@@ -1,0 +1,49 @@
+<div mat-dialog-content>
+  <h3>{{data.dialogTitle}}</h3>
+  <button *ngIf="data.editMode == 2" (click)="saveTeacher()" mat-icon-button class="edit-button">
+    <mat-icon>check</mat-icon>
+  </button>
+  <button *ngIf="data.editMode == 1" (click)="enableEdit()" mat-icon-button class="edit-button">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button class="close-button" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="text-center" style="width: 485px; margin-top: 15px;">
+    <table><tr>
+      <td style="width: 220px"><mat-form-field>
+        <mat-label>Фамилия</mat-label>
+        <input matInput [(ngModel)]="data.teacher.lastName" [disabled]="disabled">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Имя</mat-label>
+        <input matInput [(ngModel)]="data.teacher.firstName" [disabled]="disabled">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Отчество</mat-label>
+        <input matInput [(ngModel)]="data.teacher.middleName" [disabled]="disabled">
+      </mat-form-field></td>
+      <td style="vertical-align: top; padding-left: 15px;">
+        <label class="fw-bold mb-2">Учебные предметы</label>
+        <mat-form-field>
+          <mat-select [(ngModel)]="teacherSubjectsIds" placeholder="Выберите предметы" multiple [disabled]="disabled">        
+            <mat-select-trigger>
+              <mat-chip-listbox class="mat-mdc-chip-set-stacked">
+                <mat-chip-option *ngFor="let id of teacherSubjectsIds" selectable="false" selected>
+                  {{getSubjectNameById(id)}}
+                  <mat-icon matChipRemove (click)="removeSubject(id)">cancel</mat-icon>
+                </mat-chip-option>
+              </mat-chip-listbox>
+            </mat-select-trigger>        
+            <mat-option *ngFor="let subject of data.academicSubjects" [value]="subject.id">{{subject.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr></table>  
+    <label class="fw-bold mb-2">Классы</label> 
+    <mat-button-toggle-group [(ngModel)]="teacherClassesIds" multiple [disabled]="disabled">
+      <mat-button-toggle class="mat-ripple border" *ngFor="let class of data.classes" [value]="class.id">{{class.id}}</mat-button-toggle>
+    </mat-button-toggle-group>   
+    <button *ngIf="data.editMode == 0" mat-raised-button (click)="saveTeacher()" class="emerald-button" [disabled]="disabled">Добавить</button>
+  </div>  
+</div>    

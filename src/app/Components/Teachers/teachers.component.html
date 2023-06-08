@@ -7,7 +7,7 @@
         <th>Имя</th>
         <th>Отчество</th>
         <th class="text-end">
-          <button (click)="createTeacher()" class="btn btn-success table-btn" data-bs-toggle="modal" data-bs-target="#infoModal">Создать</button>
+          <button mat-raised-button color="primary" (click)="openCreateDialog()">Добавить</button>
         </th>
       </tr>
     </thead>
@@ -17,116 +17,10 @@
         <td>{{one?.firstName}}</td> 
         <td>{{one?.middleName}}</td>  
         <td class="text-end">
-          <button (click)="editTeacher(one)" class="btn light-blue table-btn" data-bs-toggle="modal" data-bs-target="#infoModal">Подробнее</button>
+          <button mat-raised-button color="primary" (click)="openEditDialog(one)">Подробнее</button>
           <button (click)="deleteTeacher(one.id)" class="btn btn-danger table-btn">Удалить</button>
         </td>
       </tr>
     </tbody>     
   </table>
 </div>
-
-<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div>      
-          <h3 *ngIf="edit_mod == 0 || edit_mod == 1" class="modal-title fw-bold">Полная информация</h3>
-          <h3 *ngIf="edit_mod == 2" class="modal-title fw-bold">Создание учителя</h3>    
-        </div>     
-        <div>
-          <input *ngIf="edit_mod == 0" (click)="editModeOn()" type="image" src="images/pencil-square.svg" width="30" height="30" alt="Edit">
-          <input *ngIf="edit_mod == 1 || edit_mod == 2" (click)="saveTeacher()" data-bs-dismiss="modal" type="image" src="images/check.svg" width="30" height="30" alt="Save">
-          <input (click)="cancel()" data-bs-dismiss="modal" type="image" src="images/x.svg" width="30" height="30" alt="Close">
-        </div>
-      </div>      
-      <div class="modal-body">
-        <ng-template [ngIf]="edit_mod == 0" [ngIfElse]="edit"> 
-          <div class="row">
-            <div class="col-7">
-              <div class="input-group input-group-sm mb-2">
-                <span class="input-group-text">Фамилия</span>
-                <input [ngModel]="teacher.lastName" type="text" class="form-control" disabled>
-              </div>
-              <div class="input-group input-group-sm mb-2">
-                <span class="input-group-text">Имя</span>
-                <input [ngModel]="teacher.firstName" type="text" class="form-control" disabled>
-              </div>
-              <div class="input-group input-group-sm mb-2">
-                <span class="input-group-text">Отчество</span>
-                <input [ngModel]="teacher.middleName" type="text" class="form-control" disabled>
-              </div>
-              <div class="input-group input-group-sm mb-2">
-                <span class="input-group-text">Должность</span>
-                <input [ngModel]="teacher.position" type="text" class="form-control" disabled>
-              </div>
-            </div>
-            <div class="col-5">
-              <div class="text-center">
-                <label class="fw-bold mb-2">Предметы</label>
-                <input *ngFor="let sub of teacher.teacherSubjects" class="form-control form-sel-disabled form-sel-x text-center mb-2" value="{{viewSubject(sub.id)}}" disabled>
-              </div>  
-            </div>
-          </div>
-          <div class="text-center">
-            <label class="fw-bold mb-2">Классы</label> 
-            <div class="btn-group" role="group">
-              <div *ngFor="let class of classes">
-                <input type="checkbox" class="btn-check" id="btncheck{{class.id}}" [checked]="classExist(class.id)" disabled>
-                <label class="btn btn-outline-primary border rounded-circle" for="btncheck{{class.id}}">{{class.id}}</label>
-              </div>
-            </div>   
-          </div>
-        </ng-template> 
-      </div>    
-    </div>
-  </div>
-</div>
-
-<ng-template #edit>  
-  <div class="row">
-    <div class="col-7">
-      <div class="input-group input-group-sm mb-2">
-        <span class="input-group-text">Фамилия</span>
-        <input [(ngModel)]="teacher.lastName" id="inputLastName" type="text" class="form-control" autocomplete="off">
-      </div>
-      <div class="input-group input-group-sm mb-2">
-        <span class="input-group-text">Имя</span>
-        <input [(ngModel)]="teacher.firstName" id="inputFirstName" type="text" class="form-control" autocomplete="off">
-      </div>
-      <div class="input-group input-group-sm mb-2">
-        <span class="input-group-text">Отчество</span>
-        <input [(ngModel)]="teacher.middleName" id="inputMiddleName" type="text" class="form-control" autocomplete="off">
-      </div>
-      <div class="input-group input-group-sm mb-2">
-        <span class="input-group-text">Должность</span>
-        <select [(ngModel)]="teacher.position" id="inputPosition" class="form-select"> 
-          <option *ngFor="let pos of positions">{{pos}}</option>
-        </select> 
-      </div>  
-    </div>
-    <div class="col-5">
-      <div class="text-center">
-        <label class="fw-bold mb-2">Предметы</label>
-        <div *ngFor="let sub of teacher.teacherSubjects" class="form-sel-x position-relative mb-2">
-          <select [(ngModel)]="sub.id" class="form-select"> 
-            <option *ngFor="let one of getAcademicSubjects(sub.id)" value="{{one.id}}">{{one.name}}</option>
-          </select>
-          <input (click)="deleteSubject(sub.id)" class="position-absolute bottom-0 end-0" type="image" src="images/x.svg" width="25" height="25" alt="Delete">
-        </div>  
-        <div *ngIf="teacher.teacherSubjects.length < 3" class="form-sel-x position-relative mb-2">            
-          <input type="text" class="form-select form-sel-disabled text-center" value="Добавить" disabled>
-          <input (click)="addSubject()" class="position-absolute bottom-0 end-0" type="image" src="images/plus.svg" width="25" height="25" alt="Add">
-        </div> 
-      </div>  
-    </div>
-  </div> 
-  <div class="text-center">
-    <label class="fw-bold mb-2">Классы</label> 
-    <div class="btn-group" role="group">
-      <div *ngFor="let class of classes">
-        <input (click)="changeClassState(class.id)" type="checkbox" class="btn-check" id="btncheck{{class.id}}" [checked]="classExist(class.id)">
-        <label class="btn btn-outline-primary border rounded-circle" for="btncheck{{class.id}}">{{class.id}}</label>
-      </div>
-    </div>
-  </div>
-</ng-template>

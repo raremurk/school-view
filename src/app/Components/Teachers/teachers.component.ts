@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Teacher } from '../../Models/teacher';
-import { AcademicSubject } from '../../Models/academicSubject';
-import { Class } from '../../Models/class';
-import { DataService } from '../../data.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Title} from '@angular/platform-browser';
+import {TeachersDialogComponent} from './Dialog/teachersDialog.component';
+import {Teacher} from '../../Models/teacher';
+import {AcademicSubject} from '../../Models/academicSubject';
+import {Class} from '../../Models/class';
+import {DataService} from '../../data.service';
      
 @Component({
     templateUrl: './teachers.component.html',
@@ -15,16 +17,14 @@ export class TeachersComponent implements OnInit{
   teachers_route = 'teachers';
   subjects_route = 'academicsubjects';
   classes_route = 'classes';
-  positions = ['Директор','Завуч','Учитель','Учитель мл. классов'];  
+  positions = ['Учитель','Учитель мл. классов'];  
   academicSubjects: AcademicSubject[];
-  filter: {'id' : number}[];
   classes: Class[];
-  buf: Teacher = new Teacher();
-  teacher: Teacher = new Teacher();
   teachers: Teacher[]; 
-  edit_mod: number = 0; 
+  teacher: Teacher = new Teacher(0, "", "", "", "");
+  editableTeacher: Teacher;
      
-  constructor(private titleService: Title, private dataService: DataService){ }
+  constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
     this.titleService.setTitle(this.title);   
@@ -32,7 +32,37 @@ export class TeachersComponent implements OnInit{
     this.loadAllTeachers();  
     this.loadAllAcademicSubjects();  
   }
-  
+
+  openCreateDialog() {
+    this.teacher = new Teacher(0, "", "", "", "");
+    this.openDialog('Добавление учителя', 0); 
+  }
+
+  openEditDialog(teacherToEdit: Teacher) {
+    this.editableTeacher = teacherToEdit;
+    this.teacher = JSON.parse(JSON.stringify(teacherToEdit));
+    this.openDialog('Полная информация', 1);   
+  }
+
+  openDialog(title: string, mode: number){
+    this.dialog.open(TeachersDialogComponent, { data: { 
+      dialogTitle : title, 
+      editMode: mode,
+      academicSubjects : this.academicSubjects, 
+      classes: this.classes, 
+      teacher : this.teacher }})
+      .afterClosed().subscribe((result: Teacher)=>{
+      if(result.id == 0){
+        this.dataService.create(this.teachers_route, result)
+        .subscribe((data: Teacher) => this.teachers.push(data));
+      }
+      if(result.id > 0){
+        this.dataService.update(this.teachers_route, result.id, result).subscribe();
+        Object.assign(this.editableTeacher, result);
+      }
+    })
+  }
+
   loadAllAcademicSubjects() {
     this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
   }
@@ -45,75 +75,10 @@ export class TeachersComponent implements OnInit{
     this.dataService.getAll(this.teachers_route).subscribe((data: Teacher[]) => this.teachers = data);
   }
 
-  saveTeacher() {
-    if (this.teacher.id == null) {
-      this.dataService.create(this.teachers_route, this.teacher).subscribe((data: Teacher) => this.teachers.push(data));
-    } 
-    else {
-      this.dataService.update(this.teachers_route, this.teacher.id, this.teacher).subscribe();
-      Object.assign(this.buf, this.teacher);
-    }
-    this.cancel();
-  }
-
-  editModeOn(){
-    this.edit_mod = 1;
-  }
-
-  createTeacher(){
-    this.teacher = new Teacher();
-    this.edit_mod = 2;
-  }
-
-  editTeacher(p: Teacher) {     
-    this.buf = p;
-    this.teacher = JSON.parse(JSON.stringify(p));
-    this.edit_mod = 0;         
-  }
-
   deleteTeacher(p: number) {
     this.dataService.delete(this.teachers_route, p).subscribe(data => {
       var index = this.teachers.findIndex(d => d.id === p); 
       this.teachers.splice(index, 1);
     });
-  }
-
-  addSubject() {
-    this.teacher.teacherSubjects.push({'id': this.academicSubjects.filter(n => !this.teacher.teacherSubjects.some(m => m.id == n.id))[0].id});
-  }
-
-  deleteSubject(id: number) {
-    let index = this.teacher.teacherSubjects.findIndex(d => d.id == id); 
-    this.teacher.teacherSubjects.splice(index, 1);
-  }
-
-  viewSubject(id: number) {
-    return this.academicSubjects?.find(d => d.id == id).name; 
-  }
-
-  getAcademicSubjects(p: number) {
-    this.filter = this.teacher.teacherSubjects.filter(m => m.id != p);
-    return this.academicSubjects.filter(n => !this.filter.some(m => m.id == n.id));
-  }
-
-  changeClassState(id: number){
-    if (this.classExist(id)){
-      let index = this.teacher.teacherClasses.findIndex(d => d.id == id); 
-      this.teacher.teacherClasses.splice(index, 1);
-    }
-    else{
-      this.teacher.teacherClasses.push({'id' : id});
-    }      
-  }
-
-  classExist(id: number) {   
-    if (this.teacher.teacherClasses.some(d => d.id == id)) {
-      return true;
-    }
-    return false;       
-  }
-
-  cancel() {
-    this.teacher = new Teacher();
   }
 }  
