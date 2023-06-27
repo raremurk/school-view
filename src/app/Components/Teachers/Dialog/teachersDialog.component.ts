@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {AcademicSubject} from '../../../Models/academicSubject';
 import {Teacher} from '../../../Models/teacher';
@@ -8,7 +8,7 @@ import {Class} from '../../../Models/class';
     templateUrl: 'teachersDialog.component.html',
     styleUrls: ['./teachersDialog.component.scss']
   })
-export class TeachersDialogComponent{
+export class TeachersDialogComponent implements OnInit{ 
   teacherSubjectsIds: number[]= [];
   teacherClassesIds: number[]= [];
   disabled: boolean;
@@ -19,12 +19,13 @@ export class TeachersDialogComponent{
       editMode: number,
       academicSubjects: AcademicSubject[], 
       classes: Class[], 
-      teacher: Teacher}) 
-  {
+      teacher: Teacher}) { }
+
+  ngOnInit(){  
     this.teacherSubjectsIds = this.data.teacher.teacherSubjects.map(p => p.id);
     this.teacherClassesIds = this.data.teacher.teacherClasses.map(p => p.id);
     this.disabled = this.data.editMode == 1;
-  } 
+  }
   
   saveTeacher() {
     this.data.teacher.teacherSubjects = this.teacherSubjectsIds.map(p => ({id: p}));

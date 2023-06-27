@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { Class } from '../../Models/class';
-import { TeacherFullName } from '../../Models/teacherFullName';
-import { DataService } from '../../data.service';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {Class} from '../../Models/class';
+import {TeacherFullName} from '../../Models/teacherFullName';
+import {DataService} from '../../data.service';
      
 @Component({
   templateUrl: './class.component.html',
@@ -45,12 +45,13 @@ export class ClassComponent implements OnInit{
   }
 
   updateClass() {
-    this.dataService.update(this.classes_route, this.class.id, this.class).subscribe();
-    if (this.class.classTeacherId != null){
-      this.class.classTeacherFullName = this.teacherFullNames.find(x => x.id == this.class.classTeacherId).fullName;
-    }
-    Object.assign(this.buf, this.class);    
-    this.cancel();
+    this.dataService.update(this.classes_route, this.class.id, this.class).subscribe(() => {
+      if (this.class.classTeacherId != null){
+        this.class.classTeacherFullName = this.teacherFullNames.find(x => x.id == this.class.classTeacherId).fullName;
+      }
+      Object.assign(this.buf, this.class);    
+      this.cancel();
+    });
   }
 
   cancel() {

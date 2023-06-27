@@ -57,10 +57,10 @@ export class TeachersComponent implements OnInit{
         .subscribe((data: Teacher) => this.teachers.push(data));
       }
       if(result.id > 0){
-        this.dataService.update(this.teachers_route, result.id, result).subscribe();
-        Object.assign(this.editableTeacher, result);
+        this.dataService.update(this.teachers_route, result.id, result).subscribe(() => 
+        Object.assign(this.editableTeacher, result));
       }
-    })
+    });
   }
 
   loadAllAcademicSubjects() {
@@ -76,7 +76,7 @@ export class TeachersComponent implements OnInit{
   }
 
   deleteTeacher(p: number) {
-    this.dataService.delete(this.teachers_route, p).subscribe(data => {
+    this.dataService.delete(this.teachers_route, p).subscribe(() => {
       var index = this.teachers.findIndex(d => d.id === p); 
       this.teachers.splice(index, 1);
     });

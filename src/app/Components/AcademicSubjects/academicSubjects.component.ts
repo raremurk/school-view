@@ -13,9 +13,9 @@ import {DataService} from '../../data.service';
 export class AcademicSubjectsComponent implements OnInit{ 
   title = 'Список предметов';     
   subjects_route = 'academicsubjects';
-  buf: AcademicSubject = new AcademicSubject();
-  academicSubject: AcademicSubject = new AcademicSubject();
   academicSubjects: AcademicSubject[];  
+  academicSubject: AcademicSubject = new AcademicSubject(0, "", 1, 11);
+  editableSubject: AcademicSubject;
   
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
@@ -30,39 +30,33 @@ export class AcademicSubjectsComponent implements OnInit{
         this.dataService.create(this.subjects_route, result)
         .subscribe((data: AcademicSubject) => this.academicSubjects.push(data));
       }
-    })
+    });
   }
 
   loadAllAcademicSubjects() {
     this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
   }
 
+  editAcademicSubject(subject: AcademicSubject) {
+    this.academicSubject = subject;
+    this.editableSubject = { ...subject};    
+  }
+
   updateAcademicSubject() {
-    this.dataService.update(this.subjects_route, this.academicSubject.id, this.academicSubject)
-      .subscribe();
-    Object.assign(this.buf, this.academicSubject); 
-    this.cancel();
-  }
-
-  createAcademicSubject() {
-    this.cancel();
-    this.academicSubject.minClass = 1;
-    this.academicSubject.maxClass = 11;
-  }
-
-  editAcademicSubject(p: AcademicSubject) {
-    this.buf = p;
-    this.academicSubject = { ...p};
-  }
+    this.dataService.update(this.subjects_route, this.editableSubject.id, this.editableSubject).subscribe(() => {
+      Object.assign(this.academicSubject, this.editableSubject); 
+      this.cancel();
+    });
+  }  
 
   deleteAcademicSubject(p: number) {
-    this.dataService.delete(this.subjects_route, p).subscribe(data => {
+    this.dataService.delete(this.subjects_route, p).subscribe(() => {
       var index = this.academicSubjects.findIndex(x => x.id == p);
       this.academicSubjects.splice(index, 1);
     });
   }
 
   cancel() {    
-    this.academicSubject = new AcademicSubject();
+    this.editableSubject.id = 0;
   }
 } 

@@ -17,10 +17,10 @@ export class StudentsComponent implements OnInit{
   classes_route = 'classes';
   min_data = new Date(new Date().setFullYear(new Date().getFullYear() - 20));    
   max_data = new Date(new Date().setFullYear(new Date().getFullYear() - 4));
-  buf: Student = new Student();  
-  student: Student = new Student();
-  students: Student[];  
   classes: Class[];
+  students: Student[];    
+  student: Student = new Student(0, "", "", "", "", "", 1);
+  editableStudent: Student;  
   
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
@@ -36,7 +36,7 @@ export class StudentsComponent implements OnInit{
         this.dataService.create(this.students_route, result)
         .subscribe((data: Student) => this.students.push(data));
       }
-    })
+    });
   }
 
   loadAllClasses() {
@@ -47,35 +47,26 @@ export class StudentsComponent implements OnInit{
     this.dataService.getAll(this.students_route).subscribe((data: Student[]) => this.students = data);
   }
 
-  saveStudent() {
-    if (this.student.id == null) {
-      this.dataService.create(this.students_route, this.student)
-        .subscribe((data: Student) => this.students.push(data));
-    } 
-    else {
-      this.dataService.update(this.students_route, this.student.id, this.student).subscribe();
-      Object.assign(this.buf, this.student);
-    }    
-    this.cancel();
+  editStudent(stud: Student) {
+    this.student = stud;
+    this.editableStudent = { ...stud};    
   }
 
-  createStudent() {
-    this.cancel();
-  }
-
-  editStudent(p: Student) {
-    this.buf = p;
-    this.student = { ...p};
+  updateStudent() {
+    this.dataService.update(this.students_route, this.editableStudent.id, this.editableStudent).subscribe(() => {
+      Object.assign(this.student, this.editableStudent); 
+      this.cancel();
+    });
   }
 
   deleteStudent(p: number) {
-    this.dataService.delete(this.students_route, p).subscribe(data => {
+    this.dataService.delete(this.students_route, p).subscribe(() => {
       var index = this.students.findIndex(x => x.id == p);
       this.students.splice(index, 1);
     });
   }
 
   cancel() {
-    this.student = new Student();
+    this.editableStudent.id = 0;
   }
 } 

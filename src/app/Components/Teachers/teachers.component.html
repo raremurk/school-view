@@ -12,13 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let one of teachers">
-        <td>{{one?.lastName}}</td>    
-        <td>{{one?.firstName}}</td> 
-        <td>{{one?.middleName}}</td>  
+      <tr *ngFor="let teacher of teachers">
+        <td>{{teacher?.lastName}}</td>    
+        <td>{{teacher?.firstName}}</td> 
+        <td>{{teacher?.middleName}}</td>  
         <td class="text-end">
-          <button mat-raised-button color="primary" (click)="openEditDialog(one)">Подробнее</button>
-          <button (click)="deleteTeacher(one.id)" class="btn btn-danger table-btn">Удалить</button>
+          <button mat-raised-button color="primary" (click)="openEditDialog(teacher)">Подробнее</button>
+          <button (click)="deleteTeacher(teacher.id)" class="btn btn-danger table-btn">Удалить</button>
         </td>
       </tr>
     </tbody>     

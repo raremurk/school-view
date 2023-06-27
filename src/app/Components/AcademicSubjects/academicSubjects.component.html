@@ -11,18 +11,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let one of academicSubjects">
-        <ng-template [ngIf]="academicSubject?.id != one.id" [ngIfElse]="edit">
-          <td>{{one?.name}}</td>
+      <tr *ngFor="let subject of academicSubjects">
+        <ng-template [ngIf]="editableSubject?.id != subject.id" [ngIfElse]="edit">
+          <td>{{subject?.name}}</td>
           <td>
             <mat-slider min="1" max="11" step="1" showTickMarks discrete disabled>
-              <input matSliderStartThumb [value]="one.minClass">
-              <input matSliderEndThumb [value]="one.maxClass">
+              <input matSliderStartThumb [value]="subject.minClass">
+              <input matSliderEndThumb [value]="subject.maxClass">
             </mat-slider>
           </td>
           <td class="text-end">
-            <button (click)="editAcademicSubject(one)" class="btn light-blue table-btn">Изменить</button>
-            <button (click)="deleteAcademicSubject(one.id)" class="btn btn-danger table-btn">Удалить</button>
+            <button (click)="editAcademicSubject(subject)" class="btn light-blue table-btn">Изменить</button>
+            <button (click)="deleteAcademicSubject(subject.id)" class="btn btn-danger table-btn">Удалить</button>
           </td>
         </ng-template>
       </tr>
@@ -32,12 +32,12 @@
 
 <ng-template #edit>
   <td>
-    <input [(ngModel)]="academicSubject.name" type="text" class="form-control" placeholder="Введите название">
+    <input [(ngModel)]="editableSubject.name" type="text" class="form-control" placeholder="Введите название">
   </td>
   <td>
     <mat-slider min="1" max="11" step="1" showTickMarks discrete>
-      <input matSliderStartThumb [(value)]="academicSubject.minClass">
-      <input matSliderEndThumb [(value)]="academicSubject.maxClass">
+      <input matSliderStartThumb [(value)]="editableSubject.minClass">
+      <input matSliderEndThumb [(value)]="editableSubject.maxClass">
     </mat-slider>
   </td>
   <td class="text-end">

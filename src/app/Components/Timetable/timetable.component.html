@@ -7,7 +7,7 @@
     </div>
     <div class="col-8"> 
       <mat-chip-listbox>
-        <mat-chip-option *ngFor="let class of classes" routerLink="../{{class.id}}" selected="{{class.id == id}}">{{class.id}}</mat-chip-option>
+        <mat-chip-option *ngFor="let class of classes" routerLink="../{{class.id}}" selected="{{class.id == id}}" selectable="false">{{class.id}}</mat-chip-option>
       </mat-chip-listbox>
     </div>
   </div>

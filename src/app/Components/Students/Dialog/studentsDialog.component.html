@@ -3,7 +3,7 @@
   <button mat-icon-button class="close-button" mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
-  <div class="input-form">
+  <div class="text-center" style="width: 430px; margin-top: 15px;">
     <mat-form-field>
       <mat-label>Фамилия</mat-label>
       <input matInput [(ngModel)]="student.lastName">
@@ -35,8 +35,6 @@
         <mat-option *ngFor="let class of classes" [value]="class">{{class}}</mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
-  <div style="text-align: center">
     <button mat-raised-button (click)="createStudent()" class="emerald-button">Добавить</button>
   </div>     
 </div>    
