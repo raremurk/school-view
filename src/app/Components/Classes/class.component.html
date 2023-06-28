@@ -30,7 +30,7 @@
         </div>            
         <div class="row">
           <div class="col">
-            <button routerLink="../students" class="btn light-blue btn-sm">Ученики</button>   
+            <button routerLink="/students" [state]="{ classId: one.id }" class="btn light-blue btn-sm">Ученики</button>   
           </div>
           <div class="col text-end">
             <button routerLink="../timetable/{{one.id}}" class="btn light-blue btn-sm">Расписание</button> 

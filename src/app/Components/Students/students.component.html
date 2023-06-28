@@ -1,67 +1,118 @@
-<div class="container">
-  <h2 class="text-center">{{title}}</h2>   
-  <table class="table align-middle">
-    <thead>
-      <tr>
-        <th class="col-2">Фамилия</th>
-        <th class="col-2">Имя</th>
-        <th class="col-2">Отчество</th>
-        <th class="col-2">Дата рождения</th>
-        <th class="col">Пол</th>
-        <th class="col">Класс</th>
-        <th class="col-2 text-end">
-          <button mat-raised-button color="primary" (click)="openDialog()">Добавить</button>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let student of students">
-        <ng-template [ngIf]="editableStudent?.id != student.id" [ngIfElse]="edit">
-          <td>{{student?.lastName}}</td>
-          <td>{{student?.firstName}}</td>
-          <td>{{student?.middleName}}</td>            
-          <td>{{student?.birthday | date:'dd.MM.yyyy'}}</td>
-          <td>
-            <span *ngIf="student?.gender == 'M'">Мужской</span>
-            <span *ngIf="student?.gender == 'W'">Женский</span>
-          </td> 
-          <td>{{student?.classId}}</td>
-          <td class="text-end">
-            <button (click)="editStudent(student)" class="btn light-blue table-btn">Изменить</button>
-            <button (click)="deleteStudent(student.id)" class="btn btn-danger table-btn">Удалить</button>
-          </td>
-        </ng-template>
-      </tr>
-    </tbody> 
-  </table>   
-</div>
+<div class="container-fluid">
+  <h2 class="text-center">{{title}}</h2>
+  <table style="margin-top: 25px"><tr>
+    <td *ngFor="let filter of filters" class="form-field-density-5" style="width: 220px; text-align: center;">
+      <mat-form-field style="width: 190px" appearance="outline" floatLabel="always">
+      <mat-label>{{filter.label}}</mat-label>
+      <input matInput [(ngModel)]="filter.value" (keyup)="applyFilter()" placeholder="...">
+      <button *ngIf="filter.value" matSuffix mat-icon-button (click)="clear(filter)"><mat-icon>close</mat-icon></button>
+    </mat-form-field></td>
   
-<ng-template #edit>
-    <td>
-      <input [(ngModel)]="editableStudent.lastName" type="text" class="form-control form-control-sm" placeholder="Введите фамилию">
+    <td style="width: 140px; text-align: center;"><mat-chip-listbox style="display: inline-block">
+      <mat-chip-option (click)="changeGenderFilter('M')"><mat-icon class="male-icon">male</mat-icon></mat-chip-option>
+      <mat-chip-option (click)="changeGenderFilter('W')"><mat-icon class="female-icon">female</mat-icon></mat-chip-option>
+    </mat-chip-listbox></td>
+
+    <td style="width: 120px;"><mat-form-field class="form-field-density-5" style="width: 110px" appearance="outline" floatLabel="always">
+      <mat-label>Класс</mat-label>
+      <mat-select [(ngModel)]="classIdFilter" (selectionChange)="applyFilter()" placeholder="...">
+        <mat-option *ngFor="let class of classes" [value]="class.id">{{class.id}}</mat-option>
+      </mat-select>
+      <button *ngIf="classIdFilter" matSuffix mat-icon-button (click)="clearClassId($event)"><mat-icon>close</mat-icon></button>
+    </mat-form-field></td>
+
+    <td style="text-align: end">
+      <button mat-raised-button color="primary" (click)="openDialog()">Добавить</button>
     </td>
-    <td>
-      <input [(ngModel)]="editableStudent.firstName" type="text" class="form-control form-control-sm" placeholder="Введите имя">
-    </td>
-    <td>
-      <input [(ngModel)]="editableStudent.middleName" type="text" class="form-control form-control-sm" placeholder="Введите отчество">
-    </td>
-    <td>
-      <input [(ngModel)]="editableStudent.birthday" type="date" class="form-control form-control-sm" min="{{min_data | date:'yyyy-MM-dd'}}" max="{{max_data | date:'yyyy-MM-dd'}}">
-    </td>
-    <td>
-      <select [(ngModel)]="editableStudent.gender" id="inputGender" class="form-select form-select-sm">  
-        <option value="M">Мужской</option>
-        <option value="W">Женский</option>
-      </select>
-    </td>         
-    <td>
-      <select [(ngModel)]="editableStudent.classId" class="form-select form-select-sm">  
-        <option *ngFor="let class of classes" value="{{class.id}}">{{class.id}}</option>
-      </select> 
-    </td>
-    <td class="text-end">
-        <button (click)="updateStudent()" class="btn btn-success table-btn">Сохранить</button>
-        <button (click)="cancel()" class="btn btn-warning table-btn">Отмена</button>
-    </td>
-</ng-template>
+  </tr></table>
+
+  <div class="table-density-2">
+    <table mat-table [dataSource]="dataSource" matSort>
+  
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-input"> Фамилия </th>    
+        <td mat-cell *matCellDef="let row" [ngSwitch]="row.id">
+          <mat-form-field *ngSwitchCase="editableStudent.id" class="form-field-density-5" style="width: 180px;">
+            <input matInput [(ngModel)]="editableStudent.lastName" placeholder="Введите фамилию">
+          </mat-form-field>
+          <span *ngSwitchDefault style="margin-left: 16px;">{{row.lastName}}</span></td>
+      </ng-container>
+  
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-input"> Имя </th>
+        <td mat-cell *matCellDef="let row" [ngSwitch]="row.id">
+          <mat-form-field *ngSwitchCase="editableStudent.id" class="form-field-density-5" style="width: 180px">
+            <input matInput [(ngModel)]="editableStudent.firstName" placeholder="Введите имя">
+          </mat-form-field>
+          <span *ngSwitchDefault style="margin-left: 16px;">{{row.firstName}}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="middleName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-input"> Отчество </th>
+        <td mat-cell *matCellDef="let row" [ngSwitch]="row.id">
+          <mat-form-field *ngSwitchCase="editableStudent.id" class="form-field-density-5" style="width: 180px">
+            <input matInput [(ngModel)]="editableStudent.middleName" placeholder="Введите отчество">
+          </mat-form-field>
+          <span *ngSwitchDefault style="margin-left: 16px;">{{row.middleName}}</span></td>
+      </ng-container>
+  
+      <ng-container matColumnDef="birthday">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-input"> Дата рождения </th>
+        <td mat-cell *matCellDef="let row" [ngSwitch]="row.id">
+          <mat-form-field *ngSwitchCase="editableStudent.id" class="form-field-density-5" style="width: 180px">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="editableStudent.birthday" placeholder="Введите дату">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <span *ngSwitchDefault style="margin-left: 16px;">{{row.birthday | date:'dd.MM.yyyy'}}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef style="width: 140px;"> Пол </th>
+        <td mat-cell *matCellDef="let row" [ngSwitch]="row.id">
+          <mat-button-toggle-group *ngSwitchCase="editableStudent.id" [(ngModel)]="editableStudent.gender" class="form-field-density-4">
+            <mat-button-toggle value="M"><mat-icon class="male-icon">male</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="W"><mat-icon class="female-icon">female</mat-icon></mat-button-toggle>
+          </mat-button-toggle-group>
+          <div *ngSwitchDefault>
+            <mat-icon *ngIf="row.gender == 'M'" class="male-icon">male</mat-icon>
+            <mat-icon *ngIf="row.gender == 'W'" class="female-icon">female</mat-icon>
+          </div></td>
+      </ng-container>
+
+      <ng-container matColumnDef="classId">
+        <th mat-header-cell *matHeaderCellDef class="icon-button-density-5" style="width: 120px;"> Класс </th>
+        <td mat-cell *matCellDef="let row" [ngSwitch]="row.id">
+          <mat-form-field *ngSwitchCase="editableStudent.id" class="form-field-density-5" style="width: 80px">
+            <mat-select [(ngModel)]="editableStudent.classId">
+              <mat-option *ngFor="let class of classes" [value]="class.id">{{class.id}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span *ngSwitchDefault style="margin-left: 16px;">{{row.classId}}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="operations">
+        <th mat-header-cell *matHeaderCellDef> Операции </th>
+        <td mat-cell *matCellDef="let row" [ngSwitch]="row.id">
+          <div *ngSwitchCase="editableStudent.id">
+            <button (click)="updateStudent()" class="btn btn-success table-btn">Сохранить</button>
+            <button (click)="cancel()" class="btn btn-warning table-btn">Отмена</button>
+          </div>
+          <div *ngSwitchDefault>
+            <button (click)="editStudent(row)" class="btn light-blue table-btn">Изменить</button>
+            <button (click)="deleteStudent(row.id)" class="btn btn-danger table-btn">Удалить</button>
+          </div>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="7" style="text-align: center; font-weight: bold;">Нет данных соответствующих фильтру</td>
+      </tr>
+    </table>
+  
+    <mat-paginator class="form-field-density-5" [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>

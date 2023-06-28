@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 *{
     font-family: 'Roboto', sans-serif;
 }
@@ -31,6 +33,15 @@ th{
 }
 
 .mat-button-toggle-label-content{
-    line-height: 38px !important;
+    line-height: 32px !important;
     padding: 0 !important;
+}
+
+.table-density-2{
+    @include mat.table-density(-2);
+}
+
+.form-field-density-5{
+    @include mat.form-field-density(-5);
+    @include mat.icon-button-density(-4);  
 }

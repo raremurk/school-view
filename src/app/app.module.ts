@@ -18,6 +18,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule, MatPaginatorIntl} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
@@ -34,6 +37,7 @@ import {NotFoundComponent}   from './Components/Not-found/not-found.component';
 import {HomeComponent}   from './Components/Home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {SnackbarInterceptor} from './snackbar.interceptor';
+import {getRussianPaginatorIntl} from './paginator.internationalization';
 
 @NgModule({
     imports: [
@@ -56,7 +60,10 @@ import {SnackbarInterceptor} from './snackbar.interceptor';
         MatRadioModule,
         MatGridListModule,
         MatButtonToggleModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule
     ],
     declarations: [
         AppComponent,
@@ -75,6 +82,7 @@ import {SnackbarInterceptor} from './snackbar.interceptor';
         {provide: HTTP_INTERCEPTORS, useClass: SnackbarInterceptor, multi: true},
         {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {subscriptSizing: 'dynamic'}},
+        {provide: MatPaginatorIntl, useValue: getRussianPaginatorIntl()},
         Title 
     ],
     bootstrap:    [ AppComponent ]
