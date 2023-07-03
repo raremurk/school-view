@@ -1,47 +1,46 @@
-<div class="container"> 
+<div class="container-fluid"> 
   <h2 class="text-center">{{title}}</h2> 
-  <table class="table align-middle">
-    <thead>
-      <tr>
-        <th class="col-3">Название предмета</th>
-        <th class="col-7 text-center">Классы, в которых он изучается</th>
-        <th class="col-2 text-end">
-          <button mat-raised-button color="primary" (click)="openDialog()">Добавить</button>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let subject of academicSubjects">
-        <ng-template [ngIf]="editableSubject?.id != subject.id" [ngIfElse]="edit">
-          <td>{{subject?.name}}</td>
-          <td>
-            <mat-slider min="1" max="11" step="1" showTickMarks discrete disabled>
-              <input matSliderStartThumb [value]="subject.minClass">
-              <input matSliderEndThumb [value]="subject.maxClass">
-            </mat-slider>
-          </td>
-          <td class="text-end">
-            <button (click)="editAcademicSubject(subject)" class="btn light-blue table-btn">Изменить</button>
-            <button (click)="deleteAcademicSubject(subject.id)" class="btn btn-danger table-btn">Удалить</button>
-          </td>
-        </ng-template>
-      </tr>
-    </tbody>       
-  </table>   
-</div>
+  <table mat-table [dataSource]="dataSource" matSort>
 
-<ng-template #edit>
-  <td>
-    <input [(ngModel)]="editableSubject.name" type="text" class="form-control" placeholder="Введите название">
-  </td>
-  <td>
-    <mat-slider min="1" max="11" step="1" showTickMarks discrete>
-      <input matSliderStartThumb [(value)]="editableSubject.minClass">
-      <input matSliderEndThumb [(value)]="editableSubject.maxClass">
-    </mat-slider>
-  </td>
-  <td class="text-end">
-    <button (click)="updateAcademicSubject()" class="btn btn-success table-btn">Сохранить</button>
-    <button (click)="cancel()" class="btn btn-warning table-btn">Отмена</button>
-  </td>
-</ng-template>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-3 text-input"> Название предмета </th>
+      <td mat-cell *matCellDef="let subject" [ngSwitch]="subject.id">
+        <mat-form-field *ngSwitchCase="editableSubject.id" class="form-field-density-5" style="width: 200px;">
+          <input matInput [(ngModel)]="editableSubject.name" placeholder="Введите название">
+        </mat-form-field>
+        <span *ngSwitchDefault style="margin-left: 16px;">{{subject.name}}</span></td>
+    </ng-container>
+
+    <ng-container matColumnDef="classes">
+      <th mat-header-cell *matHeaderCellDef class="col-7"> Классы, в которых он изучается </th>
+      <td mat-cell *matCellDef="let subject" [ngSwitch]="subject.id">  
+        <mat-slider *ngSwitchCase="editableSubject.id" min="1" max="11" step="1" discrete>
+          <input matSliderStartThumb [(value)]="editableSubject.minClass">
+          <input matSliderEndThumb [(value)]="editableSubject.maxClass">
+        </mat-slider>
+        <mat-button-toggle-group *ngSwitchDefault disabled multiple>
+          <mat-button-toggle *ngFor="let class of classes" class="border-0" checked="{{class >= subject.minClass && subject.maxClass >= class}}">
+            <span *ngIf="class == subject.minClass || class == subject.maxClass">{{class}}</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group></td>
+    </ng-container>
+
+    <ng-container matColumnDef="operations">
+      <th mat-header-cell *matHeaderCellDef class="col-2">
+        <button mat-raised-button color="primary" (click)="openDialog()">Добавить</button>
+      </th>
+      <td mat-cell *matCellDef="let subject" [ngSwitch]="subject.id">   
+        <div *ngSwitchCase="editableSubject.id">
+          <button (click)="updateAcademicSubject()" class="btn btn-success table-btn">Сохранить</button>
+          <button (click)="cancel()" class="btn btn-warning table-btn">Отмена</button>
+        </div>
+        <div *ngSwitchDefault>
+          <button (click)="editAcademicSubject(subject)" class="btn light-blue table-btn">Изменить</button>
+          <button (click)="deleteAcademicSubject(subject.id)" class="btn btn-danger table-btn">Удалить</button>
+        </div></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

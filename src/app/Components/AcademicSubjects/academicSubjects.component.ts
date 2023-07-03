@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 import {Title} from '@angular/platform-browser';
 import {MatDialog} from '@angular/material/dialog';
 import {AcademicSubject} from '../../Models/academicSubject';
@@ -13,10 +15,13 @@ import {DataService} from '../../data.service';
 export class AcademicSubjectsComponent implements OnInit{ 
   title = 'Список предметов';     
   subjects_route = 'academicsubjects';
-  academicSubjects: AcademicSubject[];  
   academicSubject: AcademicSubject = new AcademicSubject(0, "", 1, 11);
-  editableSubject: AcademicSubject;
-  
+  editableSubject: AcademicSubject = new AcademicSubject(0, "", 1, 11);
+  classes: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  dataSource: MatTableDataSource<AcademicSubject>;
+  displayedColumns: string[] = ['name', 'classes', 'operations'];
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
@@ -28,18 +33,21 @@ export class AcademicSubjectsComponent implements OnInit{
     this.dialog.open(AcademicSubjectsDialogComponent).afterClosed().subscribe((result: AcademicSubject)=>{
       if(result.id == 0){
         this.dataService.create(this.subjects_route, result)
-        .subscribe((data: AcademicSubject) => this.academicSubjects.push(data));
+        .subscribe((createdSubject: AcademicSubject) => this.dataSource.data = [...this.dataSource.data, createdSubject]);
       }
     });
   }
-
+    
   loadAllAcademicSubjects() {
-    this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
+    this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
+    });    
   }
 
   editAcademicSubject(subject: AcademicSubject) {
     this.academicSubject = subject;
-    this.editableSubject = { ...subject};    
+    this.editableSubject = { ...subject}; 
   }
 
   updateAcademicSubject() {
@@ -51,8 +59,9 @@ export class AcademicSubjectsComponent implements OnInit{
 
   deleteAcademicSubject(p: number) {
     this.dataService.delete(this.subjects_route, p).subscribe(() => {
-      var index = this.academicSubjects.findIndex(x => x.id == p);
-      this.academicSubjects.splice(index, 1);
+      var index = this.dataSource.data.findIndex(x => x.id == p);
+      this.dataSource.data.splice(index, 1);
+      this.dataSource.data = [...this.dataSource.data];
     });
   }
 

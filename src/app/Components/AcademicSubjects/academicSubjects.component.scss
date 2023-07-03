@@ -1,3 +1,38 @@
 mat-slider{
+    width: 97%;
+}
+
+.text-input{
+    padding-left: 32px;
+    width: 220px;
+}
+
+th{
+    font-weight: bold;
+}
+  
+.mat-column-classes {
+    overflow: initial;
+    text-align: center;
+}
+
+.mat-column-operations{
+    text-align: end;
+}
+
+mat-button-toggle-group{
     width: 100%;
+    border-radius: 0;
+    border: 0;
+}
+
+mat-button-toggle{
+    width: 100%;
+    height: 24px;
+    line-height: 26px;
+}
+
+.mat-button-toggle-checked{
+    background-color: #3F51B5;
+    color: white;
 }
