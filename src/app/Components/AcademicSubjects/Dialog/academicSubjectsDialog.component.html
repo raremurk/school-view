@@ -1,16 +1,16 @@
 <div mat-dialog-content>
-  <h3>Добавление предмета</h3>
-  <button mat-icon-button class="close-button" mat-dialog-close>
-    <mat-icon>close</mat-icon>
-  </button>
-  <div class="text-center" style="margin-top: 20px">
-    <mat-form-field style="width: 100%; margin-bottom: 15px;">
+  <div class="icon-button-density-5 mb-3">
+    <h3>Добавление предмета</h3>
+    <button mat-icon-button class="close-button" mat-dialog-close><mat-icon>close</mat-icon></button>
+  </div>
+  <div class="text-center">
+    <mat-form-field>
       <mat-label>Название предмета</mat-label>
       <input matInput [(ngModel)]="academicSubject.name">
     </mat-form-field>
     <div>
-      <label>Классы, в которых он изучается</label>
-      <mat-slider style="width: 96%" min="1" max="11" step="1" showTickMarks discrete>
+      <label class="fw-bold">Классы, в которых он изучается</label>
+      <mat-slider min="1" max="11" step="1" showTickMarks discrete>
         <input matSliderStartThumb [(value)]="academicSubject.minClass">
         <input matSliderEndThumb [(value)]="academicSubject.maxClass">
       </mat-slider>   

@@ -1,13 +1,19 @@
 .close-button{
     position: absolute;
-    top: 26px;
+    top: 24px;
     right: 24px;
-    height: 24px;
-    width: 24px;
-    padding: 0;
 }
 
 .emerald-button{
     background-color: #58BC82;
     color: white;
+}
+
+mat-form-field{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+mat-slider{
+    width: 95%
 }

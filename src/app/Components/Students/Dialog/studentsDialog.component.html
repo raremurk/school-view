@@ -1,9 +1,9 @@
 <div mat-dialog-content>
-  <h3>Добавление ученика</h3>
-  <button mat-icon-button class="close-button" mat-dialog-close>
-    <mat-icon>close</mat-icon>
-  </button>
-  <div class="text-center" style="width: 430px; margin-top: 15px;">
+  <div class="icon-button-density-5 mb-3">
+    <h3>Добавление ученика</h3>
+    <button mat-icon-button class="close-button" mat-dialog-close><mat-icon>close</mat-icon></button>
+  </div>
+  <div class="text-center" style="width: 430px">
     <mat-form-field>
       <mat-label>Фамилия</mat-label>
       <input matInput [(ngModel)]="student.lastName">
