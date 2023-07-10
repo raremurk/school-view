@@ -11,12 +11,11 @@ import {Class} from '../../../Models/class';
 export class TeachersDialogComponent implements OnInit{ 
   teacherSubjectsIds: number[]= [];
   teacherClassesIds: number[]= [];
-  disabled: boolean;
 
   constructor(public dialogRef: MatDialogRef<TeachersDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       dialogTitle: string, 
-      editMode: number,
+      editMode: boolean,
       academicSubjects: AcademicSubject[], 
       classes: Class[], 
       teacher: Teacher}) { }
@@ -24,19 +23,22 @@ export class TeachersDialogComponent implements OnInit{
   ngOnInit(){  
     this.teacherSubjectsIds = this.data.teacher.teacherSubjects.map(p => p.id);
     this.teacherClassesIds = this.data.teacher.teacherClasses.map(p => p.id);
-    this.disabled = this.data.editMode == 1;
   }
   
   saveTeacher() {
-    this.data.teacher.teacherSubjects = this.teacherSubjectsIds.map(p => ({id: p}));
+    if(this.data.teacher.position == 'Учитель старших классов'){
+      this.data.teacher.teacherSubjects = this.teacherSubjectsIds.map(p => ({id: p}));
+    }
+    else{
+      this.data.teacher.teacherSubjects = [];
+    }
     this.data.teacher.teacherClasses = this.teacherClassesIds.map(p => ({id: p}));
     this.dialogRef.close(this.data.teacher);
   }
 
   enableEdit(){
     this.data.dialogTitle = 'Редактирование данных';
-    this.data.editMode = 2;
-    this.disabled = false;
+    this.data.editMode = true;
   }
 
   removeSubject(id: number) {

@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
 import {Title} from '@angular/platform-browser';
 import {TeachersDialogComponent} from './Dialog/teachersDialog.component';
@@ -16,14 +18,15 @@ export class TeachersComponent implements OnInit{
   title = 'Список учителей';
   teachers_route = 'teachers';
   subjects_route = 'academicsubjects';
-  classes_route = 'classes';
-  positions = ['Учитель','Учитель мл. классов'];  
+  classes_route = 'classes'; 
   academicSubjects: AcademicSubject[];
   classes: Class[];
-  teachers: Teacher[]; 
-  teacher: Teacher = new Teacher(0, "", "", "", "");
+  teacher: Teacher = new Teacher(0, "", "", "", "Учитель старших классов");
   editableTeacher: Teacher;
-     
+  dataSource: MatTableDataSource<Teacher>;
+  displayedColumns: string[] = ['lastName', 'firstName', 'middleName', 'operations'];
+  @ViewChild(MatSort) sort: MatSort;
+   
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
@@ -34,18 +37,18 @@ export class TeachersComponent implements OnInit{
   }
 
   openCreateDialog() {
-    this.teacher = new Teacher(0, "", "", "", "");
-    this.openDialog('Добавление учителя', 0); 
+    this.teacher = new Teacher(0, "", "", "", "Учитель старших классов");
+    this.openDialog('Добавление учителя', true); 
   }
 
   openEditDialog(teacherToEdit: Teacher) {
     this.editableTeacher = teacherToEdit;
     this.teacher = JSON.parse(JSON.stringify(teacherToEdit));
-    this.openDialog('Полная информация', 1);   
+    this.openDialog('Полная информация', false);   
   }
 
-  openDialog(title: string, mode: number){
-    this.dialog.open(TeachersDialogComponent, { data: { 
+  openDialog(title: string, mode: boolean){
+    this.dialog.open(TeachersDialogComponent, { autoFocus: 'dialog', data: { 
       dialogTitle : title, 
       editMode: mode,
       academicSubjects : this.academicSubjects, 
@@ -54,7 +57,7 @@ export class TeachersComponent implements OnInit{
       .afterClosed().subscribe((result: Teacher)=>{
       if(result.id == 0){
         this.dataService.create(this.teachers_route, result)
-        .subscribe((data: Teacher) => this.teachers.push(data));
+        .subscribe((createdTeacher: Teacher) => this.dataSource.data = [...this.dataSource.data, createdTeacher]);
       }
       if(result.id > 0){
         this.dataService.update(this.teachers_route, result.id, result).subscribe(() => 
@@ -72,13 +75,17 @@ export class TeachersComponent implements OnInit{
   }
 
   loadAllTeachers() {
-    this.dataService.getAll(this.teachers_route).subscribe((data: Teacher[]) => this.teachers = data);
+    this.dataService.getAll(this.teachers_route).subscribe((data: Teacher[]) => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
+    });   
   }
 
   deleteTeacher(p: number) {
     this.dataService.delete(this.teachers_route, p).subscribe(() => {
-      var index = this.teachers.findIndex(d => d.id === p); 
-      this.teachers.splice(index, 1);
+      var index = this.dataSource.data.findIndex(x => x.id == p);
+      this.dataSource.data.splice(index, 1);
+      this.dataSource.data = [...this.dataSource.data];
     });
   }
 }  
