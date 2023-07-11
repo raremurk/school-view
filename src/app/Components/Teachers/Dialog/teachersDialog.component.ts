@@ -26,7 +26,7 @@ export class TeachersDialogComponent implements OnInit{
   }
   
   saveTeacher() {
-    if(this.data.teacher.position == 'Учитель старших классов'){
+    if(this.data.teacher.specialization == 'Учитель старших классов'){
       this.data.teacher.teacherSubjects = this.teacherSubjectsIds.map(p => ({id: p}));
     }
     else{

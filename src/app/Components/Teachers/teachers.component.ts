@@ -51,7 +51,7 @@ export class TeachersComponent implements OnInit{
     this.dialog.open(TeachersDialogComponent, { autoFocus: 'dialog', data: { 
       dialogTitle : title, 
       editMode: mode,
-      academicSubjects : this.academicSubjects, 
+      academicSubjects : this.academicSubjects.filter(s => s.maxClass > 4), 
       classes: this.classes, 
       teacher : this.teacher }})
       .afterClosed().subscribe((result: Teacher)=>{

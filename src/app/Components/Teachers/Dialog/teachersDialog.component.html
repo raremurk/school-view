@@ -24,12 +24,12 @@
       <div *ngSwitchDefault class="name-div">{{data.teacher.middleName}}</div></td>
     <td class="text-center align-top" [ngSwitch]="data.editMode">    
       <label class="fw-bold mb-1">Классы</label>
-      <mat-button-toggle-group [(ngModel)]="data.teacher.position" [disabled]="!data.editMode">
+      <mat-button-toggle-group [(ngModel)]="data.teacher.specialization" [disabled]="!data.editMode">
         <mat-button-toggle value="Учитель начальных классов">Начальные</mat-button-toggle>
         <mat-button-toggle value="Учитель старших классов">Старшие</mat-button-toggle>
       </mat-button-toggle-group>
       <label class="fw-bold mb-1" style="margin-top: 10px;">Учебные предметы</label>
-      <div [ngSwitch]="data.teacher.position">
+      <div [ngSwitch]="data.teacher.specialization">
         <mat-form-field *ngSwitchCase="'Учитель старших классов'" class="form-field-density-5">
           <mat-select [(ngModel)]="teacherSubjectsIds" placeholder="Выберите предметы" multiple [disabled]="!data.editMode">        
             <mat-select-trigger>
