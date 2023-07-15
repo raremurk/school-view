@@ -21,23 +21,23 @@ export class TeachersComponent implements OnInit{
   classes_route = 'classes'; 
   academicSubjects: AcademicSubject[];
   classes: Class[];
-  teacher: Teacher = new Teacher(0, "", "", "", "Учитель старших классов");
+  teacher: Teacher;
   editableTeacher: Teacher;
   dataSource: MatTableDataSource<Teacher>;
-  displayedColumns: string[] = ['lastName', 'firstName', 'middleName', 'operations'];
+  displayedColumns: string[] = ['lastName', 'firstName', 'middleName', 'subjects', 'operations'];
   @ViewChild(MatSort) sort: MatSort;
    
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){  
-    this.titleService.setTitle(this.title);   
+    this.titleService.setTitle(this.title);
+    this.loadAllAcademicSubjects();    
     this.loadAllClasses(); 
-    this.loadAllTeachers();  
-    this.loadAllAcademicSubjects();  
+    this.loadAllTeachers();     
   }
 
   openCreateDialog() {
-    this.teacher = new Teacher(0, "", "", "", "Учитель старших классов");
+    this.teacher = new Teacher(0, "", "", "", "Учитель старших классов", "");
     this.openDialog('Добавление учителя', true); 
   }
 
@@ -87,5 +87,9 @@ export class TeachersComponent implements OnInit{
       this.dataSource.data.splice(index, 1);
       this.dataSource.data = [...this.dataSource.data];
     });
+  }
+
+  getSubjectNameById(id: number) {
+    return this.academicSubjects.find(d => d.id == id).name; 
   }
 }  

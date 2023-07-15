@@ -2,6 +2,39 @@ th{
     font-weight: bold;
 }
 
+.mat-column-firstName, .mat-column-lastName, .mat-column-middleName{
+    min-width: 160px;
+    padding-left: 31px;
+}
+
+.mat-column-subjects{
+    min-width: 360px;
+    overflow: initial;
+    text-align: center;
+}
+
 .mat-column-operations{
+    min-width: 290px;
+    width: 290px;    
     text-align: end;
+}
+
+.subject-div{
+    width: 100%; 
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.primary-color{
+    background-color: #3F51B5;
+    color: white;
+}
+
+.accent-color{
+    background-color: #FF4080;
+    color: white;
+}
+
+.basic-color{
+    background-color: #E0E0E0;
 }

@@ -10,10 +10,6 @@
     padding: 3px 6px;
 } 
 
-th{
-    font-size: small;
-}
-
 .light-blue{
     color: white;
     background-color: rgb(75, 175, 200);
@@ -50,4 +46,8 @@ th{
 
 .icon-button-density-5{
     @include mat.icon-button-density(-5);  
+}
+
+.button-density-2{
+    @include mat.button-density(-2);  
 }
