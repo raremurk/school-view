@@ -1,32 +1,54 @@
-table{
-  width: 100%;
-}
-
 th{
   font-weight: bold;
 }
 
+.mat-column-firstName, .mat-column-lastName, .mat-column-middleName, .mat-column-birthday,
+.mat-column-lastNameFilter, .mat-column-firstNameFilter, .mat-column-middleNameFilter, .mat-column-birthdayFilter{
+  min-width: 200px;
+  padding: 0 0 0 16px;
+  mat-form-field{
+    width: 184px;
+    margin-left: -16px;
+  }
+}
+
+.mat-column-gender, .mat-column-genderFilter{
+  min-width: 90px;
+  padding: 0;
+}
+
+.mat-column-gender{
+  padding: 0 0 0 22px;
+  mat-button-toggle-group{
+    margin-left: -21px;
+  }
+}
+
 mat-button-toggle{
   height: 34px;
+  width: 34px;
   line-height: 32px;
-  width: 35px; 
 }
 
-.male-icon{
-  color: #3F51B5;
+.male-color{ color: #3F51B5 }
+.female-color{ color: #FF4080 }
+
+.gender-icon{
   vertical-align: middle;
+  margin-left: 2px;
 }
 
-.female-icon{
-  color: #FF4080;
-  vertical-align: middle;
+.mat-column-classId, .mat-column-classIdFilter{
+  min-width: 130px;
+  mat-form-field{ 
+    width: 110px;
+    margin-left: -16px;
+  }
 }
 
-.text-input{
-  padding-left: 32px;
-  width: 220px;
-}
-
-.mat-column-gender, .mat-column-operations{
-  text-align: center;
+.mat-column-operations{
+  min-width: 240px; 
+  width: 240px;    
+  padding: 0;
+  text-align: end;
 }

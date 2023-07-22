@@ -25,13 +25,15 @@ export class StudentsComponent implements OnInit{
   student: Student = new Student(0, "", "", "", "", "", 1);
   editableStudent: Student= new Student(0, "", "", "", "", "", 1); 
 
+  displayedFilterColumns: string[] = ['lastNameFilter', 'firstNameFilter', 'middleNameFilter', 'birthdayFilter', 
+  'genderFilter', 'classIdFilter'];
   displayedColumns: string[] = ['lastName', 'firstName', 'middleName', 'birthday', 'gender', 'classId', 'operations'];
 
   
-  lastNameFilter = { label: 'Фильтр по фамилии', value: '' };
-  firstNameFilter = { label: 'Фильтр по имени', value: '' };
-  middleNameFilter = { label: 'Фильтр по отчеству', value: '' };
-  birthdayFilter = { label: 'Фильтр по дате рождения', value: '' };
+  lastNameFilter = { label: 'Фильтр по фамилии', value: '' , columnDef: 'lastNameFilter'};
+  firstNameFilter = { label: 'Фильтр по имени', value: '', columnDef: 'firstNameFilter' };
+  middleNameFilter = { label: 'Фильтр по отчеству', value: '' , columnDef: 'middleNameFilter'};
+  birthdayFilter = { label: 'Фильтр по дате рождения', value: '', columnDef: 'birthdayFilter' };
   genderFilter: string = '';
   classIdFilter: string = '';
   filters = [this.lastNameFilter, this.firstNameFilter, this.middleNameFilter, this.birthdayFilter];
@@ -112,8 +114,12 @@ export class StudentsComponent implements OnInit{
     }
   } 
 
-  changeGenderFilter(gender: string){
-    this.genderFilter = this.genderFilter.includes(gender) ? '' : gender;
+  toggleChange(event: any) {
+    const toggle = event.source;
+    if (toggle && event.value.some(item => item == toggle.value)) {
+        toggle.buttonToggleGroup.value = [toggle.value];
+    }
+    this.genderFilter = this.genderFilter.includes(toggle.value) ? '' : toggle.value;
     this.applyFilter();
   }
 

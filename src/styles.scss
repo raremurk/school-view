@@ -4,15 +4,31 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.table-btn{
-    font-size: small;
-    margin: 0px 2px;
-    padding: 3px 6px;
-} 
+.table-button-1{
+    width: 125px;
+    margin-right: 4px;
+    letter-spacing: 0;
+
+}
+
+.table-button-2{
+    width: 105px;
+    letter-spacing: 0;
+}
 
 .light-blue{
     color: white;
     background-color: rgb(75, 175, 200);
+}
+
+.mat-green{
+    background-color: #58BC82 !important;
+    color: white !important;
+}
+  
+.mat-grey{
+    background-color: #6c8794 !important;
+    color: white !important;
 }
 
 .form-sel-x{
@@ -41,7 +57,7 @@
 
 .form-field-density-5{
     @include mat.form-field-density(-5);
-    @include mat.icon-button-density(-4);  
+    @include mat.icon-button-density(-5);  
 }
 
 .icon-button-density-5{
@@ -50,4 +66,14 @@
 
 .button-density-2{
     @include mat.button-density(-2);  
+}
+
+.custom-slider{
+    .mat-mdc-slider-visual-thumb{
+        height: 20px !important;
+        .mat-ripple{ display: none }    
+    }
+    .mdc-slider__value-indicator{
+        margin-bottom: -15px;
+    }
 }

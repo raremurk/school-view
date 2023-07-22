@@ -1,53 +1,57 @@
-<div class="container-fluid table-density-2"> 
+<div class="container-fluid"> 
   <h2 class="text-center">{{title}}</h2> 
-  <table mat-table [dataSource]="dataSource" matSort>
+  <div class="table-density-2" style="margin: 0px 15px">
+    <table mat-table [dataSource]="dataSource" matSort>
 
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Фамилия </th>
-      <td mat-cell *matCellDef="let teacher">{{teacher.lastName}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Имя </th>
-      <td mat-cell *matCellDef="let teacher">{{teacher.firstName}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="middleName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Отчество </th>
-      <td mat-cell *matCellDef="let teacher">{{teacher.middleName}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="subjects">
-      <th mat-header-cell *matHeaderCellDef> Учебные предметы </th>
-      <td mat-cell *matCellDef="let teacher" [ngSwitch]="teacher.teacherSubjects.length">
-        <table *ngSwitchCase="0" class="w-100"><tr><td>
-          <div *ngIf="teacher.specialization == 'Учитель старших классов'" class="subject-div basic-color">
-            Учебные предметы не назначены</div>
-          <div *ngIf="teacher.specialization == 'Учитель начальных классов'" class="subject-div accent-color">
-            Все предметы начальных классов</div>
-        </td></tr></table>
-        <table *ngSwitchDefault class="w-100"><tr>
-          <td class="col-6"><div class="subject-div primary-color">
-            {{getSubjectNameById(teacher.teacherSubjects[0].id)}}</div></td>
-          <td *ngIf="teacher.teacherSubjects[1]"><div class="subject-div primary-color"
-            matBadge="+{{teacher.teacherSubjects.length - 2}}" 
-            matBadgeColor="accent" 
-            [matBadgeHidden]="!teacher.teacherSubjects[2]">
-            {{getSubjectNameById(teacher.teacherSubjects[1].id)}}</div></td>  
-        </tr></table></td>
-    </ng-container>
-
-    <ng-container matColumnDef="operations">
-      <th mat-header-cell *matHeaderCellDef>
-        <button mat-raised-button color="primary" (click)="openCreateDialog()"><mat-icon>add</mat-icon>Добавить</button>
-      </th>
-      <td mat-cell *matCellDef="let teacher" class="button-density-2">
-        <button mat-raised-button color="primary" (click)="openEditDialog(teacher)" class="me-1">
-          <mat-icon>more_horiz</mat-icon>Подробнее</button>
-        <button mat-raised-button color="warn" (click)="deleteTeacher(teacher.id)"><mat-icon>delete</mat-icon>Удалить</button>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Фамилия </th>
+        <td mat-cell *matCellDef="let teacher">{{teacher.lastName}}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Имя </th>
+        <td mat-cell *matCellDef="let teacher">{{teacher.firstName}}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="middleName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Отчество </th>
+        <td mat-cell *matCellDef="let teacher">{{teacher.middleName}}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="subjects">
+        <th mat-header-cell *matHeaderCellDef> Учебные предметы </th>
+        <td mat-cell *matCellDef="let teacher" [ngSwitch]="teacher.teacherSubjects.length">
+          <table *ngSwitchCase="0" class="w-100"><tr><td>
+            <div *ngIf="teacher.specialization == 'Учитель старших классов'" class="subject-div basic-color">
+              Учебные предметы не назначены</div>
+            <div *ngIf="teacher.specialization == 'Учитель начальных классов'" class="subject-div accent-color">
+              Все предметы начальных классов</div>
+          </td></tr></table>
+          <table *ngSwitchDefault class="w-100"><tr>
+            <td class="col-6"><div class="subject-div primary-color">
+              {{getSubjectNameById(teacher.teacherSubjects[0].id)}}</div></td>
+            <td *ngIf="teacher.teacherSubjects[1]"><div class="subject-div primary-color"
+              matBadge="+{{teacher.teacherSubjects.length - 2}}" 
+              matBadgeColor="accent" 
+              [matBadgeHidden]="!teacher.teacherSubjects[2]">
+              {{getSubjectNameById(teacher.teacherSubjects[1].id)}}</div></td>  
+          </tr></table></td>
+      </ng-container>
+  
+      <ng-container matColumnDef="operations">
+        <th mat-header-cell *matHeaderCellDef>
+          <button mat-raised-button color="primary" (click)="openCreateDialog()"><mat-icon>add</mat-icon>Добавить</button>
+        </th>
+        <td mat-cell *matCellDef="let teacher" class="button-density-2">
+          <button mat-raised-button color="primary" (click)="openEditDialog(teacher)" class="table-button-1">
+            <mat-icon>more_horiz</mat-icon>Подробнее</button>
+          <button mat-raised-button color="warn" (click)="deleteTeacher(teacher.id)" class="table-button-2">
+            <mat-icon>delete</mat-icon>Удалить</button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>  
 </div>
