@@ -1,15 +1,43 @@
-.container{
-    .card{
-        padding: 15px;
-        width: 270px;
-        margin: 5px; 
-        .data{
-            height: 60px;
-        }
-        .btn-sm{
-            margin-left: 5px;
-            padding: 3px;
-            width: 100px;
-        }
-    }
+.responsive-grid{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 16px;
+}
+
+mat-card{
+    padding: 15px;
+}
+
+.close-button{
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.action-button{
+    position: absolute;
+    top: 12px;
+    right: 44px;
+}
+
+.name-div{
+    background-color: #3F51B5;
+    color: white;
+    width: 100%; 
+    padding: 6px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+mat-form-field{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.buttons-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(80px, auto));
+    gap: 8px;
+    button{ letter-spacing: 0}
 }

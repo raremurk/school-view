@@ -1,7 +1,6 @@
-<ng-template [ngIf]="id > 0  && id <= 11" [ngIfElse]="empty">
-<div class="container-xxl">   
+<div class="container-fluid">
   <h2 class="text-center">{{title}}</h2> 
-  <div class="row align-items-center">
+  <div class="row" style="margin-bottom: 15px;">
     <div class="col-4 text-end">
       <h3>Классы</h3> 
     </div>
@@ -11,49 +10,33 @@
       </mat-chip-listbox>
     </div>
   </div>
-  <div class="card-group mt-3">
-    <div *ngFor="let day of timetable; let i=index" class="col">
-      <div class="card card-day mx-auto">   
-        <div class="row">
-          <div class="col-9">
-            <h5 class="text-nowrap">{{headers[i]}}</h5>     
+  <div *ngIf="id > 0 && id < 12 else empty" class="responsive-grid">
+    <mat-card *ngFor="let day of timetable; let i = index" class="form-field-density-5 icon-button-density-5">
+      <h5 style="height: 30px;">{{headers[i]}}</h5>
+      <div [ngSwitch]="day[0].day">
+        <div *ngSwitchCase="edit_day">
+          <button mat-icon-button (click)="cancel()" class="action-button"><mat-icon>close</mat-icon></button>
+          <div *ngFor="let lesson of timetableDay" class="lesson">
+            <mat-form-field class="timetable-select">
+              <select matNativeControl [(ngModel)]="lesson.academicSubjectId">
+                <option *ngFor="let subject of academicSubjects" [value]="subject.id">{{subject.name}}</option>
+              </select>
+              <button *ngIf="lesson" (click)="deleteLesson(lesson)" matSuffix mat-icon-button><mat-icon>close</mat-icon></button>
+            </mat-form-field>
           </div>
-          <div class="col-3">
-            <input *ngIf="day[0].day != edit_day else closeButton" (click)="editTimetableDay(day)" type="image" src="images/pencil-square.svg" width="25" height="25" alt="Edit">
-            <ng-template #closeButton> 
-              <input (click)="cancel()" type="image" src="images/x.svg" width="25" height="25" alt="Close">
-            </ng-template>
-          </div>  
-        </div>     
-        <ng-template [ngIf]="day[0].day != edit_day" [ngIfElse]="editbody">  
-          <div *ngFor="let acadSub of day" class="data d-flex align-items-center">
-            <div class="mx-auto">{{acadSub.academicSubjectName}}</div>
-          </div>  
-        </ng-template> 
-        <div *ngIf="day[0].day == edit_day" class="data d-flex align-items-center">    
-          <div class="d-flex mx-auto">
-            <input (click)="updateTimetableDay()" type="image" src="images/check.svg" width="25" height="25" alt="Save">
-          </div>                
-        </div> 
+          <div class="text-center">
+            <button mat-icon-button (click)="updateTimetableDay()"><mat-icon>check</mat-icon></button> 
+          </div>
+        </div>
+        <div *ngSwitchDefault>
+          <button mat-icon-button (click)="editTimetableDay(day)" class="action-button"><mat-icon>edit</mat-icon></button>
+          <div *ngFor="let lesson of day" class="lesson" style="padding-left: 10px;">{{lesson.academicSubjectName}}</div>
+        </div>
       </div>  
-    </div>
+    </mat-card>
   </div>
 </div>
-</ng-template>
-
-<ng-template #editbody>   
-  <div *ngFor="let sub of timetableDay" class="data d-flex align-items-center">
-    <div class="form-sel-x position-relative">
-      <select [(ngModel)]="sub.academicSubjectId" class="form-select">  
-        <option *ngFor="let one of academicSubjects" value="{{one.id}}">{{one.name}}</option>
-      </select> 
-      <input (click)="deleteAcademicSubject(sub)" class="position-absolute bottom-0 end-0" type="image" src="images/x.svg" width="25" height="25" alt="Delete">
-    </div>
-  </div>
-</ng-template>
 
 <ng-template #empty>
-  <div class="cont"> 
-    <h2 class="text-center">Такого класса нет</h2> 
-  </div>
+  <h3 style="text-align: center;">Такого класса нет</h3> 
 </ng-template>

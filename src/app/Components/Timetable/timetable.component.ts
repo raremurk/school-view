@@ -71,7 +71,7 @@ export class TimetableComponent implements OnInit{
     this.cancel();
   }
 
-  deleteAcademicSubject(p: Lesson) {
+  deleteLesson(p: Lesson) {
     p.academicSubjectId = null;
     p.academicSubjectName = null;
   }

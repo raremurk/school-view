@@ -14,7 +14,7 @@ export class ClassComponent implements OnInit{
   classes_route = 'classes';
   teachers_route = 'teachers/class';
   buf: Class = new Class();
-  class: Class = new Class();
+  editableClass: Class = new Class(0, 0, '');
   classes: Class[];    
   teacherFullNames: TeacherFullName[];
   
@@ -36,25 +36,25 @@ export class ClassComponent implements OnInit{
   editClass(p: Class) {
     this.loadAllTeachers(p.id);
     this.buf = p;
-    this.class = {...p};  
+    this.editableClass = {...p};  
   }
 
   deleteClassTeacher(){
-    this.class.classTeacherId = null;
-    this.class.classTeacherFullName = null;
+    this.editableClass.classTeacherId = null;
+    this.editableClass.classTeacherFullName = '';
   }
 
   updateClass() {
-    this.dataService.update(this.classes_route, this.class.id, this.class).subscribe(() => {
-      if (this.class.classTeacherId != null){
-        this.class.classTeacherFullName = this.teacherFullNames.find(x => x.id == this.class.classTeacherId).fullName;
+    this.dataService.update(this.classes_route, this.editableClass.id, this.editableClass).subscribe(() => {
+      if (this.editableClass.classTeacherId != null){
+        this.editableClass.classTeacherFullName = this.teacherFullNames.find(x => x.id == this.editableClass.classTeacherId).fullName;
       }
-      Object.assign(this.buf, this.class);    
+      Object.assign(this.buf, this.editableClass);    
       this.cancel();
     });
   }
 
   cancel() {
-    this.class = new Class();
+    this.editableClass = new Class();
   }
 }

@@ -31,19 +31,6 @@
     color: white !important;
 }
 
-.form-sel-x{
-    height: 25px;
-    width: 100%;
-    .form-select{  
-        padding: 0px 2px 0px 5px;                
-        height: 25px;          
-        background: white;    
-    }
-    .form-sel-disabled{
-        background: lightgray;
-    }
-}
-
 .mat-button-toggle-label-content{
     line-height: 0px !important;
     padding: 0 !important;
@@ -69,11 +56,17 @@
 }
 
 .custom-slider{
-    .mat-mdc-slider-visual-thumb{
-        height: 20px !important;
-        .mat-ripple{ display: none }    
-    }
-    .mdc-slider__value-indicator{
-        margin-bottom: -15px;
+    .mat-mdc-slider-visual-thumb{ height: 20px !important; }
+    .mdc-slider__value-indicator{ margin-bottom: -15px; }
+    .mat-ripple{ display: none; } 
+}
+
+.timetable-select{  
+    .mat-mdc-text-field-wrapper{ padding-left: 10px; }
+    .mat-mdc-form-field-infix:after{ display: none; }
+    .mat-mdc-form-field-icon-suffix{ padding: 0 !important; }
+    .mat-mdc-input-element{
+        padding: 0 !important;
+        font-size: 14px !important;
     }
 }

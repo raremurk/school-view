@@ -18,6 +18,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule, MatPaginatorIntl} from '@angular/material/paginator';
@@ -65,7 +66,8 @@ import {getRussianPaginatorIntl} from './paginator.internationalization';
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatCardModule
     ],
     declarations: [
         AppComponent,
