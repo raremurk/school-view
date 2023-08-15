@@ -1,13 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
  
 @Injectable()
-export class DataService {
-    
+export class DataService {    
     url: string = 'https://school228.somee.com/api/';
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) { }
  
     getAll(route: string){
         return this.http.get(this.url + route);
@@ -17,7 +15,7 @@ export class DataService {
         return this.http.get(this.url + route + '/' + id);
     }
      
-    create(route: string, object){
+    create(route: string, object: any){
         return this.http.post(this.url + route, object);
     }
 
@@ -25,7 +23,7 @@ export class DataService {
         return this.http.delete(this.url + route + '/' + id);
     }
 
-    update(route: string, id: number, object){
+    update(route: string, id: number, object: any){
         return this.http.put(this.url + route + '/' + id, object);
     }
 }

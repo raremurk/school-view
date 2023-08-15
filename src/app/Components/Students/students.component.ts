@@ -20,10 +20,10 @@ export class StudentsComponent implements OnInit{
   classes_route = 'classes';
   minDate = new Date(new Date().setFullYear(new Date().getFullYear() - 20));    
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() - 4));
-  classes: Class[];
+  classes: Class[] = [];
   
-  student: Student = new Student(0, "", "", "", "", "", 1);
-  editableStudent: Student= new Student(0, "", "", "", "", "", 1); 
+  student: Student = new Student(0, '', '', '', '', '', 1);
+  editableStudent: Student= new Student(0, '', '', '', '', '', 1); 
 
   displayedFilterColumns: string[] = ['lastNameFilter', 'firstNameFilter', 'middleNameFilter', 'birthdayFilter', 
   'genderFilter', 'classIdFilter'];
@@ -38,10 +38,10 @@ export class StudentsComponent implements OnInit{
   classIdFilter: string = '';
   filters = [this.lastNameFilter, this.firstNameFilter, this.middleNameFilter, this.birthdayFilter];
 
-  dataSource: MatTableDataSource<Student>;
+  dataSource: MatTableDataSource<Student> = new MatTableDataSource();
   
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild(MatPaginator) paginator: MatPaginator= <MatPaginator>{};
 
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
@@ -58,21 +58,21 @@ export class StudentsComponent implements OnInit{
     this.dialog.open(StudentsDialogComponent, { autoFocus: 'dialog'}).afterClosed().subscribe((result: Student) => {
       if(result.id == 0) {
         this.dataService.create(this.students_route, result)
-          .subscribe((createdStudent: Student) => this.dataSource.data = [...this.dataSource.data, createdStudent]);
+          .subscribe({next:(createdStudent: any) => this.dataSource.data = [...this.dataSource.data, createdStudent]});
       }
     });
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data);    
+    this.dataService.getAll(this.classes_route).subscribe({next:(data: any) => this.classes = data});    
   }
 
   loadAllStudents() {
-    this.dataService.getAll(this.students_route).subscribe((data: Student[]) => {
+    this.dataService.getAll(this.students_route).subscribe({next:(data: any) => {
       this.dataSource = new MatTableDataSource(data);
       this.initializeTableDataSource();  
       this.applyFilter();    
-    });    
+    }});    
   }
 
   editStudent(stud: Student) {
@@ -116,7 +116,7 @@ export class StudentsComponent implements OnInit{
 
   toggleChange(event: any) {
     const toggle = event.source;
-    if (toggle && event.value.some(item => item == toggle.value)) {
+    if (toggle && event.value.some((item: any) => item == toggle.value)) {
         toggle.buttonToggleGroup.value = [toggle.value];
     }
     this.genderFilter = this.genderFilter.includes(toggle.value) ? '' : toggle.value;

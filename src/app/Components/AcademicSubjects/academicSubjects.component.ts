@@ -18,9 +18,9 @@ export class AcademicSubjectsComponent implements OnInit{
   academicSubject: AcademicSubject = new AcademicSubject(0, "", 1, 11);
   editableSubject: AcademicSubject = new AcademicSubject(0, "", 1, 11);
   classes: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  dataSource: MatTableDataSource<AcademicSubject>;
+  dataSource: MatTableDataSource<AcademicSubject> = new MatTableDataSource();
   displayedColumns: string[] = ['name', 'classes', 'operations'];
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
@@ -34,16 +34,16 @@ export class AcademicSubjectsComponent implements OnInit{
     .afterClosed().subscribe((result: AcademicSubject) => {
       if(result.id == 0){
         this.dataService.create(this.subjects_route, result)
-        .subscribe((createdSubject: AcademicSubject) => this.dataSource.data = [...this.dataSource.data, createdSubject]);
+        .subscribe({next:(createdSubject: any) => this.dataSource.data = [...this.dataSource.data, createdSubject]});
       }
     });
   }
     
   loadAllAcademicSubjects() {
-    this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => {
+    this.dataService.getAll(this.subjects_route).subscribe({next:(data: any) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
-    });    
+    }});    
   }
 
   editAcademicSubject(subject: AcademicSubject) {

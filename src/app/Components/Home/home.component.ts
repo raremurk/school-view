@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { DataService } from '../../data.service';
-import { SchoolStat } from '../../Models/SchoolStat';
+import {Component} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {DataService} from '../../data.service';
+import {SchoolStat} from '../../Models/schoolStat';
   
 @Component({
   templateUrl: './home.component.html',
@@ -11,7 +11,7 @@ import { SchoolStat } from '../../Models/SchoolStat';
 export class HomeComponent {
   title = 'Главная';     
   admin_route = 'admin';
-  schoolStat: SchoolStat;
+  schoolStat: SchoolStat = new SchoolStat('', '', 0, 0 );
   
   constructor(private titleService: Title, private dataService: DataService){ }
     
@@ -21,7 +21,7 @@ export class HomeComponent {
   }
 
   loadInfo() {
-    this.dataService.getAll(this.admin_route).subscribe((data: SchoolStat) => this.schoolStat = data);
+    this.dataService.getAll(this.admin_route).subscribe({next:(data: any) => this.schoolStat = data});
   } 
 
   upStudents(){

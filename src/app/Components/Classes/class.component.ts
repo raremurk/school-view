@@ -13,10 +13,10 @@ export class ClassComponent implements OnInit{
   title = 'Список классов';
   classes_route = 'classes';
   teachers_route = 'teachers/class';
-  buf: Class = new Class();
+  class: Class = new Class(0, 0, '');
   editableClass: Class = new Class(0, 0, '');
-  classes: Class[];    
-  teacherFullNames: TeacherFullName[];
+  classes: Class[] = [];    
+  teacherFullNames: TeacherFullName[] = [];
   
   constructor(private titleService: Title, private dataService: DataService){ }
     
@@ -26,17 +26,17 @@ export class ClassComponent implements OnInit{
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data);    
+    this.dataService.getAll(this.classes_route).subscribe({next:(data: any) => this.classes = data});    
   }
 
   loadAllTeachers(p: number) {
-    this.dataService.getOne(this.teachers_route, p).subscribe((data: TeacherFullName[]) => this.teacherFullNames = data);
+    this.dataService.getOne(this.teachers_route, p).subscribe({next:(data: any) => this.teacherFullNames = data});
   }
 
-  editClass(p: Class) {
-    this.loadAllTeachers(p.id);
-    this.buf = p;
-    this.editableClass = {...p};  
+  editClass(editClass: Class) {
+    this.loadAllTeachers(editClass.id);
+    this.class = editClass;
+    this.editableClass = {...editClass};  
   }
 
   deleteClassTeacher(){
@@ -46,15 +46,16 @@ export class ClassComponent implements OnInit{
 
   updateClass() {
     this.dataService.update(this.classes_route, this.editableClass.id, this.editableClass).subscribe(() => {
-      if (this.editableClass.classTeacherId != null){
-        this.editableClass.classTeacherFullName = this.teacherFullNames.find(x => x.id == this.editableClass.classTeacherId).fullName;
+      let teacher = this.teacherFullNames.find(x => x.id == this.editableClass.classTeacherId);
+      if(teacher != undefined && this.editableClass.classTeacherId != null){
+        this.editableClass.classTeacherFullName = teacher.fullName;
       }
-      Object.assign(this.buf, this.editableClass);    
+      Object.assign(this.class, this.editableClass);    
       this.cancel();
     });
   }
 
   cancel() {
-    this.editableClass = new Class();
+    this.editableClass = new Class(0, 0, '');
   }
 }

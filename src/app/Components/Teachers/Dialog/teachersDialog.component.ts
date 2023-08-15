@@ -47,6 +47,7 @@ export class TeachersDialogComponent implements OnInit{
   }
 
   getSubjectNameById(id: number) {
-    return this.data.academicSubjects.find(d => d.id == id).name; 
+    let subject = this.data.academicSubjects.find(x => x.id == id);
+    return subject != undefined ? subject.name : '';
   }
 }

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router'
-import { DataService } from '../../data.service';
-import { Lesson} from '../../Models/lesson'; 
-import { AcademicSubject } from '../../Models/academicSubject';
-import { Class } from '../../Models/class';
-import { switchMap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router'
+import {DataService} from '../../data.service';
+import {Lesson} from '../../Models/lesson'; 
+import {AcademicSubject} from '../../Models/academicSubject';
+import {Class} from '../../Models/class';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './timetable.component.html',
@@ -18,13 +18,13 @@ export class TimetableComponent implements OnInit{
   classes_route = 'classes';
   lessons_route = 'lessons';
   subjects_route = 'academicsubjects/class';  
-  academicSubjects: AcademicSubject[];
-  classes: Class[];
-  buf: Lesson[];
-  timetable: [Lesson[]];
-  timetableDay: Lesson[]; 
-  id: number;
-  edit_day: number = 0;
+  classes: Class[] = [];
+  timetable: [Lesson[]] = [[]];
+  academicSubjects: AcademicSubject[] = [];
+  timetableDay: Lesson[] = []; 
+  editableTimetableDay: Lesson[] = [];
+  editableDayIndex: number = 0;
+  id: number = 0;  
 
   constructor(private titleService: Title, private dataService: DataService, private activateRoute: ActivatedRoute){ }
 
@@ -43,41 +43,44 @@ export class TimetableComponent implements OnInit{
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data);
+    this.dataService.getAll(this.classes_route).subscribe({next:(data: any) => this.classes = data});
   }
 
   loadAllAcademicSubjects(id: number) {
-    this.dataService.getOne(this.subjects_route, id).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
+    this.dataService.getOne(this.subjects_route, id).subscribe({next:(data: any) => this.academicSubjects = data});
   }
 
   loadTimetable(id: number) {    
-    this.dataService.getOne(this.lessons_route, id).subscribe((data: [Lesson[]]) => this.timetable = data); 
+    this.dataService.getOne(this.lessons_route, id).subscribe({next:(data: any) => this.timetable = data}); 
   }
 
-  editTimetableDay(p: Lesson[]) {
-    this.buf = p;
-    this.timetableDay = JSON.parse(JSON.stringify(p))   
-    this.edit_day = p[0].day;
+  editTimetableDay(day: Lesson[]) {
+    this.timetableDay = day;
+    this.editableTimetableDay = JSON.parse(JSON.stringify(day))   
+    this.editableDayIndex = day[0].day;
   }
 
   updateTimetableDay() {
-    for(let one of this.timetableDay){
-      this.dataService.update(this.lessons_route, one.id, one).subscribe();
-      if(one.academicSubjectId != null && one.academicSubjectId != 0){
-        one.academicSubjectName = this.academicSubjects.find(x => x.id == one.academicSubjectId).name;
+    this.editableTimetableDay.forEach((lesson, index) => {
+      if(lesson.academicSubjectId != this.timetableDay[index].academicSubjectId){
+        let subject = this.academicSubjects.find(x => x.id == lesson.academicSubjectId);
+        if(subject != undefined){
+          lesson.academicSubjectName = subject.name;
+        }
+        this.dataService.update(this.lessons_route, lesson.id, lesson).subscribe();
       }
-    }  
-    Object.assign(this.buf, this.timetableDay);  
+    });
+    Object.assign(this.editableTimetableDay, this.timetableDay);  
     this.cancel();
   }
 
-  deleteLesson(p: Lesson) {
-    p.academicSubjectId = null;
-    p.academicSubjectName = null;
+  deleteLesson(lesson: Lesson) {
+    lesson.academicSubjectId = null;
+    lesson.academicSubjectName = '';
   }
 
   cancel() {
     this.timetableDay = new Array;
-    this.edit_day = 0;
+    this.editableDayIndex = 0;
   }
 } 

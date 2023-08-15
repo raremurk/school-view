@@ -19,13 +19,14 @@ export class TeachersComponent implements OnInit{
   teachers_route = 'teachers';
   subjects_route = 'academicsubjects';
   classes_route = 'classes'; 
-  academicSubjects: AcademicSubject[];
-  classes: Class[];
-  teacher: Teacher;
-  editableTeacher: Teacher;
-  dataSource: MatTableDataSource<Teacher>;
+  academicSubjects: AcademicSubject[] = [];
+  classes: Class[] = [];
+  teacher: Teacher = new Teacher(0, '', '', '', '', '');
+  editableTeacher: Teacher = new Teacher(0, '', '', '', '', '');
+
   displayedColumns: string[] = ['lastName', 'firstName', 'middleName', 'subjects', 'operations'];
-  @ViewChild(MatSort) sort: MatSort;
+  dataSource: MatTableDataSource<Teacher> = new MatTableDataSource();
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
    
   constructor(public dialog: MatDialog, private titleService: Title, private dataService: DataService){ }
     
@@ -37,7 +38,7 @@ export class TeachersComponent implements OnInit{
   }
 
   openCreateDialog() {
-    this.teacher = new Teacher(0, "", "", "", "Учитель старших классов", "");
+    this.teacher = new Teacher(0, '', '', '', 'Учитель старших классов', '');
     this.openDialog('Добавление учителя', true); 
   }
 
@@ -57,7 +58,7 @@ export class TeachersComponent implements OnInit{
       .afterClosed().subscribe((result: Teacher)=>{
       if(result.id == 0){
         this.dataService.create(this.teachers_route, result)
-        .subscribe((createdTeacher: Teacher) => this.dataSource.data = [...this.dataSource.data, createdTeacher]);
+        .subscribe({next:(createdTeacher: any) => this.dataSource.data = [...this.dataSource.data, createdTeacher]});
       }
       if(result.id > 0){
         this.dataService.update(this.teachers_route, result.id, result).subscribe(() => 
@@ -67,29 +68,30 @@ export class TeachersComponent implements OnInit{
   }
 
   loadAllAcademicSubjects() {
-    this.dataService.getAll(this.subjects_route).subscribe((data: AcademicSubject[]) => this.academicSubjects = data);
+    this.dataService.getAll(this.subjects_route).subscribe({next:(data: any) => this.academicSubjects = data});
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.classes_route).subscribe((data: Class[]) => this.classes = data); 
+    this.dataService.getAll(this.classes_route).subscribe({next:(data: any) => this.classes = data}); 
   }
 
   loadAllTeachers() {
-    this.dataService.getAll(this.teachers_route).subscribe((data: Teacher[]) => {
+    this.dataService.getAll(this.teachers_route).subscribe({next:(data: any) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
-    });   
+    }});   
   }
 
-  deleteTeacher(p: number) {
-    this.dataService.delete(this.teachers_route, p).subscribe(() => {
-      var index = this.dataSource.data.findIndex(x => x.id == p);
+  deleteTeacher(id: number) {
+    this.dataService.delete(this.teachers_route, id).subscribe(() => {
+      var index = this.dataSource.data.findIndex(x => x.id == id);
       this.dataSource.data.splice(index, 1);
       this.dataSource.data = [...this.dataSource.data];
     });
   }
 
   getSubjectNameById(id: number) {
-    return this.academicSubjects.find(d => d.id == id).name; 
+    let subject = this.academicSubjects.find(x => x.id == id);
+    return subject != undefined ? subject.name : '';
   }
 }  

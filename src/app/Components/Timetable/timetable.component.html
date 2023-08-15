@@ -11,10 +11,10 @@
     </div>
   </div>
   <div *ngIf="id > 0 && id < 12 else empty" class="responsive-grid">
-    <mat-card *ngFor="let day of timetable; let i = index" class="form-field-density-5 icon-button-density-5">
-      <h5 style="height: 30px;">{{headers[i]}}</h5>
-      <div [ngSwitch]="day[0].day">
-        <div *ngSwitchCase="edit_day">
+    <mat-card *ngFor="let day of timetable; index as index" class="form-field-density-5 icon-button-density-5">
+      <h5 style="height: 30px;">{{headers[index]}}</h5>
+      <div [ngSwitch]="index + 1">
+        <div *ngSwitchCase="editableDayIndex">
           <button mat-icon-button (click)="cancel()" class="action-button"><mat-icon>close</mat-icon></button>
           <div *ngFor="let lesson of timetableDay" class="lesson">
             <mat-form-field class="timetable-select">
