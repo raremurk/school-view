@@ -1,42 +1,38 @@
-<div class="container-fluid">
-  <h2 class="text-center">{{title}}</h2> 
-  <div class="row" style="margin-bottom: 15px;">
-    <div class="col-4 text-end">
-      <h3>Классы</h3> 
-    </div>
-    <div class="col-8"> 
-      <mat-chip-listbox>
-        <mat-chip-option *ngFor="let class of classes" routerLink="../{{class.id}}" selected="{{class.id == id}}" selectable="false">{{class.id}}</mat-chip-option>
-      </mat-chip-listbox>
-    </div>
+<div class="container">
+  <h1 class="text-center mb-0">{{title}}</h1> 
+  <div class="class-navigation">
+    <h2>Классы</h2> 
+    <mat-chip-listbox>
+      <mat-chip-option *ngFor="let class of classes" routerLink="../{{class.id}}" selected="{{class.id == classId}}" selectable="false">{{class.id}}</mat-chip-option>
+    </mat-chip-listbox>
   </div>
-  <div *ngIf="id > 0 && id < 12 else empty" class="responsive-grid">
-    <mat-card *ngFor="let day of timetable; index as index" class="form-field-density-5 icon-button-density-5">
-      <h5 style="height: 30px;">{{headers[index]}}</h5>
-      <div [ngSwitch]="index + 1">
-        <div *ngSwitchCase="editableDayIndex">
-          <button mat-icon-button (click)="cancel()" class="action-button"><mat-icon>close</mat-icon></button>
-          <div *ngFor="let lesson of timetableDay" class="lesson">
-            <mat-form-field class="timetable-select">
-              <select matNativeControl [(ngModel)]="lesson.academicSubjectId">
-                <option *ngFor="let subject of academicSubjects" [value]="subject.id">{{subject.name}}</option>
-              </select>
-              <button *ngIf="lesson" (click)="deleteLesson(lesson)" matSuffix mat-icon-button><mat-icon>close</mat-icon></button>
-            </mat-form-field>
-          </div>
-          <div class="text-center">
-            <button mat-icon-button (click)="updateTimetableDay()"><mat-icon>check</mat-icon></button> 
-          </div>
+  <div *ngIf="classExists() else empty" class="responsive-grid form-field-density-5 icon-button-density-5">
+    <mat-card *ngFor="let day of days(); index as index" [ngSwitch]="index + 1">
+      <div class="card-row justify-between">
+        <h3 class="m-0">{{headers[index]}}</h3>
+        <button *ngSwitchCase="editableDayIndex" mat-icon-button (click)="cancel()"><mat-icon>close</mat-icon></button>
+        <button *ngSwitchDefault mat-icon-button (click)="editTimetableDay(index)"><mat-icon>edit</mat-icon></button>
+      </div>
+      <div *ngSwitchCase="editableDayIndex">
+        <div *ngFor="let lesson of editableDay" class="card-row lesson">
+          <mat-form-field class="timetable-select">
+            <select matNativeControl [(ngModel)]="lesson.academicSubjectId">
+              <option *ngFor="let subject of academicSubjects" [value]="subject.id">{{subject.name}}</option>
+            </select>
+            <button *ngIf="lesson" (click)="deleteLesson(lesson)" matSuffix mat-icon-button><mat-icon>close</mat-icon></button>
+          </mat-form-field>
         </div>
-        <div *ngSwitchDefault>
-          <button mat-icon-button (click)="editTimetableDay(day)" class="action-button"><mat-icon>edit</mat-icon></button>
-          <div *ngFor="let lesson of day" class="lesson" style="padding-left: 10px;">{{lesson.academicSubjectName}}</div>
+        <div class="card-row justify-center">
+          <button mat-icon-button (click)="updateTimetableDay()"><mat-icon>check</mat-icon></button> 
         </div>
-      </div>  
+      </div>
+      <div *ngSwitchDefault>
+        <div *ngFor="let lesson of timetable[index]" class="card-row lesson"><span>{{lesson.academicSubjectName}}</span></div>
+      </div>
     </mat-card>
   </div>
 </div>
 
 <ng-template #empty>
-  <h3 style="text-align: center;">Такого класса нет</h3> 
+  <h3 class="text-center m-0">Такого класса нет</h3> 
 </ng-template>

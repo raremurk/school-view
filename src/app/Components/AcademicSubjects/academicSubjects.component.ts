@@ -30,7 +30,7 @@ export class AcademicSubjectsComponent implements OnInit{
   }
 
   openDialog() {
-    this.dialog.open(AcademicSubjectsDialogComponent, { autoFocus: 'dialog'})
+    this.dialog.open(AcademicSubjectsDialogComponent, { autoFocus: 'dialog', width: '428px'})
     .afterClosed().subscribe((result: AcademicSubject) => {
       if(result.id == 0){
         this.dataService.create(this.subjects_route, result)
@@ -68,5 +68,19 @@ export class AcademicSubjectsComponent implements OnInit{
 
   cancel() {    
     this.editableSubject.id = 0;
+  }
+
+  getCssClasses(subject: AcademicSubject, classId: number){
+    let Cssclasses: string[] = [];
+    if(classId >= subject.minClass && classId <= subject.maxClass){
+      Cssclasses.push('primary-color');
+    }
+    if(classId == subject.minClass){
+      Cssclasses.push('rounded-s-xl');
+    }
+    if(classId == subject.maxClass){
+      Cssclasses.push('rounded-e-xl');
+    }
+    return Cssclasses.join(' ');
   }
 } 

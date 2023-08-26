@@ -1,20 +1,18 @@
 <div mat-dialog-content>
-  <div class="icon-button-density-5 mb-3">
-    <h3>Добавление предмета</h3>
-    <button mat-icon-button class="close-button" mat-dialog-close><mat-icon>close</mat-icon></button>
+  <div class="flex items-center justify-between icon-button-density-5 mb-5">
+    <h2 class="m-0">Добавление предмета</h2>
+    <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
   </div>
   <div class="text-center">
     <mat-form-field>
       <mat-label>Название предмета</mat-label>
       <input matInput [(ngModel)]="academicSubject.name">
     </mat-form-field>
-    <div>
-      <label class="fw-bold">Классы, в которых он изучается</label>
-      <mat-slider min="1" max="11" step="1" showTickMarks discrete>
-        <input matSliderStartThumb [(value)]="academicSubject.minClass">
-        <input matSliderEndThumb [(value)]="academicSubject.maxClass">
-      </mat-slider>   
-    </div>   
-    <button mat-raised-button (click)="createAcademicSubject()" class="emerald-button">Добавить</button>
+    <h4 class="m-0">Классы, в которых он изучается</h4>
+    <mat-slider min="1" max="11" step="1" showTickMarks discrete>
+      <input matSliderStartThumb [(value)]="academicSubject.minClass">
+      <input matSliderEndThumb [(value)]="academicSubject.maxClass">
+    </mat-slider>   
+    <button mat-raised-button (click)="createAcademicSubject()" color="green">Добавить</button>
   </div>
 </div>    

@@ -1,26 +1,33 @@
-<div class="container-fluid responsive-grid">
-  <mat-card *ngFor="let class of classes" class="form-field-density-5 icon-button-density-5">
-    <h4>{{class.id}} Класс</h4>
-    <button mat-icon-button *ngIf="class.id != editableClass.id else editButtons" (click)="editClass(class)" class="close-button">
-      <mat-icon>edit</mat-icon></button>
-    <ng-template #editButtons>           
-      <button mat-icon-button (click)="updateClass()" class="action-button"><mat-icon>check</mat-icon></button>
-      <button mat-icon-button (click)="cancel()" class="close-button"><mat-icon>close</mat-icon></button>
-    </ng-template>                      
-    <div [ngSwitch]="class.id">
-      <label class="mb-1">Классный руководитель</label>  
-      <mat-form-field *ngSwitchCase="editableClass.id">
-        <select matNativeControl [(ngModel)]="editableClass.classTeacherId">
-          <option *ngFor="let teacher of teacherFullNames" [value]="teacher.id">{{teacher.fullName}}</option>
-        </select>
-        <button *ngIf="editableClass.classTeacherId" (click)="deleteClassTeacher()" matSuffix mat-icon-button><mat-icon>close</mat-icon></button>
-      </mat-form-field>   
-      <div *ngSwitchDefault class="name-div">{{class.classTeacherFullName}}</div> 
-    </div>
-    <div class="buttons-grid button-density-2">
-      <button mat-raised-button color="grey" routerLink="/students" [state]="{ classId: class.id }">Ученики</button>
-      <button mat-raised-button color="grey" routerLink="/timetable/{{class.id}}">Расписание</button>
-      <button mat-raised-button color="grey" (click)="cancel()">Предметы</button> 
-    </div>
-  </mat-card>
+<div class="container">
+  <div class="responsive-grid">
+    <mat-card *ngFor="let class of classes" class="p-4 form-field-density-5 icon-button-density-5">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="m-0">{{class.id}} Класс</h2>
+        <div>
+          <button mat-icon-button *ngIf="class.id != editableClass.id else editButtons" (click)="editClass(class)"><mat-icon>edit</mat-icon></button>
+          <ng-template #editButtons>
+            <button mat-icon-button (click)="updateClass()" class="mr-1"><mat-icon>check</mat-icon></button>
+            <button mat-icon-button (click)="cancel()"><mat-icon>close</mat-icon></button>
+          </ng-template> 
+        </div>
+      </div>                     
+      <div [ngSwitch]="class.id">
+        <label>Классный руководитель</label>
+        <div class="mt-1 mb-2">
+          <mat-form-field *ngSwitchCase="editableClass.id">
+            <select matNativeControl [(ngModel)]="editableClass.classTeacherId">
+              <option *ngFor="let teacher of teacherFullNames" [value]="teacher.id">{{teacher.fullName}}</option>
+            </select>
+            <button *ngIf="editableClass.classTeacherId" (click)="deleteClassTeacher()" matSuffix mat-icon-button><mat-icon>close</mat-icon></button>
+          </mat-form-field>   
+          <div *ngSwitchDefault class="name-div">{{class.classTeacherFullName}}</div> 
+        </div>        
+      </div>
+      <div class="actions-buttons justify-between button-density-2">
+        <button mat-raised-button color="grey" routerLink="/students" [state]="{ classId: class.id }">Ученики</button>
+        <button mat-raised-button color="grey" routerLink="/timetable/{{class.id}}">Расписание</button>
+        <button mat-raised-button color="grey" (click)="cancel()">Предметы</button> 
+      </div>
+    </mat-card>
+  </div> 
 </div>

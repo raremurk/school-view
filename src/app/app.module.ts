@@ -13,6 +13,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -67,7 +68,8 @@ import {getRussianPaginatorIntl} from './paginator.internationalization';
         MatPaginatorModule,
         MatSortModule,
         MatBadgeModule,
-        MatCardModule
+        MatCardModule,
+        MatDividerModule
     ],
     declarations: [
         AppComponent,

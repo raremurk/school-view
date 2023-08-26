@@ -1,27 +1,29 @@
+.class-navigation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
 .responsive-grid{
-    width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(208px, 1fr));
     gap: 16px;
 }
 
 mat-card{
-    padding: 15px 15px 5px 15px;
+    padding: 0 16px;
     height: min-content;    
 }
 
-.action-button{
-    position: absolute;
-    top: 12px;
-    right: 12px;
+.card-row{
+    height: 46px;
+    display: flex;
+    align-items: center;
 }
 
 .lesson{
-    height: 46px;
-    border-top: 1px solid rgba(0,0,0,.125); 
-    display: flex;
-    align-items: center;
-    mat-form-field{
-        width: 100%;
-    }
+    span{ padding-left: 10px; };
+    border-top: 1px solid #E0E0E0;
+    mat-form-field{ width: 100%; }
 }

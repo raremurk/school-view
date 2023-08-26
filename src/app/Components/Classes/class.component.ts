@@ -11,8 +11,8 @@ import {DataService} from '../../data.service';
 })
 export class ClassComponent implements OnInit{ 
   title = 'Список классов';
-  classes_route = 'classes';
-  teachers_route = 'teachers/class';
+  classesRoute = 'classes';
+  teachersRoute = 'teachers/class';
   class: Class = new Class(0, 0, '');
   editableClass: Class = new Class(0, 0, '');
   classes: Class[] = [];    
@@ -26,11 +26,11 @@ export class ClassComponent implements OnInit{
   }
 
   loadAllClasses() {
-    this.dataService.getAll(this.classes_route).subscribe({next:(data: any) => this.classes = data});    
+    this.dataService.getAll(this.classesRoute).subscribe({next:(data: any) => this.classes = data});    
   }
 
   loadAllTeachers(p: number) {
-    this.dataService.getOne(this.teachers_route, p).subscribe({next:(data: any) => this.teacherFullNames = data});
+    this.dataService.getOne(this.teachersRoute, p).subscribe({next:(data: any) => this.teacherFullNames = data});
   }
 
   editClass(editClass: Class) {
@@ -45,7 +45,7 @@ export class ClassComponent implements OnInit{
   }
 
   updateClass() {
-    this.dataService.update(this.classes_route, this.editableClass.id, this.editableClass).subscribe(() => {
+    this.dataService.update(this.classesRoute, this.editableClass.id, this.editableClass).subscribe(() => {
       let teacher = this.teacherFullNames.find(x => x.id == this.editableClass.classTeacherId);
       if(teacher != undefined && this.editableClass.classTeacherId != null){
         this.editableClass.classTeacherFullName = teacher.fullName;

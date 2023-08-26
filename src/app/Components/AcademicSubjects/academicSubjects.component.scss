@@ -3,7 +3,7 @@ th{
 }
 
 .mat-column-name{
-  min-width: 300px;
+  min-width: 200px;
   padding: 0 0 0 16px;
   mat-form-field{
     width: 200px;
@@ -12,22 +12,18 @@ th{
 }
 
 .mat-column-classes {
-    min-width: 400px;
+    min-width: 500px;
     overflow: initial;
     text-align: center;
-    table{
-        width: 100%;
-        table-layout: fixed;
-        td{ width: 100% }
-        .primary-color{
-            background-color: #3F51B5;
-            color: white;
-        }
-    }
     mat-slider{
         height: 20px;
         width: 98%;
     }
+}
+
+.primary-color{
+    background-color: #3F51B5;
+    color: white;
 }
 
 .mat-column-operations{

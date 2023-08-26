@@ -1,6 +1,6 @@
-<div class="container-fluid"> 
-  <h2 class="text-center">{{title}}</h2> 
-  <div class="table-density-2 form-field-density-5" style="margin: 0px 15px">
+<div class="container"> 
+  <h1 class="text-center">{{title}}</h1> 
+  <div class="table-density-2 form-field-density-5">
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
@@ -19,10 +19,10 @@
             <input matSliderStartThumb [(value)]="editableSubject.minClass">
             <input matSliderEndThumb [(value)]="editableSubject.maxClass">
           </mat-slider>
-          <table *ngSwitchDefault><tr>
-            <td *ngFor="let class of classes" [ngClass]="class >= subject.minClass && subject.maxClass >= class ? 'primary-color' : ''">
-              <span *ngIf="class == subject.minClass || class == subject.maxClass">{{class}}</span></td>
-          </tr></table></td>
+          <div *ngSwitchDefault class="flex">
+            <div *ngFor="let class of classes" class="w-full py-0.5" [ngClass]="getCssClasses(subject, class)">
+              <span *ngIf="class == subject.minClass || class == subject.maxClass">{{class}}</span></div>
+          </div></td>
       </ng-container>
   
       <ng-container matColumnDef="operations">
@@ -30,13 +30,13 @@
           <button mat-raised-button color="primary" (click)="openDialog()"><mat-icon>add</mat-icon>Добавить</button>
         </th>
         <td mat-cell *matCellDef="let subject" [ngSwitch]="subject.id" class="button-density-2">
-          <div *ngSwitchCase="editableSubject.id">
+          <div *ngSwitchCase="editableSubject.id" class="flex justify-between">
             <button mat-raised-button color="green" (click)="updateAcademicSubject()" class="table-button-1">
               <mat-icon>check</mat-icon>Сохранить</button>
             <button mat-raised-button color="grey" (click)="cancel()" class="table-button-2">
               <mat-icon>close</mat-icon>Отмена</button>
           </div>
-          <div *ngSwitchDefault>
+          <div *ngSwitchDefault class="flex justify-between">
             <button mat-raised-button color="primary" (click)="editAcademicSubject(subject)" class="table-button-1">
               <mat-icon>edit</mat-icon>Изменить</button>
             <button mat-raised-button color="warn" (click)="deleteAcademicSubject(subject.id)" class="table-button-2">

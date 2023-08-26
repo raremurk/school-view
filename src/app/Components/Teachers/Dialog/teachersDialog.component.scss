@@ -1,40 +1,35 @@
-.close-button{
-    position: absolute;
-    top: 24px;
-    right: 24px;
-}
-
-.action-button{
-    position: absolute;
-    top: 24px;
-    right: 56px;
+.information{
+    h4{ margin: 0; }
+    display: flex;
+    gap: 16px;
 }
 
 .name-div{
     background-color: #3F51B5;
     color: white;
-    width: 100%; 
-    padding: 14px 17px;
-    margin-bottom: 15px;
-    border-radius: 5px 5px 0 0;
+    height: 52px;
+    line-height: 52px;
+    padding-left: 16px;
+    border-radius: 5px 5px 0 0; 
+    margin-top: 4px;  
+    margin-bottom: 15px; 
 }
 
 mat-form-field{
     width: 100%;
+    margin-top: 4px;
     margin-bottom: 15px;
 }
 
-mat-button-toggle-group{
-    width: 100%;
-}
+mat-button-toggle-group{ width: 100%; }
 
 mat-button-toggle{
-    height: 30px;
-    line-height: 30px;
+    height: 32px;
+    line-height: 32px;
     width: 100%; 
 }
 
 .mat-button-toggle-checked{
-    background-color: #3F51B5;
-    color: white;
+    background-color: #3F51B5 !important;
+    color: white !important;
 }

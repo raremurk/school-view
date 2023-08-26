@@ -1,34 +1,36 @@
 <div mat-dialog-content>
-  <div class="icon-button-density-5 mb-3">
-    <h3>{{data.dialogTitle}}</h3>
-    <button mat-icon-button *ngIf="data.editMode" (click)="saveTeacher()" class="action-button"><mat-icon>check</mat-icon></button>
-    <button mat-icon-button *ngIf="!data.editMode" (click)="enableEdit()" class="action-button"><mat-icon>edit</mat-icon></button>
-    <button mat-icon-button class="close-button" mat-dialog-close><mat-icon>close</mat-icon></button>
+  <div class="flex items-center justify-between icon-button-density-5 mb-5">
+    <h2 class="m-0">{{data.dialogTitle}}</h2>
+    <div>
+      <button mat-icon-button *ngIf="data.editMode" (click)="saveTeacher()"><mat-icon>check</mat-icon></button>
+      <button mat-icon-button *ngIf="!data.editMode" (click)="enableEdit()"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button mat-dialog-close class="ml-1"><mat-icon>close</mat-icon></button>
+    </div>
   </div>
-  <table style="width: 520px;"><tr>
-    <td class="col-6 align-top pe-3" [ngSwitch]="data.editMode">
-      <label class="fw-bold mb-1">Фамилия</label>
+  <div class="information">
+    <div class="w-full" [ngSwitch]="data.editMode">
+      <h4>Фамилия</h4>
       <mat-form-field *ngSwitchCase="true">
         <input matInput [(ngModel)]="data.teacher.lastName" placeholder="Введите фамилию">
       </mat-form-field>
       <div *ngSwitchDefault class="name-div">{{data.teacher.lastName}}</div>
-      <label class="fw-bold mb-1">Имя</label>
+      <h4>Имя</h4>
       <mat-form-field *ngSwitchCase="true">
         <input matInput [(ngModel)]="data.teacher.firstName" placeholder="Введите имя">
       </mat-form-field>
       <div *ngSwitchDefault class="name-div">{{data.teacher.firstName}}</div>
-      <label class="fw-bold mb-1">Отчество</label>
+      <h4>Отчество</h4>
       <mat-form-field *ngSwitchCase="true">
         <input matInput [(ngModel)]="data.teacher.middleName" placeholder="Введите отчество">
       </mat-form-field>
-      <div *ngSwitchDefault class="name-div">{{data.teacher.middleName}}</div></td>
-    <td class="text-center align-top" [ngSwitch]="data.editMode">    
-      <label class="fw-bold mb-1">Классы</label>
-      <mat-button-toggle-group [(ngModel)]="data.teacher.specialization" [disabled]="!data.editMode">
+      <div *ngSwitchDefault class="name-div">{{data.teacher.middleName}}</div></div>
+    <div class="w-full text-center" [ngSwitch]="data.editMode">    
+      <h4>Классы</h4>
+      <mat-button-toggle-group [(ngModel)]="data.teacher.specialization" class="mt-1 mb-2" [disabled]="!data.editMode">
         <mat-button-toggle value="Учитель начальных классов">Начальные</mat-button-toggle>
         <mat-button-toggle value="Учитель старших классов">Старшие</mat-button-toggle>
       </mat-button-toggle-group>
-      <label class="fw-bold mb-1" style="margin-top: 10px;">Учебные предметы</label>
+      <h4>Учебные предметы</h4>
       <div [ngSwitch]="data.teacher.specialization">
         <mat-form-field *ngSwitchCase="'Учитель старших классов'" class="form-field-density-5">
           <mat-select [(ngModel)]="teacherSubjectsIds" placeholder="Выберите предметы" multiple [disabled]="!data.editMode">        
@@ -44,6 +46,7 @@
           </mat-select>
         </mat-form-field>
         <div *ngSwitchDefault class="name-div">Все предметы начальных классов</div>
-      </div></td>
-  </tr></table>    
+      </div>
+    </div>
+  </div>    
 </div>    

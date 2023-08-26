@@ -49,7 +49,7 @@ export class TeachersComponent implements OnInit{
   }
 
   openDialog(title: string, mode: boolean){
-    this.dialog.open(TeachersDialogComponent, { autoFocus: 'dialog', data: { 
+    this.dialog.open(TeachersDialogComponent, { autoFocus: 'dialog', width: '568px', data: { 
       dialogTitle : title, 
       editMode: mode,
       academicSubjects : this.academicSubjects.filter(s => s.maxClass > 4), 
@@ -93,5 +93,14 @@ export class TeachersComponent implements OnInit{
   getSubjectNameById(id: number) {
     let subject = this.academicSubjects.find(x => x.id == id);
     return subject != undefined ? subject.name : '';
+  }
+
+  noSubjectsLabel(teacher: Teacher){
+    return teacher.specialization == 'Учитель начальных классов' ? 
+      'Все предметы начальных классов' : 'Учебные предметы не назначены';
+  }
+
+  getSubjectColor(teacher: Teacher){
+    return teacher.specialization == 'Учитель начальных классов' ? 'accent-color' : 'basic-color';
   }
 }  

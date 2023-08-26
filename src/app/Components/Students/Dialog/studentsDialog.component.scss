@@ -1,15 +1,10 @@
-.close-button{
-    position: absolute;
-    top: 24px;
-    right: 24px;
-}
-
 mat-form-field{
     width: 100%;
     margin-bottom: 15px;
 }
 
-.emerald-button{
-    background-color: #58BC82;
-    color: white;
+.input-row{
+    display: grid;
+    grid-template-columns: 200px 120px 100px;
+    gap: 8px;
 }

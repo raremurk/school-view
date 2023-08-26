@@ -13,18 +13,17 @@ import {switchMap} from 'rxjs/operators';
   providers: [DataService]
 })
 export class TimetableComponent implements OnInit{ 
-  title = 'Расписание';
+  title = 'Расписание';  
   headers: string[] = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-  classes_route = 'classes';
-  lessons_route = 'lessons';
-  subjects_route = 'academicsubjects/class';  
+  classesRoute = 'classes';
+  lessonsRoute = 'lessons';
+  subjectsRoute = 'academicsubjects/class';  
   classes: Class[] = [];
   timetable: [Lesson[]] = [[]];
   academicSubjects: AcademicSubject[] = [];
-  timetableDay: Lesson[] = []; 
-  editableTimetableDay: Lesson[] = [];
+  editableDay: Lesson[] = [];
   editableDayIndex: number = 0;
-  id: number = 0;  
+  classId: number = 0;  
 
   constructor(private titleService: Title, private dataService: DataService, private activateRoute: ActivatedRoute){ }
 
@@ -34,44 +33,51 @@ export class TimetableComponent implements OnInit{
     this.activateRoute.paramMap
       .pipe(switchMap(params => params.getAll('id')))
       .subscribe((data)=> {
-        this.id = +data;  
-        if(this.id > 0 && this.id <= 11) {
-          this.loadAllAcademicSubjects(this.id);
-          this.loadTimetable(this.id);
+        this.classId = +data;  
+        if(this.classExists()) {
+          this.loadAllAcademicSubjects(this.classId);
+          this.loadTimetable(this.classId);
+          this.cancel();
         }     
       });
   }
 
+  classExists() {
+    return this.classId >= 1 && this.classId <= 11;
+  }
+
+  days() {
+    return this.classId >= 1 && this.classId <= 4 ? this.headers.slice(0, -1) : this.headers;
+  }
+
   loadAllClasses() {
-    this.dataService.getAll(this.classes_route).subscribe({next:(data: any) => this.classes = data});
+    this.dataService.getAll(this.classesRoute).subscribe({next:(data: any) => this.classes = data});
   }
 
   loadAllAcademicSubjects(id: number) {
-    this.dataService.getOne(this.subjects_route, id).subscribe({next:(data: any) => this.academicSubjects = data});
+    this.dataService.getOne(this.subjectsRoute, id).subscribe({next:(data: any) => this.academicSubjects = data});
   }
 
   loadTimetable(id: number) {    
-    this.dataService.getOne(this.lessons_route, id).subscribe({next:(data: any) => this.timetable = data}); 
+    this.dataService.getOne(this.lessonsRoute, id).subscribe({next:(data: any) => this.timetable = data}); 
   }
 
-  editTimetableDay(day: Lesson[]) {
-    this.timetableDay = day;
-    this.editableTimetableDay = JSON.parse(JSON.stringify(day))   
-    this.editableDayIndex = day[0].day;
+  editTimetableDay(index: number) {
+    this.editableDayIndex = index + 1;
+    this.editableDay = JSON.parse(JSON.stringify(this.timetable[index]));
   }
 
   updateTimetableDay() {
-    this.editableTimetableDay.forEach((lesson, index) => {
-      if(lesson.academicSubjectId != this.timetableDay[index].academicSubjectId){
+    this.editableDay.forEach((lesson, index) => {
+      if(lesson.academicSubjectId != this.timetable[this.editableDayIndex - 1][index].academicSubjectId){
         let subject = this.academicSubjects.find(x => x.id == lesson.academicSubjectId);
-        if(subject != undefined){
-          lesson.academicSubjectName = subject.name;
-        }
-        this.dataService.update(this.lessons_route, lesson.id, lesson).subscribe();
+        lesson.academicSubjectName = subject != undefined ? subject.name : '';
+        this.dataService.update(this.lessonsRoute, lesson.id, lesson).subscribe(() => {
+          this.timetable[this.editableDayIndex - 1] = this.editableDay; 
+          this.cancel();
+        });
       }
-    });
-    Object.assign(this.editableTimetableDay, this.timetableDay);  
-    this.cancel();
+    });   
   }
 
   deleteLesson(lesson: Lesson) {
@@ -80,7 +86,7 @@ export class TimetableComponent implements OnInit{
   }
 
   cancel() {
-    this.timetableDay = new Array;
+    this.editableDay = [];
     this.editableDayIndex = 0;
   }
 } 

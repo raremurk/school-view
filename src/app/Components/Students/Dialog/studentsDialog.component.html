@@ -1,9 +1,9 @@
 <div mat-dialog-content>
-  <div class="icon-button-density-5 mb-3">
-    <h3>Добавление ученика</h3>
-    <button mat-icon-button class="close-button" mat-dialog-close><mat-icon>close</mat-icon></button>
+  <div class="flex items-center justify-between icon-button-density-5 mb-5">
+    <h2 class="m-0">Добавление ученика</h2>
+    <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
   </div>
-  <div class="text-center" style="width: 430px">
+  <div class="text-center">
     <mat-form-field>
       <mat-label>Фамилия</mat-label>
       <input matInput [(ngModel)]="student.lastName">
@@ -16,25 +16,27 @@
       <mat-label>Отчество</mat-label>
       <input matInput [(ngModel)]="student.middleName">
     </mat-form-field>
-    <mat-form-field style="width: 200px; margin-right: 5px">
-      <mat-label>Дата рождения</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="student.birthday">
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field style="width: 120px; margin-right: 5px">
-      <mat-label>Пол</mat-label>
-      <mat-select [(ngModel)]="student.gender">
-        <mat-option value="M">Мужской</mat-option>
-        <mat-option value="W">Женский</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field style="width: 100px">
-      <mat-label>Класс</mat-label>
-      <mat-select [(ngModel)]="student.classId">
-        <mat-option *ngFor="let class of classes" [value]="class">{{class}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-raised-button (click)="createStudent()" class="emerald-button">Добавить</button>
+    <div class="input-row">
+      <mat-form-field>
+        <mat-label>Дата рождения</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="student.birthday">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Пол</mat-label>
+        <mat-select [(ngModel)]="student.gender">
+          <mat-option value="M">Мужской</mat-option>
+          <mat-option value="W">Женский</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Класс</mat-label>
+        <mat-select [(ngModel)]="student.classId">
+          <mat-option *ngFor="let class of classes" [value]="class">{{class}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button (click)="createStudent()" color="green">Добавить</button>
   </div>     
 </div>    

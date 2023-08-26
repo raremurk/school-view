@@ -1,33 +1,33 @@
 <div class="container">    
-    <div class="row text-center border-bottom mb-3">
-        <div class="col">
-            <h3>Информация</h3>            
+    <div class="flex justify-around">
+        <div>
+            <h2 class="text-center">Информация</h2>
+            <mat-divider></mat-divider>
+            <div class="mt-4">
+                <div class="flex items-center gap-4">
+                    <div class="info-block w-24">Директор</div>
+                    <h4 class="m-0">{{schoolStat.director}}</h4>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="info-block w-24">Завуч</div>
+                    <h4>{{schoolStat.headTeacher}}</h4>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="info-block w-48">Количество учеников</div>
+                    <h4 class="m-0">{{schoolStat.studentsCount}}</h4>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="info-block w-48">Количество учителей</div>
+                    <h4>{{schoolStat.teachersCount}}</h4>
+                </div> 
+            </div>        
         </div>
-        <div class="col">
-            <h3>Операции</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col text-center">
-            <div class="d-flex">
-                <p class="span-gray sm h-30">Директор</p>
-                <span class="fw-bold h-30">{{schoolStat.director}}</span>
+        <div>
+            <h2 class="text-center">Операции</h2>
+            <mat-divider></mat-divider>
+            <div class="mt-4">
+                <button mat-raised-button color="primary" (click)="upStudents()">Перевести учеников в следующий класс</button>
             </div>
-            <div class="d-flex">
-                <p class="span-gray sm h-30">Завуч</p>
-                <span class="fw-bold h-30">{{schoolStat.headTeacher}}</span>
-            </div>
-            <div class="d-flex">
-                <p class="span-gray bg h-30">Количество учеников</p>
-                <span class="fw-bold h-30">{{schoolStat.studentsCount}}</span>
-            </div>
-            <div class="d-flex">
-                <p class="span-gray bg h-30">Количество учителей</p>
-                <span class="fw-bold h-30">{{schoolStat.teachersCount}}</span>
-            </div>
-        </div>
-        <div class="col text-center">
-            <button (click)="upStudents()" class="btn light-blue">Перевести учеников в следующий класс</button>
         </div>
     </div>  
 </div>

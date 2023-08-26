@@ -1,24 +1,18 @@
 @use '@angular/material' as mat;
+@tailwind utilities;
 
-*{
-    font-family: 'Roboto', sans-serif;
-}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container{ padding: 0 16px; }
 
 .table-button-1{
-    width: 125px;
-    margin-right: 4px;
+    width: 128px;
     letter-spacing: 0;
-
 }
 
 .table-button-2{
-    width: 105px;
+    width: 108px;
     letter-spacing: 0;
-}
-
-.light-blue{
-    color: white;
-    background-color: rgb(75, 175, 200);
 }
 
 .mat-green{

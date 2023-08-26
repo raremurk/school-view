@@ -1,43 +1,23 @@
 .responsive-grid{
-    width: 90%;
+    padding: 30px 5% 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     gap: 16px;
 }
 
-mat-card{
-    padding: 15px;
-}
-
-.close-button{
-    position: absolute;
-    top: 12px;
-    right: 12px;
-}
-
-.action-button{
-    position: absolute;
-    top: 12px;
-    right: 44px;
-}
-
 .name-div{
     background-color: #3F51B5;
     color: white;
-    width: 100%; 
-    padding: 6px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px 5px 0 0;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 16px;
+    border-radius: 5px 5px 0 0;    
 }
 
-mat-form-field{
-    width: 100%;
-    margin-bottom: 10px;
-}
+mat-form-field{ width: 100%; }
 
-.buttons-grid{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(80px, auto));
+.actions-buttons{
+    display: flex;
     gap: 8px;
-    button{ letter-spacing: 0}
+    button{ letter-spacing: 0; }
 }

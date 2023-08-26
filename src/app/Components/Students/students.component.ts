@@ -55,7 +55,7 @@ export class StudentsComponent implements OnInit{
   }
  
   openDialog() {
-    this.dialog.open(StudentsDialogComponent, { autoFocus: 'dialog'}).afterClosed().subscribe((result: Student) => {
+    this.dialog.open(StudentsDialogComponent, { autoFocus: 'dialog', width: '478px' }).afterClosed().subscribe((result: Student) => {
       if(result.id == 0) {
         this.dataService.create(this.students_route, result)
           .subscribe({next:(createdStudent: any) => this.dataSource.data = [...this.dataSource.data, createdStudent]});

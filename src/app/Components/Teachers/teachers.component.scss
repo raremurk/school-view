@@ -13,7 +13,7 @@ th{
 }
 
 .subject-div{
-    width: 100%; 
+    width: 100%;
     padding: 4px;
     border-radius: 5px;
 }
@@ -30,6 +30,11 @@ th{
 
 .basic-color{
     background-color: #E0E0E0;
+}
+
+.academic-subjects{
+    display: flex;
+    gap: 4px;
 }
 
 .mat-column-operations{
