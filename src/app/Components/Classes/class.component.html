@@ -16,7 +16,7 @@
         <div class="mt-1 mb-2">
           <mat-form-field *ngSwitchCase="editableClass.id">
             <select matNativeControl [(ngModel)]="editableClass.classTeacherId">
-              <option *ngFor="let teacher of teacherFullNames" [value]="teacher.id">{{teacher.fullName}}</option>
+              <option *ngFor="let teacher of teacherFullNames" [value]="teacher.id">{{teacher.shortFullName}}</option>
             </select>
             <button *ngIf="editableClass.classTeacherId" (click)="deleteClassTeacher()" matSuffix mat-icon-button><mat-icon>close</mat-icon></button>
           </mat-form-field>   

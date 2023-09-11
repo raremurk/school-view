@@ -11,7 +11,7 @@ export class DataService {
         return this.http.get(this.url + route);
     }
      
-    getOne(route: string, id: number){
+    getOne(route: string, id: any){
         return this.http.get(this.url + route + '/' + id);
     }
      
@@ -23,7 +23,7 @@ export class DataService {
         return this.http.delete(this.url + route + '/' + id);
     }
 
-    update(route: string, id: number, object: any){
+    update(route: string, id: any, object: any){
         return this.http.put(this.url + route + '/' + id, object);
     }
 }

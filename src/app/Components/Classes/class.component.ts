@@ -17,7 +17,7 @@ export class ClassComponent implements OnInit{
   editableClass: Class = new Class(0, 0, '');
   classes: Class[] = [];    
   teacherFullNames: TeacherFullName[] = [];
-  
+    
   constructor(private titleService: Title, private dataService: DataService){ }
     
   ngOnInit(){
@@ -29,14 +29,12 @@ export class ClassComponent implements OnInit{
     this.dataService.getAll(this.classesRoute).subscribe({next:(data: any) => this.classes = data});    
   }
 
-  loadAllTeachers(p: number) {
-    this.dataService.getOne(this.teachersRoute, p).subscribe({next:(data: any) => this.teacherFullNames = data});
-  }
-
   editClass(editClass: Class) {
-    this.loadAllTeachers(editClass.id);
-    this.class = editClass;
-    this.editableClass = {...editClass};  
+    this.dataService.getOne(this.teachersRoute, editClass.id).subscribe({next:(data: any) => {
+      this.teacherFullNames = data;
+      this.class = editClass;
+      this.editableClass = {...editClass};
+    }});
   }
 
   deleteClassTeacher(){
@@ -45,11 +43,9 @@ export class ClassComponent implements OnInit{
   }
 
   updateClass() {
-    this.dataService.update(this.classesRoute, this.editableClass.id, this.editableClass).subscribe(() => {
-      let teacher = this.teacherFullNames.find(x => x.id == this.editableClass.classTeacherId);
-      if(teacher != undefined && this.editableClass.classTeacherId != null){
-        this.editableClass.classTeacherFullName = teacher.fullName;
-      }
+    let teacher = this.teacherFullNames.find(x => x.id == this.editableClass.classTeacherId);
+    this.editableClass.classTeacherFullName = teacher != undefined ? teacher.shortFullName : '';
+    this.dataService.update(this.classesRoute, this.editableClass.id, this.editableClass).subscribe(() => {     
       Object.assign(this.class, this.editableClass);    
       this.cancel();
     });

@@ -1,0 +1,16 @@
+.responsive-grid{
+  padding: 5% 5% 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 16px;
+}
+
+.name-div{
+  background-color: #3F51B5;
+  color: white;
+  height: 36px;
+  line-height: 36px;
+  letter-spacing: 0.5px;
+  padding-left: 16px;
+  border-radius: 5px 5px 0 0;    
+}

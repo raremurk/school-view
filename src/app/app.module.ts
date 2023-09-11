@@ -37,7 +37,7 @@ import {StudentsDialogComponent} from './Components/Students/Dialog/studentsDial
 import {ClassComponent}   from './Components/Classes/class.component';
 import {TimetableComponent}   from './Components/Timetable/timetable.component';
 import {NotFoundComponent}   from './Components/Not-found/not-found.component';
-import {HomeComponent}   from './Components/Home/home.component';
+import {AdministrationComponent}   from './Components/Administration/administration.component';
 import {AppRoutingModule} from './app-routing.module';
 import {SnackbarInterceptor} from './snackbar.interceptor';
 import {getRussianPaginatorIntl} from './paginator.internationalization';
@@ -82,7 +82,7 @@ import {getRussianPaginatorIntl} from './paginator.internationalization';
         AcademicSubjectsComponent,    
         AcademicSubjectsDialogComponent,    
         NotFoundComponent,
-        HomeComponent
+        AdministrationComponent
     ],
     providers:    [ 
         {provide: HTTP_INTERCEPTORS, useClass: SnackbarInterceptor, multi: true},

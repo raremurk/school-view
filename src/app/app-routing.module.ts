@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {HomeComponent}   from './Components/Home/home.component';
+import {AdministrationComponent}   from './Components/Administration/administration.component';
 import {TimetableComponent}   from './Components/Timetable/timetable.component';
 import {ClassComponent}   from './Components/Classes/class.component';
 import {TeachersComponent}   from './Components/Teachers/teachers.component';
@@ -12,7 +12,7 @@ import {NotFoundComponent}   from './Components/Not-found/not-found.component';
 const routes: Routes =[
     { path: 'timetable', redirectTo: 'timetable/5', pathMatch:'full'},
     { path: '', redirectTo: 'classes', pathMatch:'full'},
-    { path: 'home', component: HomeComponent},
+    { path: 'administration', component: AdministrationComponent},
     { path: 'timetable/:id', component: TimetableComponent},
     { path: 'classes', component: ClassComponent},    
     { path: 'teachers', component: TeachersComponent},

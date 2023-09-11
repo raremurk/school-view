@@ -1,0 +1,38 @@
+<div class="container">    
+  <div class="responsive-grid">
+    <mat-card class="form-field-density-5 icon-button-density-5 p-4">
+      <h2 class="text-center m-0">Информация</h2>
+
+      <div *ngFor="let person of administration" [ngSwitch]="person.position">
+        <div class="flex items-center justify-between">
+          <h4 class="m-0">{{person.position}}</h4>
+          <div *ngSwitchDefault>
+            <button mat-icon-button (click)="editAdministration(person)"><mat-icon>edit</mat-icon></button>
+          </div>
+          <div *ngSwitchCase="editablePerson.position">
+            <button mat-icon-button (click)="updateAdministration()" class="mr-1"><mat-icon>check</mat-icon></button>
+            <button mat-icon-button (click)="cancel()"><mat-icon>close</mat-icon></button>
+          </div>
+        </div>
+        <div class="my-2">
+          <mat-form-field *ngSwitchCase="editablePerson.position" class="w-full">
+            <select matNativeControl [(ngModel)]="editablePerson.teacherId">
+              <option *ngFor="let teacher of teacherFullNames" [value]="teacher.id">{{teacher.fullName}}</option>
+            </select>
+            <button *ngIf="editablePerson.teacherId" (click)="clearPosition()" matSuffix mat-icon-button><mat-icon>close</mat-icon></button>
+          </mat-form-field>   
+          <div *ngSwitchDefault class="name-div">{{person.fullName}}</div>
+        </div>
+      </div>
+     
+      <div class="flex justify-around mt-2">
+        <h4 class="m-0">{{schoolStat.studentsCount}} учеников</h4>
+        <h4 class="m-0">{{schoolStat.teachersCount}} учителей</h4>
+      </div>  
+    </mat-card>      
+    <mat-card class="p-4">
+      <h2 class="text-center m-0">Операции</h2>
+      <button mat-raised-button color="primary" (click)="promoteStudents()" class="mt-4">Перевести учеников в следующий класс</button>
+    </mat-card>
+  </div>  
+</div>
